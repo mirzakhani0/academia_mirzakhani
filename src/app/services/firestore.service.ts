@@ -8,6 +8,7 @@ export interface Curso {
   precio: number;
   categoria: string;
   activo: boolean;
+  imagen?: string;
   createdAt?: string;
 }
 
