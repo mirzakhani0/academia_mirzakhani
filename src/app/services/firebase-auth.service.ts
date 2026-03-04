@@ -100,6 +100,22 @@ export class AuthService {
     this.usuarioActual = null;
   }
 
+  // Reset de contraseña
+  async resetPassword(email: string): Promise<{ success: boolean; message: string }> {
+    try {
+      await this.afAuth.sendPasswordResetEmail(email);
+      return {
+        success: true,
+        message: 'Correo de recuperación enviado. Revisa tu bandeja de entrada.'
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: this.getErrorMessage(error.code)
+      };
+    }
+  }
+
   // Obtener usuario actual
   getCurrentUser(): any {
     return this.usuarioActual;

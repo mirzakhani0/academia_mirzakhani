@@ -6,7 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
+import { ResetPasswordDialogComponent } from '../reset-password/reset-password.component';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +46,7 @@ import { AuthService } from 'src/app/services/auth.service';
               <input type="checkbox" [(ngModel)]="recordarme" name="recordarme">
               <span>Recordarme</span>
             </label>
-            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            <a href="javascript:void(0)" class="forgot-password" (click)="openResetPassword()">¿Olvidaste tu contraseña?</a>
           </div>
 
           <button mat-raised-button color="primary" type="submit" 
@@ -232,8 +234,15 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
+
+  openResetPassword(): void {
+    const dialogRef = this.dialog.open(ResetPasswordDialogComponent, {
+      width: '400px'
+    });
+  }
 
   onLogin(): void {
     const result = this.authService.login(this.email, this.password);
