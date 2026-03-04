@@ -18,6 +18,7 @@ import {
   query
 } from 'firebase/firestore';
 import { getApps, initializeApp, FirebaseApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { Subscription } from 'rxjs';
 
 interface Usuario {
@@ -474,12 +475,43 @@ export class GestionUsuariosComponent implements OnInit {
         return;
       }
 
-      const id = doc(collection(this.firestore, 'usuarios')).id;
-      const usuarioRef = doc(this.firestore, 'usuarios', id);
+      // Importar environment para obtener la config de Firebase
+      const { environment } = await import('../../../../environments/environment');
+      
+      // Inicializar Firebase Auth si no está inicializado
+      let auth;
+      try {
+        auth = getAuth();
+      } catch (authError) {
+        // Si Auth no está inicializado, inicializar Firebase primero
+        if (!getApps().length) {
+          initializeApp(environment.firebase);
+        }
+        auth = getAuth();
+      }
+
+      // Paso 1: Crear usuario en Firebase Authentication
+      let userCredential;
+      try {
+        userCredential = await createUserWithEmailAndPassword(
+          auth,
+          usuarioData.email,
+          usuarioData.password
+        );
+        console.log('✅ Usuario creado en Firebase Auth:', userCredential.user.uid);
+      } catch (authError: any) {
+        console.error('Error en Firebase Auth:', authError);
+        alert('❌ Error al crear usuario en Auth: ' + authError.message);
+        return;
+      }
+
+      // Paso 2: Guardar datos adicionales en Firestore
+      const uid = userCredential.user.uid;
+      const usuarioRef = doc(this.firestore, 'usuarios', uid);
 
       const usuario: Usuario = {
-        uid: id,
-        id: id,
+        uid: uid,
+        id: uid,
         nombre: usuarioData.nombre,
         email: usuarioData.email,
         dni: usuarioData.dni,
@@ -487,19 +519,24 @@ export class GestionUsuariosComponent implements OnInit {
         rol: usuarioData.rol,
         cursosMatriculados: [],
         activo: true,
-        password: usuarioData.password || ''
+        password: '' // No guardamos la password en Firestore por seguridad
       };
 
       await setDoc(usuarioRef, usuario);
-      console.log('✅ Usuario creado en Firebase:', id);
+      console.log('✅ Usuario guardado en Firestore:', uid);
 
-      alert('✅ Usuario creado exitosamente');
-      
+      // Actualizar el perfil con el nombre
+      await updateProfile(userCredential.user, {
+        displayName: usuarioData.nombre
+      });
+
+      alert('✅ Usuario creado exitosamente. Ahora puede iniciar sesión con el email y contraseña proporcionados.');
+
       // Recargar lista de usuarios
       await this.cargarUsuarios();
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ Error creando usuario:', error);
-      alert('❌ Error al crear usuario: ' + (error as any).message);
+      alert('❌ Error al crear usuario: ' + error.message);
     }
   }
 
