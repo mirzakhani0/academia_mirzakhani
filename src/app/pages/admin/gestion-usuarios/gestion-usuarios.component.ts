@@ -618,9 +618,9 @@ export class GestionUsuariosComponent implements OnInit {
         <mat-icon matPrefix>phone</mat-icon>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width" *ngIf="!data.edit">
+      <mat-form-field appearance="outline" class="full-width" *ngIf="data.edit !== true">
         <mat-label>Contraseña Temporal</mat-label>
-        <input matInput [(ngModel)]="usuarioData.password" type="password" placeholder="Mínimo 6 caracteres">
+        <input matInput [(ngModel)]="usuarioData.password" type="password" placeholder="Mínimo 6 caracteres" required>
         <mat-icon matPrefix>lock</mat-icon>
       </mat-form-field>
 
@@ -727,7 +727,9 @@ export class NuevoUsuarioDialog {
     
     // Para nuevos usuarios, la contraseña es requerida
     if (!this.data.edit) {
-      return isValid && this.usuarioData.password && this.usuarioData.password.length >= 6;
+      const passValid = this.usuarioData.password && this.usuarioData.password.length >= 6;
+      console.log('Password:', this.usuarioData.password, 'Valid:', passValid);
+      return isValid && passValid;
     }
     
     return isValid;
