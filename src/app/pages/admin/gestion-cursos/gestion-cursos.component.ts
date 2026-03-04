@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import { AcademiaService, Curso } from 'src/app/services/academia.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gestion-cursos',
@@ -19,14 +20,26 @@ import { AcademiaService, Curso } from 'src/app/services/academia.service';
   ],
   templateUrl: './gestion-cursos.component.html'
 })
-export class GestionCursosComponent {
+export class GestionCursosComponent implements OnInit, OnDestroy {
   cursos: Curso[] = [];
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private academiaService: AcademiaService,
     private dialog: MatDialog
-  ) {
-    this.cursos = this.academiaService.getCursos();
+  ) {}
+
+  ngOnInit(): void {
+    // Suscribirse a los cambios de cursos
+    this.subscription.add(
+      this.academiaService.cursos$.subscribe(cursos => {
+        this.cursos = cursos;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   openNuevoCurso(): void {
@@ -35,10 +48,10 @@ export class GestionCursosComponent {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result) {
-        this.academiaService.addCurso(result);
-        this.cursos = this.academiaService.getCursos();
+        await this.academiaService.addCurso(result);
+        // No es necesario actualizar this.cursos manualmente porque la suscripción lo hace
       }
     });
   }
@@ -49,18 +62,16 @@ export class GestionCursosComponent {
       data: { ...curso, edit: true }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result) {
-        this.academiaService.updateCurso(curso.id, result);
-        this.cursos = this.academiaService.getCursos();
+        await this.academiaService.updateCurso(curso.id, result);
       }
     });
   }
 
-  eliminarCurso(id: number): void {
+  async eliminarCurso(id: number): Promise<void> {
     if (confirm('¿Estás seguro de eliminar este curso?')) {
-      this.academiaService.deleteCurso(id);
-      this.cursos = this.academiaService.getCursos();
+      await this.academiaService.deleteCurso(id);
     }
   }
 }
