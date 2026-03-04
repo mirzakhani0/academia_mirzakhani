@@ -46,7 +46,9 @@ import { ResetPasswordDialogComponent } from '../reset-password/reset-password.c
               <input type="checkbox" [(ngModel)]="recordarme" name="recordarme">
               <span>Recordarme</span>
             </label>
-            <a href="javascript:void(0)" class="forgot-password" (click)="openResetPassword()">¿Olvidaste tu contraseña?</a>
+            <button type="button" class="forgot-password-btn" (click)="openResetPassword()">
+              ¿Olvidaste tu contraseña?
+            </button>
           </div>
 
           <button mat-raised-button color="primary" type="submit" 
@@ -151,13 +153,20 @@ import { ResetPasswordDialogComponent } from '../reset-password/reset-password.c
         cursor: pointer;
       }
 
-      .forgot-password {
+      .forgot-password-btn {
+        background: none;
+        border: none;
         color: #f97316;
-        text-decoration: none;
         font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        padding: 0;
+        text-decoration: none;
+        transition: color 0.3s;
       }
 
-      .forgot-password:hover {
+      .forgot-password-btn:hover {
+        color: #ea580c;
         text-decoration: underline;
       }
 
