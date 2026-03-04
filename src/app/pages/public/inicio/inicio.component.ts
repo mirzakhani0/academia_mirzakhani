@@ -288,10 +288,6 @@ import { CommonModule } from '@angular/common';
                 </a>
               </p>
             </div>
-            
-            <p class="footer-legal">
-              DERECHOS RESERVADOS @MIRZAKHANI - 2026
-            </p>
           </div>
         </div>
       </footer>
