@@ -1,0 +1,1243 @@
+<div class="academia-container">
+  <!-- HERO SECTION -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <span class="hero-badge">🎓 Educación de Excelencia</span>
+      <h1 class="hero-title">Academia <span class="text-gradient">MIRZAKHANI</span></h1>
+      <p class="hero-subtitle">Potencia tu aprendizaje con cursos diseñados por expertos</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Cursos</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">1000+</span>
+          <span class="stat-label">Estudiantes</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">∞</span>
+          <span class="stat-label">Acceso Vitalicio</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filters-section">
+    <div class="search-container">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="¿Qué quieres aprender hoy?"
+        class="search-input"
+      />
+    </div>
+    <div class="category-pills">
+      <button
+        class="pill"
+        [class.active]="categoriaSeleccionada === 'Todos'"
+        (click)="categoriaSeleccionada = 'Todos'"
+      >
+        Todos
+      </button>
+      <button
+        class="pill"
+        [class.active]="categoriaSeleccionada === 'Matemáticas'"
+        (click)="categoriaSeleccionada = 'Matemáticas'"
+      >
+        <mat-icon>calculate</mat-icon>
+        Matemáticas
+      </button>
+      <button
+        class="pill"
+        [class.active]="categoriaSeleccionada === 'Física'"
+        (click)="categoriaSeleccionada = 'Física'"
+      >
+        <mat-icon>science</mat-icon>
+        Física
+      </button>
+    </div>
+  </div>
+
+  <!-- GRID DE CURSOS -->
+  <div class="courses-grid">
+    <div class="course-card" *ngFor="let curso of cursosFiltrados">
+      <!-- Card Header con Gradiente -->
+      <div class="course-header" [style.background]="curso.gradiente">
+        <div class="course-icon-wrapper">
+          <mat-icon class="course-icon">{{curso.icono}}</mat-icon>
+        </div>
+        <div class="course-type-badge">{{curso.tipo}}</div>
+      </div>
+
+      <!-- Card Body -->
+      <div class="course-body">
+        <!-- Tags -->
+        <div class="course-tags">
+          <span class="tag tag-category">{{curso.categoria}}</span>
+          <span class="tag tag-level">{{curso.nivel}}</span>
+        </div>
+
+        <!-- Título -->
+        <h3 class="course-title">{{curso.titulo}}</h3>
+
+        <!-- Descripción -->
+        <p class="course-description">{{curso.descripcion}}</p>
+
+        <!-- Features -->
+        <div class="course-features">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <mat-icon>schedule</mat-icon>
+            </div>
+            <span>{{curso.duracion}}</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <mat-icon>lock_open</mat-icon>
+            </div>
+            <span>Acceso vitalicio</span>
+          </div>
+        </div>
+
+        <!-- Precio y Botón -->
+        <div class="course-footer">
+          <div class="price-section">
+            <span class="price-label">Inversión única</span>
+            <span class="price-value">{{curso.precio | currency:'USD':'symbol':'1.2-2'}}</span>
+          </div>
+          <button class="btn-enroll" (click)="comprar(curso)">
+            <span>Adquirir</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE PAGO MEJORADO -->
+<div class="modal-overlay" *ngIf="mostrarFormularioPago" [@fadeInOut]>
+  <div class="modal-container" [@slideIn]>
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">Completar Inscripción</h2>
+        <p class="modal-subtitle">Estás a un paso de comenzar tu aprendizaje</p>
+      </div>
+      <button class="btn-close" (click)="cancelarPago()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <!-- Curso Seleccionado -->
+      <div class="selected-course-card">
+        <div class="selected-course-info">
+          <mat-icon class="selected-course-icon">school</mat-icon>
+          <div>
+            <span class="selected-course-label">Curso seleccionado</span>
+            <h4 class="selected-course-title">{{cursoSeleccionado?.titulo}}</h4>
+          </div>
+        </div>
+        <div class="selected-course-price">
+          {{cursoSeleccionado?.precio | currency:'USD':'symbol':'1.2-2'}}
+        </div>
+      </div>
+
+      <!-- Paso 1: Pago -->
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <h4 class="step-title">Realiza tu pago Yape</h4>
+        </div>
+        <div class="payment-info">
+          <div class="qr-section">
+            <div class="qr-wrapper">
+              <img src="/assets/images/qr-yape.jpg" alt="QR Yape" class="qr-image" />
+            </div>
+            <div class="payment-details">
+              <p class="payment-name">JOSE LLAN*</p>
+              <span class="payment-account">BCP: 191-XXXXXXXX-0-XX</span>
+              <span class="payment-phone">📱 926 454 594</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paso 2: Datos -->
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <h4 class="step-title">Tus datos de contacto</h4>
+        </div>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label class="form-label">Nombre completo</label>
+            <div class="input-wrapper">
+              <mat-icon class="input-icon">person</mat-icon>
+              <input
+                type="text"
+                [(ngModel)]="nombreAlumno"
+                class="form-input"
+                placeholder="Ej: María Fernández"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Correo electrónico</label>
+            <div class="input-wrapper">
+              <mat-icon class="input-icon">email</mat-icon>
+              <input
+                type="email"
+                [(ngModel)]="correoAlumno"
+                class="form-input"
+                placeholder="tu@correo.com"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp</label>
+            <div class="input-wrapper">
+              <mat-icon class="input-icon">phone</mat-icon>
+              <input
+                type="text"
+                [(ngModel)]="telefonoAlumno"
+                class="form-input"
+                placeholder="+51 9XX XXX XXX"
+              />
+            </div>
+          </div>
+        </div>
+        <button class="btn-confirm" (click)="confirmarPago()">
+          <span>Confirmar Datos</span>
+          <mat-icon>check_circle</mat-icon>
+        </button>
+      </div>
+
+      <!-- Paso 3: Confirmación -->
+      <div class="step-card step-whatsapp">
+        <div class="step-header">
+          <div class="step-number step-whatsapp-number">3</div>
+          <h4 class="step-title">Envía tu comprobante</h4>
+        </div>
+        <p class="whatsapp-description">
+          Haz clic abajo para enviar tu comprobante de pago por WhatsApp
+        </p>
+        <a
+          href="https://wa.me/51965890475?text=Hola Jose, pago realizado"
+          target="_blank"
+          class="btn-whatsapp"
+        >
+          <mat-icon>chat</mat-icon>
+          <span>Enviar por WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ESTILOS MEJORADOS -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+
+  /* Variables - Paleta Rojo y Naranja */
+  :host {
+    --primary-gradient: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    --secondary-gradient: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+    --success-gradient: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    --card-shadow: 0 10px 40px rgba(220, 38, 38, 0.12);
+    --card-shadow-hover: 0 20px 60px rgba(220, 38, 38, 0.2);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Container Principal */
+  .academia-container {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    background: var(--primary-gradient);
+    padding: 60px 20px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .hero-title {
+    font-size: 48px;
+    font-weight: 900;
+    color: white;
+    margin: 0 0 16px 0;
+    letter-spacing: -1px;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 40px 0;
+    font-weight: 400;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    padding: 24px 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-number {
+    font-size: 32px;
+    font-weight: 900;
+    color: white;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Filters Section */
+  .filters-section {
+    max-width: 1200px;
+    margin: -40px auto 40px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .search-container {
+    background: white;
+    border-radius: 16px;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 24px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .search-icon {
+    color: #94a3b8;
+    font-size: 22px;
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 14px 0;
+    font-size: 16px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #1e293b;
+  }
+
+  .search-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .category-pills {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+
+  .pill mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .pill:hover {
+    border-color: #667eea;
+    color: #667eea;
+    transform: translateY(-2px);
+  }
+
+  .pill.active {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  /* Courses Grid */
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* Course Card */
+  .course-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+    border: 1px solid #f1f5f9;
+  }
+
+  .course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  .course-header {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+  }
+
+  .course-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .course-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+    color: white;
+  }
+
+  .course-type-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .course-body {
+    padding: 24px;
+  }
+
+  .course-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .tag {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-category {
+    background: #eff6ff;
+    color: #3b82f6;
+  }
+
+  .tag-level {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+
+  .course-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+    min-height: 52px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .course-description {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+    min-height: 44px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .course-features {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .feature-icon {
+    width: 32px;
+    height: 32px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .feature-icon mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #667eea;
+  }
+
+  .course-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 2px solid #f1f5f9;
+  }
+
+  .price-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .price-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .price-value {
+    font-size: 28px;
+    font-weight: 900;
+    color: #1e293b;
+  }
+
+  .btn-enroll {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  }
+
+  .btn-enroll:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+  }
+
+  .btn-enroll mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+  }
+
+  .modal-container {
+    background: white;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 32px 32px 24px;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .modal-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #1e293b;
+    margin: 0 0 6px 0;
+  }
+
+  .modal-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+
+  .btn-close {
+    background: #f1f5f9;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+  }
+
+  .btn-close:hover {
+    background: #e2e8f0;
+    transform: rotate(90deg);
+  }
+
+  .btn-close mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #64748b;
+  }
+
+  .modal-body {
+    padding: 32px;
+    overflow-y: auto;
+    max-height: calc(90vh - 140px);
+  }
+
+  .selected-course-card {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    border: 2px solid #bfdbfe;
+  }
+
+  .selected-course-info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .selected-course-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  }
+
+  .selected-course-label {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .selected-course-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  .selected-course-price {
+    font-size: 28px;
+    font-weight: 900;
+    color: #3b82f6;
+  }
+
+  .step-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: var(--transition-smooth);
+  }
+
+  .step-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .step-whatsapp {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-color: #86efac;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+    background: var(--primary-gradient);
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .step-whatsapp-number {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  }
+
+  .step-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  .payment-info {
+    padding: 0;
+  }
+
+  .qr-section {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .qr-wrapper {
+    flex-shrink: 0;
+  }
+
+  .qr-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    border: 3px solid #e2e8f0;
+    object-fit: cover;
+  }
+
+  .payment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .payment-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  .payment-account {
+    font-size: 14px;
+    color: #64748b;
+    font-family: monospace;
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 8px;
+    width: fit-content;
+  }
+
+  .payment-phone {
+    font-size: 14px;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 16px;
+    color: #94a3b8;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    color: #1e293b;
+    transition: var(--transition-smooth);
+    outline: none;
+  }
+
+  .form-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  }
+
+  .form-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .btn-confirm {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  }
+
+  .btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+  }
+
+  .btn-confirm mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .whatsapp-description {
+    font-size: 14px;
+    color: #475569;
+    text-align: center;
+    margin: 0 0 16px 0;
+  }
+
+  .btn-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    transition: var(--transition-smooth);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+  }
+
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(37, 211, 102, 0.4);
+  }
+
+  .btn-whatsapp mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 40px 16px 60px;
+    }
+
+    .hero-title {
+      font-size: 28px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+    }
+
+    .hero-stats {
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .stat-divider {
+      width: 30px;
+      height: 1px;
+    }
+
+    .filters-section {
+      margin-top: -30px;
+      padding: 0 16px;
+    }
+
+    .search-container {
+      padding: 6px 16px;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      font-size: 15px;
+    }
+
+    .category-pills {
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+
+    .pill mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .courses-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 0 16px 40px;
+    }
+
+    .course-header {
+      height: 140px;
+    }
+
+    .course-icon-wrapper {
+      width: 60px;
+      height: 60px;
+    }
+
+    .course-icon {
+      font-size: 32px;
+    }
+
+    .course-body {
+      padding: 20px;
+    }
+
+    .course-title {
+      font-size: 17px;
+      min-height: 44px;
+    }
+
+    .course-description {
+      font-size: 13px;
+      min-height: 38px;
+    }
+
+    .course-features {
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .feature-item {
+      font-size: 11px;
+    }
+
+    .feature-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .feature-icon mat-icon {
+      font-size: 16px;
+    }
+
+    .course-footer {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .price-section {
+      text-align: center;
+    }
+
+    .price-value {
+      font-size: 24px;
+    }
+
+    .btn-enroll {
+      justify-content: center;
+      padding: 14px 24px;
+    }
+
+    /* Modal Responsive */
+    .modal-container {
+      max-height: 95vh;
+      margin: 10px;
+    }
+
+    .modal-header {
+      padding: 24px 20px 20px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+    }
+
+    .modal-subtitle {
+      font-size: 13px;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .selected-course-card {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .selected-course-info {
+      flex-direction: column;
+    }
+
+    .qr-section {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 24px;
+    }
+
+    .hero-badge {
+      font-size: 12px;
+      padding: 6px 14px;
+    }
+
+    .stat-number {
+      font-size: 24px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+    }
+
+    .course-title {
+      font-size: 16px;
+    }
+
+    .course-price {
+      font-size: 22px;
+    }
+
+    .btn-enroll {
+      font-size: 13px;
+      padding: 12px 20px;
+    }
+  }
+
+  /* Animaciones */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .modal-overlay {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .modal-container {
+    animation: slideIn 0.3s ease-out;
+  }
+</style>

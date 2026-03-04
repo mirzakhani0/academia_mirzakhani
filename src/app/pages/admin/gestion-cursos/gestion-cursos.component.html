@@ -1,0 +1,139 @@
+<div class="gestion-container">
+  <div class="page-header">
+    <h1>Gestión de Cursos</h1>
+    <button mat-raised-button color="primary" (click)="openNuevoCurso()">
+      <mat-icon>add</mat-icon> Nuevo Curso
+    </button>
+  </div>
+
+  <div class="cursos-resumen" *ngIf="cursos.length > 0">
+    <div class="resumen-card" *ngFor="let curso of cursos">
+      <div class="resumen-header">
+        <h3>{{curso.nombre}}</h3>
+        <div class="acciones">
+          <button mat-icon-button color="primary" (click)="openEditarCurso(curso)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="eliminarCurso(curso.id)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="resumen-body">
+        <p>{{curso.descripcion}}</p>
+        <div class="resumen-meta">
+          <span class="categoria-badge">{{curso.categoria}}</span>
+          <span class="precio">${{curso.precio}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="cursos.length === 0">
+    <mat-icon>folder_open</mat-icon>
+    <p>No hay cursos registrados</p>
+    <button mat-raised-button color="primary" (click)="openNuevoCurso()">
+      <mat-icon>add</mat-icon> Agregar Primer Curso
+    </button>
+  </div>
+</div>
+
+<style>
+  .gestion-container { padding: 20px; }
+  .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .page-header h1 { font-size: 28px; font-weight: 900; color: #1e293b; margin: 0; }
+  
+  .cursos-resumen { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+  
+  .resumen-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .resumen-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  }
+  
+  .resumen-header {
+    background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .resumen-header h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+    flex: 1;
+  }
+  
+  .acciones {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .acciones button mat-icon {
+    color: white;
+  }
+  
+  .resumen-body {
+    padding: 20px;
+  }
+  
+  .resumen-body p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 16px;
+  }
+  
+  .resumen-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .categoria-badge {
+    background: #eff6ff;
+    color: #3b82f6;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .precio {
+    font-size: 24px;
+    font-weight: 900;
+    color: #dc2626;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 16px;
+  }
+  
+  .empty-state mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #cbd5e1;
+    margin-bottom: 16px;
+  }
+  
+  .empty-state p {
+    color: #64748b;
+    font-size: 16px;
+    margin: 0 0 24px;
+  }
+</style>

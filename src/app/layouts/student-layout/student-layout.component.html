@@ -1,0 +1,273 @@
+<mat-sidenav-container class="student-layout" autosize>
+  <!-- Sidebar -->
+  <mat-sidenav #sidenav mode="side" opened class="student-sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <span class="logo-text">MIRZAKHANI</span>
+      </div>
+      <button mat-icon-button (click)="sidenav.toggle()" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/estudiante/dashboard" routerLinkActive="active" class="nav-item">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/estudiante/mis-cursos" routerLinkActive="active" class="nav-item">
+        <mat-icon>school</mat-icon>
+        <span>Mis Cursos</span>
+      </a>
+      <a routerLink="/estudiante/biblioteca" routerLinkActive="active" class="nav-item">
+        <mat-icon>menu_book</mat-icon>
+        <span>Biblioteca</span>
+      </a>
+      <a routerLink="/estudiante/perfil" routerLinkActive="active" class="nav-item">
+        <mat-icon>person</mat-icon>
+        <span>Perfil</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button mat-button class="logout-btn" routerLink="/inicio">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="student-content">
+    <!-- Topbar -->
+    <header class="student-topbar">
+      <div class="left-section">
+        <button mat-icon-button (click)="sidenav.toggle()" class="menu-btn">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1 class="page-title">{{ pageTitle }}</h1>
+      </div>
+
+      <div class="right-section">
+        <button mat-icon-button class="notification-btn">
+          <mat-icon>notifications</mat-icon>
+          <span class="badge">3</span>
+        </button>
+        
+        <div class="user-menu">
+          <div class="user-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <span class="user-name">Estudiante</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="student-main">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<style>
+  :host {
+    display: block;
+    height: 100vh;
+  }
+
+  .student-layout {
+    height: 100vh;
+  }
+
+  .student-sidebar {
+    width: 280px;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-header {
+    padding: 24px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .logo-text {
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .close-btn {
+    color: white;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+
+  .nav-item.active {
+    background: linear-gradient(90deg, rgba(249, 115, 22, 0.2) 0%, transparent 100%);
+    color: #f97316;
+    border-left-color: #f97316;
+  }
+
+  .nav-item mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .logout-btn {
+    width: 100%;
+    color: rgba(255, 255, 255, 0.7);
+    justify-content: flex-start;
+  }
+
+  .logout-btn:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .student-content {
+    background: #f8fafc;
+  }
+
+  .student-topbar {
+    background: white;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .left-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .menu-btn {
+    color: #64748b;
+  }
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .notification-btn {
+    position: relative;
+    color: #64748b;
+  }
+
+  .badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #dc2626;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 50px;
+  }
+
+  .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: #f1f5f9;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .user-avatar mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: white;
+  }
+
+  .user-name {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 14px;
+  }
+
+  .student-main {
+    padding: 24px;
+    min-height: calc(100vh - 80px);
+  }
+
+  @media (max-width: 768px) {
+    .student-sidebar {
+      position: fixed;
+      z-index: 1000;
+    }
+
+    .page-title {
+      font-size: 18px;
+    }
+
+    .user-name {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,141 @@
+<header class="public-header">
+  <div class="header-container">
+    <div class="logo">
+      <span class="logo-text">Academia <strong>MIRZAKHANI</strong></span>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/inicio" class="nav-link">Inicio</a>
+      <a routerLink="/cursos-public" class="nav-link">Cursos</a>
+      <a routerLink="/authentication/login" class="btn-login">Ingresar</a>
+    </nav>
+
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</header>
+
+<main class="public-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="public-footer">
+  <div class="footer-content">
+    <p>DERECHOS RESERVADOS @MIRZAKHANI - {{ currentYear }}</p>
+  </div>
+</footer>
+
+<style>
+  :host {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .public-header {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 15px;
+    transition: color 0.3s;
+  }
+
+  .nav-link:hover {
+    color: #f97316;
+  }
+
+  .btn-login {
+    background: transparent;
+    color: #64748b;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s;
+  }
+
+  .btn-login:hover {
+    border-color: #f97316;
+    color: #f97316;
+    transform: translateY(-2px);
+  }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .menu-toggle mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #1e293b;
+  }
+
+  .public-content {
+    min-height: calc(100vh - 200px);
+  }
+
+  .public-footer {
+    background: #1e293b;
+    color: white;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .public-footer p {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: 768px) {
+    .nav-menu {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+
+    .logo-text {
+      font-size: 20px;
+    }
+  }
+</style>

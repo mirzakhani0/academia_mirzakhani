@@ -1,0 +1,128 @@
+{
+  "cursos": [
+    {
+      "id": 1,
+      "nombre": "Álgebra Lineal: Dominio Total",
+      "descripcion": "De matrices a espacios vectoriales. Incluye 20 horas de video y resolución de exámenes pasados.",
+      "precio": 45,
+      "categoria": "Matemáticas",
+      "activo": true,
+      "icono": "functions",
+      "gradiente": "linear-gradient(135deg, #f97316 0%, #dc2626 100%)",
+      "tipo": "CLASE GRABADA"
+    },
+    {
+      "id": 2,
+      "nombre": "Pack: Cálculo Diferencial",
+      "descripcion": "La guía definitiva en PDF con 200 ejercicios resueltos y trucos para derivar rápido.",
+      "precio": 25,
+      "categoria": "Matemáticas",
+      "activo": true,
+      "icono": "description",
+      "gradiente": "linear-gradient(135deg, #fb923c 0%, #f97316 100%)",
+      "tipo": "MATERIAL PDF"
+    },
+    {
+      "id": 3,
+      "nombre": "Física I: Mecánica y Estática",
+      "descripcion": "Domina los diagramas de cuerpo libre y las leyes de Newton con un método 100% visual.",
+      "precio": 39,
+      "categoria": "Física",
+      "activo": true,
+      "icono": "rocket_launch",
+      "gradiente": "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+      "tipo": "CLASE GRABADA"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "Administrador",
+      "email": "admin@mirzakhani.com",
+      "dni": "00000000",
+      "rol": "admin",
+      "password": "admin2026",
+      "activo": true,
+      "cursosMatriculados": []
+    },
+    {
+      "id": "2",
+      "nombre": "Juan Pérez García",
+      "email": "juan@email.com",
+      "dni": "12345678",
+      "rol": "estudiante",
+      "password": "123456782026",
+      "activo": true,
+      "cursosMatriculados": [1]
+    },
+    {
+      "id": "3",
+      "nombre": "María López Rodríguez",
+      "email": "maria@email.com",
+      "dni": "87654321",
+      "rol": "estudiante",
+      "password": "876543212026",
+      "activo": true,
+      "cursosMatriculados": [2, 3]
+    }
+  ],
+  "solicitudes": [
+    {
+      "id": "1",
+      "nombre": "Juan Pérez García",
+      "email": "juan@email.com",
+      "dni": "12345678",
+      "telefono": "+51 999 999 999",
+      "cursoId": 1,
+      "cursoNombre": "Álgebra Lineal: Dominio Total",
+      "precio": 45,
+      "estado": "aprobado",
+      "password": "123456782026",
+      "fecha": "2026-03-03T10:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "nombre": "María López Rodríguez",
+      "email": "maria@email.com",
+      "dni": "87654321",
+      "telefono": "+51 888 888 888",
+      "cursoId": 2,
+      "cursoNombre": "Pack: Cálculo Diferencial",
+      "precio": 25,
+      "estado": "pendiente",
+      "fecha": "2026-03-03T12:00:00.000Z"
+    }
+  ],
+  "contenidos": [
+    {
+      "id": "1",
+      "cursoId": 1,
+      "cursoNombre": "Álgebra Lineal",
+      "tema": "Matrices y Vectores",
+      "nombre": "Teoría (PDF)",
+      "tipo": "pdf",
+      "url": "/assets/archivos/algebra-teoria.pdf",
+      "fecha": "2026-03-01"
+    },
+    {
+      "id": "2",
+      "cursoId": 1,
+      "cursoNombre": "Álgebra Lineal",
+      "tema": "Matrices y Vectores",
+      "nombre": "Ejercicios Propuestos (PDF)",
+      "tipo": "pdf",
+      "url": "/assets/archivos/algebra-ejercicios.pdf",
+      "fecha": "2026-03-01"
+    },
+    {
+      "id": "3",
+      "cursoId": 1,
+      "cursoNombre": "Álgebra Lineal",
+      "tema": "Matrices y Vectores",
+      "nombre": "Clase Teoría (Video)",
+      "tipo": "video",
+      "url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "fecha": "2026-03-01"
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+<div class="row">
+  <div class="col-12">
+    <div class="welcome-card">
+      <div class="welcome-content">
+        <h1 class="welcome-title">Bienvenido a Academia <span class="text-gradient">MIRZAKHANI</span></h1>
+        <p class="welcome-subtitle">Tu plataforma de gestión de cursos y estudiantes</p>
+        <div class="welcome-actions">
+          <a routerLink="/dashboard/cursos" class="btn-welcome primary">
+            <mat-icon>school</mat-icon>
+            <span>Ver Cursos</span>
+          </a>
+          <a routerLink="/dashboard/biblioteca" class="btn-welcome secondary">
+            <mat-icon>menu_book</mat-icon>
+            <span>Ir a Biblioteca</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-lg-6">
+    <div class="stats-card">
+      <div class="stats-icon bg-orange">
+        <mat-icon>person</mat-icon>
+      </div>
+      <div class="stats-content">
+        <h3>1,250</h3>
+        <p>Estudiantes Activos</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="stats-card">
+      <div class="stats-icon bg-red">
+        <mat-icon>class</mat-icon>
+      </div>
+      <div class="stats-content">
+        <h3>48</h3>
+        <p>Cursos Disponibles</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .welcome-card {
+    background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    border-radius: 24px;
+    padding: 48px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 20px 60px rgba(220, 38, 38, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .welcome-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .welcome-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .welcome-title {
+    font-size: 42px;
+    font-weight: 900;
+    margin: 0 0 16px 0;
+    letter-spacing: -1px;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .welcome-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 32px 0;
+  }
+
+  .welcome-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-welcome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 15px;
+  }
+
+  .btn-welcome.primary {
+    background: white;
+    color: #dc2626;
+  }
+
+  .btn-welcome.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-welcome.secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-welcome.secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .btn-welcome mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .stats-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f1f5f9;
+  }
+
+  .stats-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  }
+
+  .stats-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .stats-icon mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: white;
+  }
+
+  .stats-icon.bg-orange {
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+  }
+
+  .stats-icon.bg-red {
+    background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+  }
+
+  .stats-content h3 {
+    font-size: 32px;
+    font-weight: 900;
+    color: #1e293b;
+    margin: 0 0 4px 0;
+  }
+
+  .stats-content p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .welcome-card {
+      padding: 32px 20px;
+    }
+
+    .welcome-title {
+      font-size: 28px;
+    }
+
+    .welcome-subtitle {
+      font-size: 15px;
+    }
+
+    .welcome-actions {
+      flex-direction: column;
+    }
+
+    .btn-welcome {
+      justify-content: center;
+    }
+
+    .stats-card {
+      padding: 20px;
+    }
+
+    .stats-icon {
+      width: 52px;
+      height: 52px;
+    }
+
+    .stats-icon mat-icon {
+      font-size: 26px;
+    }
+
+    .stats-content h3 {
+      font-size: 24px;
+    }
+  }
+</style>
