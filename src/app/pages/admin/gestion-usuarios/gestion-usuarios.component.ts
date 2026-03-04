@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -8,11 +8,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
+import { 
+  getFirestore, 
+  collection, 
+  doc, 
+  getDocs, 
+  setDoc, 
+  updateDoc,
+  query
+} from 'firebase/firestore';
+import { getApps, initializeApp, FirebaseApp } from 'firebase/app';
+import { Subscription } from 'rxjs';
 
 interface Usuario {
   uid?: string;
+  id?: string;
   nombre: string;
   email: string;
   dni: string;
@@ -20,6 +30,7 @@ interface Usuario {
   rol: 'estudiante' | 'admin';
   cursosMatriculados: number[];
   activo: boolean;
+  password?: string;
 }
 
 @Component({
@@ -77,7 +88,7 @@ interface Usuario {
             <div class="usuario-stats">
               <div class="stat-item">
                 <mat-icon>school</mat-icon>
-                <span>{{usuario.cursosMatriculados?.length || 0}} cursos</span>
+                <span>{{usuario.cursosMatriculados.length || 0}} cursos</span>
               </div>
               <div class="stat-item" *ngIf="usuario.rol">
                 <mat-icon>badge</mat-icon>
@@ -374,37 +385,68 @@ interface Usuario {
 })
 export class GestionUsuariosComponent implements OnInit {
   usuarios: Usuario[] = [];
+  private firestore: any = null;
+  private app: FirebaseApp | null = null;
 
   constructor(
-    private dialog: MatDialog,
-    private authService: AuthService,
-    private firestoreService: FirestoreService
+    private dialog: MatDialog
   ) {}
 
   async ngOnInit(): Promise<void> {
+    await this.initializeFirebase();
     await this.cargarUsuarios();
+  }
+
+  private async initializeFirebase() {
+    try {
+      const { environment } = await import('../../../../environments/environment');
+      
+      if (!getApps().length) {
+        this.app = initializeApp(environment.firebase);
+      }
+      
+      this.firestore = getFirestore();
+      console.log('✅ Firebase inicializado en GestionUsuarios');
+    } catch (error) {
+      console.error('❌ Error inicializando Firebase:', error);
+    }
   }
 
   async cargarUsuarios(): Promise<void> {
     try {
-      const usuariosData = await this.firestoreService.getUsuarios();
-      this.usuarios = usuariosData.map(u => ({
-        uid: u.id,
-        nombre: u.nombre,
-        email: u.email,
-        dni: u.dni || '',
-        telefono: u.telefono || '',
-        rol: u.rol || 'estudiante',
-        cursosMatriculados: u.cursosMatriculados || [],
-        activo: u.activo !== undefined ? u.activo : true
-      }));
+      if (!this.firestore) {
+        console.error('Firestore no inicializado');
+        return;
+      }
+
+      const querySnapshot = await getDocs(collection(this.firestore, 'usuarios'));
+      
+      if (querySnapshot.empty) {
+        console.log('⚠️ No hay usuarios en Firebase');
+        this.usuarios = [];
+        return;
+      }
+
+      this.usuarios = querySnapshot.docs.map(doc => {
+        const data: any = doc.data();
+        return {
+          uid: doc.id,
+          id: doc.id,
+          nombre: data['nombre'],
+          email: data['email'],
+          dni: data['dni'] || '',
+          telefono: data['telefono'] || '',
+          rol: data['rol'] || 'estudiante',
+          cursosMatriculados: data['cursosMatriculados'] || [],
+          activo: data['activo'] !== undefined ? data['activo'] : true,
+          password: data['password'] || ''
+        };
+      });
+
+      console.log('✅ Usuarios cargados:', this.usuarios.length);
     } catch (error) {
-      console.error('Error cargando usuarios:', error);
-      // Fallback a datos locales
-      this.usuarios = [
-        { nombre: 'Juan Pérez', email: 'juan@email.com', dni: '', telefono: '', rol: 'estudiante', cursosMatriculados: [1], activo: true },
-        { nombre: 'María López', email: 'maria@email.com', dni: '', telefono: '', rol: 'estudiante', cursosMatriculados: [2, 3], activo: true },
-      ];
+      console.error('❌ Error cargando usuarios:', error);
+      this.usuarios = [];
     }
   }
 
@@ -420,25 +462,45 @@ export class GestionUsuariosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async result => {
       if (result) {
-        try {
-          await this.firestoreService.createUsuario({
-            nombre: result.nombre,
-            email: result.email,
-            dni: result.dni,
-            telefono: result.telefono,
-            rol: result.rol,
-            password: result.password,
-            cursosMatriculados: [],
-            activo: true
-          });
-          await this.cargarUsuarios();
-          alert('✅ Usuario creado exitosamente');
-        } catch (error) {
-          console.error('Error creando usuario:', error);
-          alert('❌ Error al crear usuario. Intente nuevamente.');
-        }
+        await this.crearUsuario(result);
       }
     });
+  }
+
+  async crearUsuario(usuarioData: any): Promise<void> {
+    try {
+      if (!this.firestore) {
+        alert('❌ Error: Firebase no está inicializado');
+        return;
+      }
+
+      const id = doc(collection(this.firestore, 'usuarios')).id;
+      const usuarioRef = doc(this.firestore, 'usuarios', id);
+
+      const usuario: Usuario = {
+        uid: id,
+        id: id,
+        nombre: usuarioData.nombre,
+        email: usuarioData.email,
+        dni: usuarioData.dni,
+        telefono: usuarioData.telefono,
+        rol: usuarioData.rol,
+        cursosMatriculados: [],
+        activo: true,
+        password: usuarioData.password || ''
+      };
+
+      await setDoc(usuarioRef, usuario);
+      console.log('✅ Usuario creado en Firebase:', id);
+
+      alert('✅ Usuario creado exitosamente');
+      
+      // Recargar lista de usuarios
+      await this.cargarUsuarios();
+    } catch (error) {
+      console.error('❌ Error creando usuario:', error);
+      alert('❌ Error al crear usuario: ' + (error as any).message);
+    }
   }
 
   openEditarUsuario(usuario: Usuario): void {
@@ -449,38 +511,64 @@ export class GestionUsuariosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async result => {
       if (result && usuario.uid) {
-        try {
-          await this.firestoreService.updateUsuario(usuario.uid, {
-            nombre: result.nombre,
-            email: result.email,
-            dni: result.dni,
-            telefono: result.telefono,
-            rol: result.rol,
-            activo: result.activo
-          });
-          await this.cargarUsuarios();
-          alert('✅ Usuario actualizado exitosamente');
-        } catch (error) {
-          console.error('Error actualizando usuario:', error);
-          alert('❌ Error al actualizar usuario.');
-        }
+        await this.actualizarUsuario(usuario.uid, result);
       }
     });
   }
 
-  async eliminarUsuario(usuario: Usuario): Promise<void> {
-    if (confirm(`¿Estás seguro de eliminar a ${usuario.nombre}?`)) {
-      try {
-        if (usuario.uid) {
-          // En lugar de eliminar, desactivamos el usuario
-          await this.firestoreService.updateUsuario(usuario.uid, { activo: false });
-          await this.cargarUsuarios();
-          alert('✅ Usuario eliminado exitosamente');
-        }
-      } catch (error) {
-        console.error('Error eliminando usuario:', error);
-        alert('❌ Error al eliminar usuario.');
+  async actualizarUsuario(uid: string, usuarioData: any): Promise<void> {
+    try {
+      if (!this.firestore) {
+        alert('❌ Error: Firebase no está inicializado');
+        return;
       }
+
+      const usuarioRef = doc(this.firestore, 'usuarios', uid);
+
+      await updateDoc(usuarioRef, {
+        nombre: usuarioData.nombre,
+        email: usuarioData.email,
+        dni: usuarioData.dni,
+        telefono: usuarioData.telefono,
+        rol: usuarioData.rol,
+        activo: usuarioData.activo
+      });
+
+      console.log('✅ Usuario actualizado en Firebase:', uid);
+      alert('✅ Usuario actualizado exitosamente');
+      
+      // Recargar lista de usuarios
+      await this.cargarUsuarios();
+    } catch (error) {
+      console.error('❌ Error actualizando usuario:', error);
+      alert('❌ Error al actualizar usuario: ' + (error as any).message);
+    }
+  }
+
+  async eliminarUsuario(usuario: Usuario): Promise<void> {
+    if (!confirm(`¿Estás seguro de eliminar a ${usuario.nombre}?`)) {
+      return;
+    }
+
+    try {
+      if (!this.firestore || !usuario.uid) {
+        alert('❌ Error: Firebase no está inicializado');
+        return;
+      }
+
+      const usuarioRef = doc(this.firestore, 'usuarios', usuario.uid);
+
+      // En lugar de eliminar, desactivamos el usuario
+      await updateDoc(usuarioRef, { activo: false });
+
+      console.log('✅ Usuario desactivado en Firebase:', usuario.uid);
+      alert('✅ Usuario eliminado exitosamente');
+      
+      // Recargar lista de usuarios
+      await this.cargarUsuarios();
+    } catch (error) {
+      console.error('❌ Error eliminando usuario:', error);
+      alert('❌ Error al eliminar usuario: ' + (error as any).message);
     }
   }
 }
