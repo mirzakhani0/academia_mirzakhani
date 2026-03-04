@@ -220,30 +220,77 @@ import { CommonModule } from '@angular/common';
       <!-- Footer -->
       <footer class="landing-footer">
         <div class="footer-content">
-          <div class="footer-info">
+          <div class="footer-column footer-about">
             <h3>Academia MIRZAKHANI</h3>
-            <p>Educación de calidad al alcance de todos</p>
+            <p class="footer-tagline">Educación de calidad al alcance de todos</p>
+            <div class="footer-social">
+              <a href="#" class="social-icon" title="Facebook">
+                <mat-icon>facebook</mat-icon>
+              </a>
+              <a href="#" class="social-icon" title="Instagram">
+                <mat-icon>favorite</mat-icon>
+              </a>
+              <a href="#" class="social-icon" title="YouTube">
+                <mat-icon>play_circle</mat-icon>
+              </a>
+              <a href="https://wa.me/51965890475" class="social-icon" title="WhatsApp">
+                <mat-icon>phone</mat-icon>
+              </a>
+            </div>
           </div>
-          <div class="footer-contact">
-            <h4>Contacto</h4>
-            <p>📱 WhatsApp: +51 965 890 475</p>
-            <p>📧 Email: contacto@mirzakhani.com</p>
+          
+          <div class="footer-column footer-contact">
+            <h4>📞 Contacto</h4>
+            <p>
+              <mat-icon>phone</mat-icon>
+              <span>+51 965 890 475</span>
+            </p>
+            <p>
+              <mat-icon>email</mat-icon>
+              <a href="mailto:contacto@mirzakhani.com">contacto@mirzakhani.com</a>
+            </p>
+            <p>
+              <mat-icon>location_on</mat-icon>
+              <span>Perú</span>
+            </p>
           </div>
-          <div class="footer-payment">
-            <h4>Métodos de Pago</h4>
-            <p>📱 Yape</p>
-            <p>🏦 BCP</p>
+          
+          <div class="footer-column footer-payment">
+            <h4>💳 Métodos de Pago</h4>
+            <div class="payment-methods">
+              <div class="payment-item">
+                <mat-icon class="payment-icon yape">wallet</mat-icon>
+                <span>Yape</span>
+              </div>
+              <div class="payment-item">
+                <mat-icon class="payment-icon bcp">account_balance</mat-icon>
+                <span>BCP</span>
+              </div>
+            </div>
           </div>
         </div>
+        
         <div class="footer-bottom">
-          <p>© 2026 Academia MIRZAKHANI. Todos los derechos reservados.</p>
-          
-          <!-- Developer Credits -->
-          <div class="developer-credits">
-            <p class="credits-title">Desarrollado por <strong>CARLOS</strong></p>
-            <p class="credits-contact">
-              📧 ¿Quieres un proyecto similar? Contáctame: 
-              <a href="mailto:llanovilca79@gmail.com" class="credits-email">llanovilca79@gmail.com</a>
+          <div class="footer-bottom-content">
+            <p class="copyright">
+              © 2026 Academia MIRZAKHANI. Todos los derechos reservados.
+            </p>
+            
+            <!-- Developer Credits -->
+            <div class="developer-credits">
+              <p class="credits-title">
+                💻 Desarrollado por <strong>CARLOS</strong>
+              </p>
+              <p class="credits-contact">
+                📧 ¿Quieres un proyecto similar? 
+                <a href="mailto:llanovilca79@gmail.com" class="credits-email">
+                  llanovilca79@gmail.com
+                </a>
+              </p>
+            </div>
+            
+            <p class="footer-legal">
+              DERECHOS RESERVADOS @MIRZAKHANI - 2026
             </p>
           </div>
         </div>
@@ -749,45 +796,156 @@ import { CommonModule } from '@angular/common';
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 48px;
         margin-bottom: 40px;
       }
 
-      .footer-info h3 {
-        font-size: 24px;
-        font-weight: 900;
-        margin: 0 0 12px;
-        background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      .footer-column {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
       }
 
-      .footer-info p {
-        color: rgba(255, 255, 255, 0.7);
-        margin: 0;
-      }
-
-      .footer-contact h4,
-      .footer-payment h4 {
-        font-size: 18px;
+      .footer-column h3,
+      .footer-column h4 {
+        font-size: 20px;
         font-weight: 800;
         margin: 0 0 16px;
         color: white;
       }
 
-      .footer-contact p,
-      .footer-payment p {
+      .footer-column h3 {
+        font-size: 24px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .footer-tagline {
         color: rgba(255, 255, 255, 0.7);
-        margin: 8px 0;
+        font-size: 15px;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* Social Icons */
+      .footer-social {
+        display: flex;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(249, 115, 22, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        border: 2px solid rgba(249, 115, 22, 0.3);
+      }
+
+      .social-icon mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        color: #f97316;
+      }
+
+      .social-icon:hover {
+        background: #f97316;
+        border-color: #f97316;
+        transform: translateY(-3px);
+      }
+
+      .social-icon:hover mat-icon {
+        color: white;
+      }
+
+      /* Contact */
+      .footer-contact p {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 12px 0;
         font-size: 15px;
       }
 
+      .footer-contact mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #f97316;
+        flex-shrink: 0;
+      }
+
+      .footer-contact a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-contact a:hover {
+        color: #f97316;
+      }
+
+      /* Payment Methods */
+      .payment-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .payment-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+      }
+
+      .payment-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(249, 115, 22, 0.3);
+      }
+
+      .payment-item span {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .payment-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+
+      .payment-icon.yape {
+        color: #742194;
+      }
+
+      .payment-icon.bcp {
+        color: #00A9E0;
+      }
+
+      /* Footer Bottom */
       .footer-bottom {
         max-width: 1200px;
         margin: 0 auto;
         padding-top: 30px;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .footer-bottom-content {
         text-align: center;
       }
 
@@ -797,16 +955,23 @@ import { CommonModule } from '@angular/common';
         font-size: 14px;
       }
 
+      .copyright {
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+
       /* Developer Credits */
       .developer-credits {
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin: 20px 0;
+        padding: 20px;
+        background: rgba(249, 115, 22, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(249, 115, 22, 0.2);
       }
 
       .credits-title {
         font-size: 15px;
-        color: rgba(255, 255, 255, 0.7);
+        color: rgba(255, 255, 255, 0.8);
         margin: 0 0 8px;
       }
 
@@ -831,6 +996,14 @@ import { CommonModule } from '@angular/common';
       .credits-email:hover {
         color: #f97316;
         text-decoration: underline;
+      }
+
+      .footer-legal {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 12px;
       }
 
       /* Responsive */
