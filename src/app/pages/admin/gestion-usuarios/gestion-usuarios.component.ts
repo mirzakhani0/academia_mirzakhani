@@ -525,14 +525,21 @@ export class GestionUsuariosComponent implements OnInit {
 
       const usuarioRef = doc(this.firestore, 'usuarios', uid);
 
-      await updateDoc(usuarioRef, {
+      const updateData: any = {
         nombre: usuarioData.nombre,
         email: usuarioData.email,
         dni: usuarioData.dni,
         telefono: usuarioData.telefono,
         rol: usuarioData.rol,
         activo: usuarioData.activo
-      });
+      };
+
+      // Si se proporcionó una nueva contraseña, actualizarla
+      if (usuarioData.nuevaPassword && usuarioData.nuevaPassword.length >= 6) {
+        updateData.password = usuarioData.nuevaPassword;
+      }
+
+      await updateDoc(usuarioRef, updateData);
 
       console.log('✅ Usuario actualizado en Firebase:', uid);
       alert('✅ Usuario actualizado exitosamente');
@@ -634,6 +641,12 @@ export class GestionUsuariosComponent implements OnInit {
         </mat-select>
         <mat-icon matPrefix>toggle_on</mat-icon>
       </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width" *ngIf="data.edit">
+        <mat-label>Nueva Contraseña (Opcional)</mat-label>
+        <input matInput [(ngModel)]="usuarioData.nuevaPassword" type="password" placeholder="Dejar en blanco para mantener la actual">
+        <mat-icon matPrefix>lock</mat-icon>
+      </mat-form-field>
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
@@ -681,6 +694,7 @@ export class NuevoUsuarioDialog {
     dni: '',
     telefono: '',
     password: '',
+    nuevaPassword: '',
     rol: 'estudiante',
     activo: true
   };
@@ -696,19 +710,27 @@ export class NuevoUsuarioDialog {
         dni: data.dni || '',
         telefono: data.telefono || '',
         rol: data.rol || 'estudiante',
-        activo: data.activo !== undefined ? data.activo : true
+        activo: data.activo !== undefined ? data.activo : true,
+        nuevaPassword: ''  // Vacío por defecto al editar
       };
     }
   }
 
   isValidForm(): boolean {
-    return this.usuarioData.nombre &&
+    const isValid = this.usuarioData.nombre &&
            this.usuarioData.email &&
            this.usuarioData.email.includes('@') &&
            this.usuarioData.dni &&
            this.usuarioData.dni.length === 8 &&
            this.usuarioData.telefono &&
-           (!this.data.edit || true);
+           this.usuarioData.rol;
+    
+    // Para nuevos usuarios, la contraseña es requerida
+    if (!this.data.edit) {
+      return isValid && this.usuarioData.password && this.usuarioData.password.length >= 6;
+    }
+    
+    return isValid;
   }
 
   guardarUsuario(): void {
