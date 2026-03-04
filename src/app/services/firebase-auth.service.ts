@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 export interface Usuario {
   id?: string;
@@ -33,11 +34,11 @@ export class AuthService {
   async login(email: string, password: string): Promise<{ success: boolean; message: string; user?: any }> {
     try {
       const credential = await this.afAuth.signInWithEmailAndPassword(email, password);
-      
+
       if (credential.user) {
         // Obtener datos adicionales del usuario desde Firestore
         const userDoc = await this.firestore.collection('usuarios').doc(credential.user.uid).get().toPromise();
-        
+
         return {
           success: true,
           message: 'Login exitoso',
@@ -48,7 +49,7 @@ export class AuthService {
           }
         };
       }
-      
+
       return {
         success: false,
         message: 'Error al iniciar sesión'
@@ -66,7 +67,7 @@ export class AuthService {
     try {
       // Crear usuario en Firebase Auth
       const credential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      
+
       if (credential.user) {
         // Guardar datos adicionales en Firestore
         await this.firestore.collection('usuarios').doc(credential.user.uid).set({
