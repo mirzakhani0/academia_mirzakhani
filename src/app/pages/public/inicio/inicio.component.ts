@@ -237,6 +237,15 @@ import { CommonModule } from '@angular/common';
         </div>
         <div class="footer-bottom">
           <p>© 2026 Academia MIRZAKHANI. Todos los derechos reservados.</p>
+          
+          <!-- Developer Credits -->
+          <div class="developer-credits">
+            <p class="credits-title">Desarrollado por <strong>CARLOS</strong></p>
+            <p class="credits-contact">
+              📧 ¿Quieres un proyecto similar? Contáctame: 
+              <a href="mailto:llanovilca79@gmail.com" class="credits-email">llanovilca79@gmail.com</a>
+            </p>
+          </div>
         </div>
       </footer>
     </div>
@@ -786,6 +795,42 @@ import { CommonModule } from '@angular/common';
         color: rgba(255, 255, 255, 0.5);
         margin: 0;
         font-size: 14px;
+      }
+
+      /* Developer Credits */
+      .developer-credits {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .credits-title {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0 0 8px;
+      }
+
+      .credits-title strong {
+        color: #f97316;
+        font-weight: 800;
+      }
+
+      .credits-contact {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0;
+      }
+
+      .credits-email {
+        color: #fbbf24;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+
+      .credits-email:hover {
+        color: #f97316;
+        text-decoration: underline;
       }
 
       /* Responsive */

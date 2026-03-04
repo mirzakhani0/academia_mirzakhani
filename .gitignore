@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase (IMPORTANT: Never commit credentials)
+serviceAccountKey.json
+firebase-service-account.json
+*.key
+*.pem
