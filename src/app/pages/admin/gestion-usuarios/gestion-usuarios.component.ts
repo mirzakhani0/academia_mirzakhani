@@ -585,12 +585,12 @@ export class GestionUsuariosComponent implements OnInit {
   standalone: true,
   imports: [
     MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,
-    FormsModule, MatButtonModule, MatIconModule
+    FormsModule, MatButtonModule, MatIconModule, CommonModule
   ],
   template: `
     <h2 mat-dialog-title class="dialog-title">
-      <mat-icon>{{data.edit ? 'edit' : 'person_add'}}</mat-icon>
-      {{data.edit ? 'Editar' : 'Nuevo'}} Usuario
+      <mat-icon>{{isEdit ? 'edit' : 'person_add'}}</mat-icon>
+      {{isEdit ? 'Editar' : 'Nuevo'}} Usuario
     </h2>
 
     <mat-dialog-content>
@@ -618,9 +618,10 @@ export class GestionUsuariosComponent implements OnInit {
         <mat-icon matPrefix>phone</mat-icon>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width" *ngIf="data.edit !== true">
-        <mat-label>Contraseña Temporal</mat-label>
-        <input matInput [(ngModel)]="usuarioData.password" type="password" placeholder="Mínimo 6 caracteres" required>
+      <!-- Campo de contraseña SOLO para nuevos usuarios -->
+      <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit">
+        <mat-label>Contraseña Temporal (Requerida)</mat-label>
+        <input matInput [(ngModel)]="usuarioData.password" type="password" placeholder="Mínimo 6 caracteres">
         <mat-icon matPrefix>lock</mat-icon>
       </mat-form-field>
 
@@ -633,7 +634,8 @@ export class GestionUsuariosComponent implements OnInit {
         <mat-icon matPrefix>badge</mat-icon>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width" *ngIf="data.edit">
+      <!-- Campos SOLO para edición -->
+      <mat-form-field appearance="outline" class="full-width" *ngIf="isEdit">
         <mat-label>Estado</mat-label>
         <mat-select [(ngModel)]="usuarioData.activo">
           <mat-option [value]="true">Activo</mat-option>
@@ -642,7 +644,7 @@ export class GestionUsuariosComponent implements OnInit {
         <mat-icon matPrefix>toggle_on</mat-icon>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width" *ngIf="data.edit">
+      <mat-form-field appearance="outline" class="full-width" *ngIf="isEdit">
         <mat-label>Nueva Contraseña (Opcional)</mat-label>
         <input matInput [(ngModel)]="usuarioData.nuevaPassword" type="password" placeholder="Dejar en blanco para mantener la actual">
         <mat-icon matPrefix>lock</mat-icon>
@@ -653,7 +655,7 @@ export class GestionUsuariosComponent implements OnInit {
       <button mat-button mat-dialog-close>Cancelar</button>
       <button mat-raised-button color="primary" [disabled]="!isValidForm()" (click)="guardarUsuario()">
         <mat-icon>check</mat-icon>
-        {{data.edit ? 'Actualizar' : 'Crear'}}
+        {{isEdit ? 'Actualizar' : 'Crear'}}
       </button>
     </mat-dialog-actions>
   `,
@@ -698,12 +700,16 @@ export class NuevoUsuarioDialog {
     rol: 'estudiante',
     activo: true
   };
+  
+  isEdit = false;
 
   constructor(
     public dialogRef: MatDialogRef<NuevoUsuarioDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    if (data.edit) {
+    this.isEdit = data && data.edit === true;
+    
+    if (this.isEdit) {
       this.usuarioData = {
         nombre: data.nombre || '',
         email: data.email || '',
@@ -711,7 +717,7 @@ export class NuevoUsuarioDialog {
         telefono: data.telefono || '',
         rol: data.rol || 'estudiante',
         activo: data.activo !== undefined ? data.activo : true,
-        nuevaPassword: ''  // Vacío por defecto al editar
+        nuevaPassword: ''
       };
     }
   }
@@ -726,10 +732,8 @@ export class NuevoUsuarioDialog {
            this.usuarioData.rol;
     
     // Para nuevos usuarios, la contraseña es requerida
-    if (!this.data.edit) {
-      const passValid = this.usuarioData.password && this.usuarioData.password.length >= 6;
-      console.log('Password:', this.usuarioData.password, 'Valid:', passValid);
-      return isValid && passValid;
+    if (!this.isEdit) {
+      return isValid && this.usuarioData.password && this.usuarioData.password.length >= 6;
     }
     
     return isValid;
