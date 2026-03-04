@@ -94,6 +94,12 @@ export class MatriculasService {
     await deleteDoc(solicitudRef);
   }
 
+  // Actualizar solicitud (para asignar cursos)
+  async updateSolicitud(id: string, updateData: any): Promise<void> {
+    const solicitudRef = doc(this.firestore, 'solicitudes', id);
+    await updateDoc(solicitudRef, updateData);
+  }
+
   // Obtener solicitudes aprobadas
   async getSolicitudesAprobadas(): Promise<Solicitud[]> {
     const q = query(collection(this.firestore, 'solicitudes'), where('estado', '==', 'aprobado'));

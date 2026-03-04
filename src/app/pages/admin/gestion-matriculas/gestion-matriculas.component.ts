@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -7,10 +7,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatriculasService, Solicitud } from 'src/app/services/matriculas.service';
 import { AuthService, Estudiante } from 'src/app/services/auth.service';
+import { AcademiaService, Curso } from 'src/app/services/academia.service';
 
 @Component({
   selector: 'app-gestion-matriculas',
@@ -126,7 +128,12 @@ import { AuthService, Estudiante } from 'src/app/services/auth.service';
                   </button>
                 </ng-container>
 
-                <button mat-stroked-button color="primary" (click)="verDetalle(solicitud)" *ngIf="solicitud.estado !== 'pendiente'">
+                <button mat-stroked-button color="accent" (click)="asignarCursos(solicitud)" *ngIf="solicitud.estado === 'aprobado'">
+                  <mat-icon>school</mat-icon>
+                  Asignar Cursos
+                </button>
+                
+                <button mat-stroked-button color="primary" (click)="verDetalle(solicitud)" *ngIf="solicitud.estado !== 'pendiente' && solicitud.estado !== 'aprobado'">
                   <mat-icon>visibility</mat-icon>
                   Ver Detalle
                 </button>
@@ -394,6 +401,7 @@ export class GestionMatriculasComponent {
   constructor(
     private matriculasService: MatriculasService,
     private authService: AuthService,
+    private academiaService: AcademiaService,
     private dialog: MatDialog
   ) {
     this.cargarSolicitudes();
@@ -442,6 +450,26 @@ export class GestionMatriculasComponent {
     navigator.clipboard.writeText(credenciales);
     alert('✅ Credenciales copiadas al portapapeles');
   }
+
+  asignarCursos(solicitud: Solicitud): void {
+    const dialogRef = this.dialog.open(AsignarCursosDialog, {
+      width: '700px',
+      data: { solicitud },
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(async (cursosSeleccionados: number[]) => {
+      if (cursosSeleccionados && solicitud.id) {
+        // Actualizar la solicitud con los cursos asignados
+        await this.matriculasService.updateSolicitud(solicitud.id, {
+          cursoId: cursosSeleccionados[0] || solicitud.cursoId,
+          cursosMatriculados: cursosSeleccionados
+        });
+        alert(`✅ Cursos asignados correctamente a ${solicitud.nombre}`);
+        await this.cargarSolicitudes();
+      }
+    });
+  }
 }
 
 @Component({
@@ -489,6 +517,237 @@ export class GestionMatriculasComponent {
 })
 export class DetalleSolicitudDialog {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+}
+
+@Component({
+  selector: 'asignar-cursos-dialog',
+  standalone: true,
+  imports: [
+    MatDialogModule, MatButtonModule, MatIconModule, MatCheckboxModule, 
+    MatCardModule, CommonModule, FormsModule
+  ] as any,
+  template: `
+    <h2 mat-dialog-title class="dialog-title">
+      <mat-icon>school</mat-icon>
+      Asignar Cursos a {{data.solicitud.nombre}}
+    </h2>
+
+    <mat-dialog-content>
+      <div class="curso-actual-info">
+        <mat-icon>info</mat-icon>
+        <p>Curso solicitado originalmente: <strong>{{data.solicitud.cursoNombre}}</strong></p>
+      </div>
+
+      <h3 class="cursos-title">Selecciona los cursos a asignar:</h3>
+      
+      <div class="cursos-list">
+        <mat-card class="curso-item" *ngFor="let curso of cursos" (click)="toggleCurso(curso.id)">
+          <mat-checkbox 
+            [checked]="cursosSeleccionados.has(curso.id)"
+            (change)="toggleCurso(curso.id, $event)">
+          </mat-checkbox>
+          <div class="curso-info">
+            <h4>{{curso.nombre}}</h4>
+            <p>{{curso.descripcion}}</p>
+            <div class="curso-meta">
+              <span class="categoria-badge">{{curso.categoria}}</span>
+              <span class="precio">S/ {{curso.precio}}</span>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="resumen-seleccion" *ngIf="cursosSeleccionados.size > 0">
+        <mat-icon>check_circle</mat-icon>
+        <span>{{cursosSeleccionados.size}} curso(s) seleccionado(s)</span>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-raised-button color="primary" [disabled]="cursosSeleccionados.size === 0" (click)="guardar()">
+        <mat-icon>check_circle</mat-icon>
+        Asignar Cursos
+      </button>
+    </mat-dialog-actions>
+  `,
+  styles: [`
+    .dialog-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #1e293b;
+      padding: 16px 24px 0;
+    }
+
+    .dialog-title mat-icon {
+      color: #f97316;
+      font-size: 28px;
+    }
+
+    mat-dialog-content {
+      padding: 24px;
+      max-height: 70vh;
+    }
+
+    .curso-actual-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: #eff6ff;
+      border-radius: 12px;
+      border: 2px solid #dbeafe;
+      margin-bottom: 24px;
+    }
+
+    .curso-actual-info mat-icon {
+      color: #2563eb;
+      font-size: 24px;
+    }
+
+    .curso-actual-info p {
+      margin: 0;
+      color: #1e40af;
+      font-size: 14px;
+    }
+
+    .cursos-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1e293b;
+      margin: 0 0 16px;
+    }
+
+    .cursos-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .curso-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid #e2e8f0;
+    }
+
+    .curso-item:hover {
+      border-color: #f97316;
+      background: #fff7ed;
+      transform: translateX(4px);
+    }
+
+    .curso-item mat-checkbox {
+      margin-top: 8px;
+    }
+
+    .curso-info {
+      flex: 1;
+    }
+
+    .curso-info h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1e293b;
+      margin: 0 0 8px;
+    }
+
+    .curso-info p {
+      font-size: 14px;
+      color: #64748b;
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+
+    .curso-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .categoria-badge {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .precio {
+      font-size: 18px;
+      font-weight: 900;
+      color: #dc2626;
+    }
+
+    .resumen-seleccion {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: #f0fdf4;
+      border-radius: 12px;
+      border: 2px solid #22c55e;
+      margin-top: 20px;
+      color: #166534;
+      font-weight: 700;
+    }
+
+    .resumen-seleccion mat-icon {
+      color: #16a34a;
+    }
+
+    mat-dialog-actions {
+      padding: 16px 24px;
+      border-top: 1px solid #e2e8f0;
+    }
+  `]
+})
+export class AsignarCursosDialog implements OnInit {
+  cursos: Curso[] = [];
+  cursosSeleccionados = new Set<number>();
+
+  constructor(
+    public dialogRef: MatDialogRef<AsignarCursosDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private academiaService: AcademiaService
+  ) {}
+
+  ngOnInit(): void {
+    this.cursos = this.academiaService.getCursos();
+    // Seleccionar el curso original por defecto
+    if (this.data.solicitud.cursoId) {
+      this.cursosSeleccionados.add(this.data.solicitud.cursoId);
+    }
+  }
+
+  toggleCurso(cursoId: number, event?: any): void {
+    if (event?.checked !== undefined) {
+      if (event.checked) {
+        this.cursosSeleccionados.add(cursoId);
+      } else {
+        this.cursosSeleccionados.delete(cursoId);
+      }
+    } else {
+      // Click en la tarjeta
+      if (this.cursosSeleccionados.has(cursoId)) {
+        this.cursosSeleccionados.delete(cursoId);
+      } else {
+        this.cursosSeleccionados.add(cursoId);
+      }
+    }
+  }
+
+  guardar(): void {
+    this.dialogRef.close(Array.from(this.cursosSeleccionados));
+  }
 }
 
 @Component({

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 import { AuthService, Estudiante } from 'src/app/services/auth.service';
+import { AcademiaService } from 'src/app/services/academia.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -514,61 +515,93 @@ import { AuthService, Estudiante } from 'src/app/services/auth.service';
     </style>
   `
 })
-export class StudentDashboardComponent {
+export class StudentDashboardComponent implements OnInit {
   estudiante: Estudiante | null = null;
   cursosMatriculados: any[] = [];
   progresoPromedio: number = 0;
+  loading = true;
 
-  constructor(private authService: AuthService) {
-    this.estudiante = this.authService.getEstudianteActual();
-    this.cargarCursosMatriculados();
+  constructor(
+    private authService: AuthService,
+    private academiaService: AcademiaService
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarDashboard();
   }
 
-  cargarCursosMatriculados(): void {
-    // Obtener IDs de cursos matriculados
-    const cursosIds = this.authService.getCursosMatriculados();
-    
-    // Datos de ejemplo de cursos (esto debería venir de un servicio)
-    const todosLosCursos = [
-      {
-        id: 1,
-        titulo: 'Álgebra Lineal: Dominio Total',
-        categoria: 'Matemáticas',
-        gradiente: 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
-        icono: 'functions',
-        progreso: 65,
-        clasesVistas: 12,
-        totalClases: 20
-      },
-      {
-        id: 2,
-        titulo: 'Física I: Mecánica y Estática',
-        categoria: 'Física',
-        gradiente: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-        icono: 'rocket_launch',
-        progreso: 30,
-        clasesVistas: 5,
-        totalClases: 15
-      },
-      {
-        id: 3,
-        titulo: 'Pack: Cálculo Diferencial',
-        categoria: 'Matemáticas',
-        gradiente: 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)',
-        icono: 'description',
-        progreso: 10,
-        clasesVistas: 2,
-        totalClases: 18
+  cargarDashboard(): void {
+    // Suscribirse al usuario actual
+    this.authService.estudiante$.subscribe(estudiante => {
+      this.estudiante = estudiante;
+      
+      if (!estudiante) {
+        this.loading = false;
+        return;
       }
-    ];
 
-    // Filtrar solo cursos matriculados
-    this.cursosMatriculados = todosLosCursos.filter(c => cursosIds.includes(c.id));
-    
-    // Calcular progreso promedio
-    if (this.cursosMatriculados.length > 0) {
-      const sumaProgresos = this.cursosMatriculados.reduce((sum, c) => sum + c.progreso, 0);
-      this.progresoPromedio = Math.round(sumaProgresos / this.cursosMatriculados.length);
-    }
+      // Obtener IDs de cursos matriculados
+      const cursosIds = estudiante.cursosMatriculados || [];
+
+      if (cursosIds.length === 0) {
+        this.cursosMatriculados = [];
+        this.progresoPromedio = 0;
+        this.loading = false;
+        return;
+      }
+
+      // Obtener todos los cursos y filtrar los matriculados
+      const todosLosCursos = this.academiaService.getCursos();
+      
+      // Mapear cursos matriculados con progreso simulado
+      this.cursosMatriculados = cursosIds.map(id => {
+        const curso = todosLosCursos.find(c => c.id === id);
+        const contenidos = this.academiaService.getContenidosByCurso(id);
+        const totalContenidos = contenidos.length;
+        // Simular progreso (en producción esto vendría de un servicio de progreso)
+        const progresoSimulado = Math.floor(Math.random() * 100);
+        
+        return {
+          id: id,
+          titulo: curso?.nombre || 'Curso',
+          categoria: curso?.categoria || 'General',
+          gradiente: this.getGradientePorCategoria(curso?.categoria || ''),
+          icono: this.getIconoPorCategoria(curso?.categoria || ''),
+          progreso: progresoSimulado,
+          clasesVistas: Math.floor(totalContenidos * (progresoSimulado / 100)),
+          totalClases: totalContenidos
+        };
+      });
+
+      // Calcular progreso promedio
+      if (this.cursosMatriculados.length > 0) {
+        const sumaProgresos = this.cursosMatriculados.reduce((sum, c) => sum + c.progreso, 0);
+        this.progresoPromedio = Math.round(sumaProgresos / this.cursosMatriculados.length);
+      }
+
+      this.loading = false;
+    });
+  }
+
+  private getIconoPorCategoria(categoria: string): string {
+    const iconos: { [key: string]: string } = {
+      'Matemáticas': 'functions',
+      'Física': 'rocket_launch',
+      'Química': 'biotech',
+      'Biología': 'science',
+      'Letras': 'menu_book'
+    };
+    return iconos[categoria] || 'school';
+  }
+
+  private getGradientePorCategoria(categoria: string): string {
+    const gradientes: { [key: string]: string } = {
+      'Matemáticas': 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
+      'Física': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      'Química': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+      'Biología': 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
+      'Letras': 'linear-gradient(135deg, #a855f7 0%, #9333ea 100%)'
+    };
+    return gradientes[categoria] || 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)';
   }
 }
