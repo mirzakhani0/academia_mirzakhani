@@ -3,9 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getApps, initializeApp } from 'firebase/app';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface UsuarioPerfil {
   nombre: string;
@@ -119,6 +117,10 @@ interface UsuarioPerfil {
       <div class="error-state" *ngIf="!loading && !usuario && errorMessage">
         <mat-icon>error_outline</mat-icon>
         <p>{{errorMessage}}</p>
+        <button mat-raised-button color="primary" (click)="recargarPagina()">
+          <mat-icon>refresh</mat-icon>
+          Recargar
+        </button>
       </div>
     </div>
 
@@ -182,6 +184,10 @@ interface UsuarioPerfil {
         height: 48px;
         color: #ef4444;
         margin-bottom: 16px;
+      }
+
+      .error-state button {
+        margin-top: 16px;
       }
 
       /* Perfil Card */
@@ -390,63 +396,38 @@ export class PerfilComponent implements OnInit {
   usuario: UsuarioPerfil | null = null;
   errorMessage: string = '';
 
-  async ngOnInit(): Promise<void> {
-    await this.cargarPerfil();
+  constructor(
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarPerfil();
   }
 
-  private async cargarPerfil(): Promise<void> {
-    try {
-      // Importar Firebase
-      const { environment } = await import('../../../../environments/environment');
+  private cargarPerfil(): void {
+    // Suscribirse a los cambios del usuario
+    this.authService.estudiante$.subscribe(estudiante => {
+      console.log('Estudiante en perfil:', estudiante);
       
-      // Inicializar Firebase si no está inicializado
-      if (!getApps().length) {
-        initializeApp(environment.firebase);
+      if (estudiante) {
+        this.usuario = {
+          nombre: estudiante.nombre || 'Usuario',
+          email: estudiante.email || '',
+          dni: estudiante.dni || '',
+          telefono: estudiante.telefono || '',
+          rol: estudiante.rol || 'estudiante',
+          fechaRegistro: estudiante.fechaRegistro || new Date().toISOString(),
+          cursosMatriculados: (estudiante.cursosMatriculados || []).length
+        };
+      } else {
+        this.errorMessage = 'No has iniciado sesión. Por favor, inicia sesión para ver tu perfil.';
       }
-
-      const auth = getAuth();
-      const firestore = getFirestore();
-
-      // Escuchar cambios en autenticación
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          // Obtener datos del usuario desde Firestore
-          const userDocRef = doc(firestore, 'usuarios', user.uid);
-          const userDoc = await getDoc(userDocRef);
-
-          if (userDoc.exists()) {
-            const data = userDoc.data();
-            this.usuario = {
-              nombre: data['nombre'] || user.displayName || 'Usuario',
-              email: data['email'] || user.email || '',
-              dni: data['dni'] || '',
-              telefono: data['telefono'] || '',
-              rol: data['rol'] || 'estudiante',
-              fechaRegistro: data['fechaRegistro'] || new Date().toISOString(),
-              cursosMatriculados: (data['cursosMatriculados'] || []).length
-            };
-          } else {
-            // Usuario no encontrado en Firestore, usar datos básicos
-            this.usuario = {
-              nombre: user.displayName || 'Usuario',
-              email: user.email || '',
-              dni: '',
-              telefono: '',
-              rol: 'estudiante',
-              fechaRegistro: new Date().toISOString(),
-              cursosMatriculados: 0
-            };
-          }
-        } else {
-          this.errorMessage = 'No has iniciado sesión. Por favor, inicia sesión para ver tu perfil.';
-        }
-
-        this.loading = false;
-      });
-    } catch (error: any) {
-      console.error('Error cargando perfil:', error);
-      this.errorMessage = 'Error al cargar los datos del perfil. Intente nuevamente.';
+      
       this.loading = false;
-    }
+    });
+  }
+
+  recargarPagina(): void {
+    window.location.reload();
   }
 }
