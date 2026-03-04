@@ -54,11 +54,6 @@
       </div>
 
       <div class="right-section">
-        <button mat-icon-button class="notification-btn">
-          <mat-icon>notifications</mat-icon>
-          <span class="badge">5</span>
-        </button>
-        
         <div class="admin-profile">
           <div class="admin-avatar">
             <mat-icon>admin_panel_settings</mat-icon>
@@ -95,6 +90,14 @@
     display: flex;
     flex-direction: column;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 1024px) {
+    .admin-sidebar {
+      position: fixed;
+      z-index: 1000;
+      height: 100%;
+    }
   }
 
   .sidebar-header {
@@ -297,11 +300,6 @@
   }
 
   @media (max-width: 1024px) {
-    .admin-sidebar {
-      position: fixed;
-      z-index: 1000;
-    }
-
     .page-title {
       font-size: 22px;
     }

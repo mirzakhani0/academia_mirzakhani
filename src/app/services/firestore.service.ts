@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { getFirestore, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, query, orderBy, where } from 'firebase/firestore';
 
 export interface Curso {
   id?: string;
@@ -18,7 +17,7 @@ export interface Solicitud {
   email: string;
   dni: string;
   telefono: string;
-  cursoId: string;
+  cursoId: number;
   cursoNombre: string;
   precio: number;
   estado: 'pendiente' | 'aprobado' | 'rechazado';
@@ -30,71 +29,116 @@ export interface Solicitud {
   providedIn: 'root'
 })
 export class FirestoreService {
-  constructor(private firestore: AngularFirestore) {}
+  private firestore!: ReturnType<typeof getFirestore>;
+
+  constructor() {
+    this.firestore = getFirestore();
+  }
 
   // ===== CURSOS =====
-  getCursos(): Observable<Curso[]> {
-    return this.firestore.collection<Curso>('cursos', ref => ref.where('activo', '==', true)).valueChanges();
+  async getCursos(): Promise<Curso[]> {
+    const q = query(collection(this.firestore, 'cursos'), where('activo', '==', true));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    } as Curso));
   }
 
-  getCurso(id: string): Observable<Curso | undefined> {
-    return this.firestore.collection<Curso>('cursos').doc(id).valueChanges();
+  async getCurso(id: string): Promise<Curso | undefined> {
+    const docRef = doc(this.firestore, 'cursos', id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return {
+        ...docSnap.data(),
+        id: docSnap.id
+      } as Curso;
+    }
+    return undefined;
   }
 
-  createCurso(curso: Curso): Promise<void> {
-    const id = this.firestore.createId();
-    return this.firestore.collection('cursos').doc(id).set({
+  async createCurso(curso: Curso): Promise<string> {
+    const id = doc(collection(this.firestore, 'cursos')).id;
+    const cursoRef = doc(this.firestore, 'cursos', id);
+    await setDoc(cursoRef, {
       ...curso,
       id,
       createdAt: new Date().toISOString()
     });
+    return id;
   }
 
-  updateCurso(id: string, curso: Partial<Curso>): Promise<void> {
-    return this.firestore.collection('cursos').doc(id).update(curso);
+  async updateCurso(id: string, curso: Partial<Curso>): Promise<void> {
+    const docRef = doc(this.firestore, 'cursos', id);
+    await updateDoc(docRef, curso);
   }
 
-  deleteCurso(id: string): Promise<void> {
-    return this.firestore.collection('cursos').doc(id).delete();
+  async deleteCurso(id: string): Promise<void> {
+    const docRef = doc(this.firestore, 'cursos', id);
+    await deleteDoc(docRef);
   }
 
   // ===== SOLICITUDES =====
-  getSolicitudes(): Observable<Solicitud[]> {
-    return this.firestore.collection<Solicitud>('solicitudes', ref => ref.orderBy('fecha', 'desc')).valueChanges();
+  async getSolicitudes(): Promise<Solicitud[]> {
+    const q = query(collection(this.firestore, 'solicitudes'), orderBy('fecha', 'desc'));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    } as Solicitud));
   }
 
-  createSolicitud(solicitud: Solicitud): Promise<void> {
-    const id = this.firestore.createId();
-    return this.firestore.collection('solicitudes').doc(id).set({
+  async createSolicitud(solicitud: Solicitud): Promise<string> {
+    const id = doc(collection(this.firestore, 'solicitudes')).id;
+    const solicitudRef = doc(this.firestore, 'solicitudes', id);
+    await setDoc(solicitudRef, {
       ...solicitud,
       id,
       fecha: new Date().toISOString()
     });
+    return id;
   }
 
-  updateSolicitud(id: string, solicitud: Partial<Solicitud>): Promise<void> {
-    return this.firestore.collection('solicitudes').doc(id).update(solicitud);
+  async updateSolicitud(id: string, solicitud: Partial<Solicitud>): Promise<void> {
+    const docRef = doc(this.firestore, 'solicitudes', id);
+    await updateDoc(docRef, solicitud);
   }
 
   // ===== USUARIOS =====
-  getUsuarios(): Observable<any[]> {
-    return this.firestore.collection('usuarios').valueChanges();
+  async getUsuarios(): Promise<any[]> {
+    const querySnapshot = await getDocs(collection(this.firestore, 'usuarios'));
+    return querySnapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    }));
   }
 
-  getUsuarioPorEmail(email: string): Observable<any> {
-    return this.firestore.collection('usuarios', ref => ref.where('email', '==', email)).valueChanges();
+  async getUsuarioPorEmail(email: string): Promise<any> {
+    const q = query(collection(this.firestore, 'usuarios'), where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      return {
+        ...doc.data(),
+        id: doc.id
+      };
+    }
+    return null;
   }
 
-  createUsuario(usuario: any): Promise<void> {
-    const id = this.firestore.createId();
-    return this.firestore.collection('usuarios').doc(id).set({
+  async createUsuario(usuario: any): Promise<string> {
+    const id = doc(collection(this.firestore, 'usuarios')).id;
+    const usuarioRef = doc(this.firestore, 'usuarios', id);
+    await setDoc(usuarioRef, {
       ...usuario,
       id,
       createdAt: new Date().toISOString()
     });
+    return id;
   }
 
-  updateUsuario(id: string, usuario: any): Promise<void> {
-    return this.firestore.collection('usuarios').doc(id).update(usuario);
+  async updateUsuario(id: string, usuario: any): Promise<void> {
+    const docRef = doc(this.firestore, 'usuarios', id);
+    await updateDoc(docRef, usuario);
   }
 }

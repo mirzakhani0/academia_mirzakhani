@@ -379,12 +379,28 @@ import { CommonModule } from '@angular/common';
         font-weight: 900;
         color: #1e293b;
         margin: 0 0 8px;
+        line-height: 1.2;
+        word-wrap: break-word;
       }
 
       .dashboard-header p {
         color: #64748b;
         margin: 0;
         font-size: 15px;
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-header {
+          padding: 20px;
+        }
+
+        .dashboard-header h1 {
+          font-size: 22px;
+        }
+
+        .dashboard-header p {
+          font-size: 13px;
+        }
       }
 
       .stats-cards {
@@ -502,11 +518,37 @@ import { CommonModule } from '@angular/common';
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
       }
 
       .action-icon mat-icon {
         font-size: 36px;
         color: white;
+      }
+
+      @media (max-width: 768px) {
+        .action-card {
+          padding: 20px 16px;
+        }
+
+        .action-icon {
+          width: 56px;
+          height: 56px;
+          margin: 0 auto 12px;
+        }
+
+        .action-icon mat-icon {
+          font-size: 28px;
+        }
+
+        .action-card h3 {
+          font-size: 15px;
+          margin-bottom: 6px;
+        }
+
+        .action-card p {
+          font-size: 12px;
+        }
       }
 
       .action-icon.bg-blue {
@@ -632,6 +674,113 @@ import { CommonModule } from '@angular/common';
 
         .quick-access-sidebar {
           position: static;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .admin-dashboard-container {
+          padding: 12px;
+          gap: 16px;
+        }
+
+        .quick-access-sidebar {
+          padding: 16px;
+        }
+
+        .sidebar-title {
+          font-size: 18px;
+          margin-bottom: 16px;
+        }
+
+        .sidebar-title mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+
+        .sidebar-section h3 {
+          font-size: 11px;
+        }
+
+        .sidebar-link {
+          padding: 10px 12px;
+          margin-bottom: 6px;
+        }
+
+        .link-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+        }
+
+        .link-icon mat-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
+
+        .link-title {
+          font-size: 13px;
+        }
+
+        .link-subtitle {
+          font-size: 11px;
+        }
+
+        .stats-cards {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .stat-card {
+          padding: 16px;
+        }
+
+        .stat-icon {
+          width: 50px;
+          height: 50px;
+        }
+
+        .stat-icon mat-icon {
+          font-size: 24px;
+        }
+
+        .stat-content h3 {
+          font-size: 24px;
+        }
+
+        .section-title {
+          font-size: 18px;
+        }
+
+        .actions-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .activity-item {
+          padding: 12px;
+        }
+
+        .activity-icon {
+          width: 40px;
+          height: 40px;
+        }
+
+        .activity-icon mat-icon {
+          font-size: 20px;
+        }
+
+        .activity-info h4 {
+          font-size: 13px;
+        }
+
+        .activity-info p {
+          font-size: 12px;
+        }
+
+        .activity-time {
+          font-size: 11px;
         }
       }
     </style>

@@ -44,6 +44,10 @@ export class AppNavItemComponent implements OnChanges {
   onItemSelected(item: NavItem) {
     if (!item.children || !item.children.length) {
       this.router.navigate([item.route]);
+      // Cerrar sidebar en móvil al navegar
+      if (window.innerWidth < 1024) {
+        this.notify.emit();
+      }
     }
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
@@ -54,11 +58,6 @@ export class AppNavItemComponent implements OnChanges {
       left: 0,
       behavior: 'smooth',
     });
-    if (!this.expanded) {
-      if (window.innerWidth < 1024) {
-        this.notify.emit();
-      }
-    }
   }
 
   openExternalLink(url: string): void {
@@ -69,7 +68,9 @@ export class AppNavItemComponent implements OnChanges {
 
   onSubItemSelected(item: NavItem) {
     if (!item.children || !item.children.length) {
-      if (this.expanded && window.innerWidth < 1024) {
+      this.router.navigate([item.route]);
+      // Cerrar sidebar en móvil al navegar desde submenú
+      if (window.innerWidth < 1024) {
         this.notify.emit();
       }
     }

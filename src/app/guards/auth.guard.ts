@@ -1,49 +1,66 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Observable, map, take, filter, timeout } from 'rxjs';
 
-export const authGuard = () => {
+export const authGuard = (): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isLoggedIn()) {
-    return true;
-  }
-
-  router.navigate(['/authentication/login']);
-  return false;
+  // Esperar a que Firebase termine de inicializar
+  return authService.isInitializing$.pipe(
+    filter(isInitializing => !isInitializing), // Esperar hasta que no esté inicializando
+    take(1),
+    map(() => {
+      if (authService.isLoggedIn()) {
+        return true;
+      }
+      router.navigate(['/authentication/login']);
+      return false;
+    })
+  );
 };
 
-export const adminGuard = () => {
+export const adminGuard = (): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAdmin()) {
-    return true;
-  }
+  return authService.isInitializing$.pipe(
+    filter(isInitializing => !isInitializing),
+    take(1),
+    map(() => {
+      if (authService.isAdmin()) {
+        return true;
+      }
 
-  // Si no es admin, redirigir a login o dashboard según corresponda
-  if (authService.isEstudiante()) {
-    router.navigate(['/estudiante/dashboard']);
-  } else {
-    router.navigate(['/authentication/login']);
-  }
-  return false;
+      if (authService.isEstudiante()) {
+        router.navigate(['/estudiante/dashboard']);
+      } else {
+        router.navigate(['/authentication/login']);
+      }
+      return false;
+    })
+  );
 };
 
-export const estudianteGuard = () => {
+export const estudianteGuard = (): Observable<boolean> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isEstudiante()) {
-    return true;
-  }
+  return authService.isInitializing$.pipe(
+    filter(isInitializing => !isInitializing),
+    take(1),
+    map(() => {
+      if (authService.isEstudiante()) {
+        return true;
+      }
 
-  // Si es admin, redirigir a admin
-  if (authService.isAdmin()) {
-    router.navigate(['/admin/dashboard']);
-  } else {
-    router.navigate(['/authentication/login']);
-  }
-  return false;
+      if (authService.isAdmin()) {
+        router.navigate(['/admin/dashboard']);
+      } else {
+        router.navigate(['/authentication/login']);
+      }
+      return false;
+    })
+  );
 };

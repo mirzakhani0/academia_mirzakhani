@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -14,7 +13,7 @@ import { MatriculasService } from 'src/app/services/matriculas.service';
   selector: 'app-cursos-public',
   standalone: true,
   imports: [
-    RouterLink, MatIconModule, MatButtonModule, MatDialogModule,
+    MatIconModule, MatButtonModule, MatDialogModule,
     MatFormFieldModule, MatInputModule, MatCheckboxModule, FormsModule, CommonModule
   ],
   template: `

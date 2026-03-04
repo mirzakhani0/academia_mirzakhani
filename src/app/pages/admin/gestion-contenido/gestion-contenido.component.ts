@@ -235,24 +235,76 @@ import { AcademiaService, Contenido } from 'src/app/services/academia.service';
         flex-wrap: wrap;
         gap: 20px;
       }
-      
+
       .header-info h1 {
         font-size: 32px;
         font-weight: 900;
         color: #1e293b;
         margin: 0 0 8px;
+        line-height: 1.2;
+        word-wrap: break-word;
       }
-      
+
       .header-info p {
         color: #64748b;
         margin: 0;
         font-size: 15px;
       }
-      
+
       .btn-subir {
         font-weight: 700;
         padding: 12px 24px;
         box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .gestion-container {
+          padding: 12px;
+        }
+
+        .header-info h1 {
+          font-size: 22px;
+        }
+
+        .header-info p {
+          font-size: 13px;
+        }
+
+        .btn-subir {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .stats-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .filter-bar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .search-box {
+          min-width: 100%;
+        }
+
+        .filter-group {
+          width: 100%;
+          overflow-x: auto;
+        }
+
+        .filter-group mat-button-toggle-group {
+          width: 100%;
+          display: flex;
+        }
+
+        .filter-group mat-button-toggle {
+          flex: 1;
+        }
+
+        .contenido-grid {
+          grid-template-columns: 1fr;
+        }
       }
       
       /* Stats Cards */

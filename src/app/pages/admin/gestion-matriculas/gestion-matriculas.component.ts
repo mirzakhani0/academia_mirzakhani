@@ -18,7 +18,7 @@ import { AuthService, Estudiante } from 'src/app/services/auth.service';
   imports: [
     MatIconModule, MatButtonModule, MatChipsModule, MatDialogModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule,
-    FormsModule, CommonModule
+    FormsModule, CommonModule, DatePipe
   ],
   template: `
     <div class="matriculas-container">
@@ -37,7 +37,7 @@ import { AuthService, Estudiante } from 'src/app/services/auth.service';
             <mat-icon>pending</mat-icon>
           </div>
           <div class="stat-content">
-            <h3>{{getConteo('pendiente')}}</h3>
+            <h3>{{conteoPendientes}}</h3>
             <p>Pendientes</p>
           </div>
         </div>
@@ -46,7 +46,7 @@ import { AuthService, Estudiante } from 'src/app/services/auth.service';
             <mat-icon>check_circle</mat-icon>
           </div>
           <div class="stat-content">
-            <h3>{{getConteo('aprobado')}}</h3>
+            <h3>{{conteoAprobados}}</h3>
             <p>Aprobados</p>
           </div>
         </div>
@@ -388,17 +388,21 @@ import { AuthService, Estudiante } from 'src/app/services/auth.service';
 })
 export class GestionMatriculasComponent {
   solicitudes: Solicitud[] = [];
+  conteoPendientes: number = 0;
+  conteoAprobados: number = 0;
 
   constructor(
     private matriculasService: MatriculasService,
     private authService: AuthService,
     private dialog: MatDialog
   ) {
-    this.solicitudes = this.matriculasService.getSolicitudes();
+    this.cargarSolicitudes();
   }
 
-  getConteo(estado: string): number {
-    return this.matriculasService.getSolicitudesByEstado(estado).length;
+  async cargarSolicitudes(): Promise<void> {
+    this.solicitudes = await this.matriculasService.getSolicitudes();
+    this.conteoPendientes = (await this.matriculasService.getSolicitudesByEstado('pendiente')).length;
+    this.conteoAprobados = (await this.matriculasService.getSolicitudesByEstado('aprobado')).length;
   }
 
   verDetalle(solicitud: Solicitud): void {
@@ -408,26 +412,28 @@ export class GestionMatriculasComponent {
     });
   }
 
-  aprobarSolicitud(solicitud: Solicitud): void {
+  async aprobarSolicitud(solicitud: Solicitud): Promise<void> {
     const dialogRef = this.dialog.open(AprobarSolicitudDialog, {
       width: '600px',
       data: { solicitud }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.matriculasService.updateEstado(solicitud.id, 'aprobado', result.password);
-        this.solicitudes = this.matriculasService.getSolicitudes();
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result && solicitud.id) {
+        await this.matriculasService.updateEstado(solicitud.id, 'aprobado', result.password);
+        await this.cargarSolicitudes();
         alert(`✅ Solicitud aprobada. Credenciales enviadas a ${solicitud.email}`);
       }
     });
   }
 
-  rechazarSolicitud(solicitud: Solicitud): void {
+  async rechazarSolicitud(solicitud: Solicitud): Promise<void> {
     if (confirm('¿Estás seguro de rechazar esta solicitud?')) {
-      this.matriculasService.updateEstado(solicitud.id, 'rechazado');
-      this.solicitudes = this.matriculasService.getSolicitudes();
-      alert('❌ Solicitud rechazada');
+      if (solicitud.id) {
+        await this.matriculasService.updateEstado(solicitud.id, 'rechazado');
+        await this.cargarSolicitudes();
+        alert('❌ Solicitud rechazada');
+      }
     }
   }
 
@@ -488,7 +494,7 @@ export class DetalleSolicitudDialog {
 @Component({
   selector: 'aprobar-solicitud-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule],
+  imports: [MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule, CommonModule],
   template: `
     <h2 mat-dialog-title>
       <mat-icon>check_circle</mat-icon>

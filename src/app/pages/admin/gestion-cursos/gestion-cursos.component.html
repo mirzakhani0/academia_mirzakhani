@@ -39,25 +39,49 @@
 </div>
 
 <style>
-  .gestion-container { padding: 20px; }
-  .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-  .page-header h1 { font-size: 28px; font-weight: 900; color: #1e293b; margin: 0; }
-  
-  .cursos-resumen { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-  
+  .gestion-container { 
+    padding: 20px;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .page-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .page-header h1 { 
+    font-size: 28px; 
+    font-weight: 900; 
+    color: #1e293b; 
+    margin: 0;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+
+  .cursos-resumen { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px;
+    max-width: 100%;
+  }
+
   .resumen-card {
     background: white;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0,0,0,0.08);
     transition: transform 0.3s, box-shadow 0.3s;
+    max-width: 100%;
   }
-  
+
   .resumen-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 60px rgba(0,0,0,0.12);
   }
-  
+
   .resumen-header {
     background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
     color: white;
@@ -66,40 +90,46 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .resumen-header h3 {
     font-size: 18px;
     font-weight: 800;
     margin: 0;
     flex: 1;
+    word-wrap: break-word;
+    margin-right: 12px;
   }
-  
+
   .acciones {
     display: flex;
     gap: 8px;
+    flex-shrink: 0;
   }
-  
+
   .acciones button mat-icon {
     color: white;
   }
-  
+
   .resumen-body {
     padding: 20px;
   }
-  
+
   .resumen-body p {
     color: #64748b;
     font-size: 14px;
     line-height: 1.6;
     margin: 0 0 16px;
+    word-wrap: break-word;
   }
-  
+
   .resumen-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
-  
+
   .categoria-badge {
     background: #eff6ff;
     color: #3b82f6;
@@ -109,20 +139,20 @@
     font-weight: 700;
     text-transform: uppercase;
   }
-  
+
   .precio {
     font-size: 24px;
     font-weight: 900;
     color: #dc2626;
   }
-  
+
   .empty-state {
     text-align: center;
     padding: 60px 20px;
     background: white;
     border-radius: 16px;
   }
-  
+
   .empty-state mat-icon {
     font-size: 64px;
     width: 64px;
@@ -130,10 +160,58 @@
     color: #cbd5e1;
     margin-bottom: 16px;
   }
-  
+
   .empty-state p {
     color: #64748b;
     font-size: 16px;
     margin: 0 0 24px;
+  }
+
+  /* Responsive para móvil */
+  @media (max-width: 768px) {
+    .gestion-container {
+      padding: 12px;
+    }
+
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .page-header h1 {
+      font-size: 22px;
+    }
+
+    .cursos-resumen {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .resumen-header {
+      padding: 16px;
+    }
+
+    .resumen-header h3 {
+      font-size: 16px;
+    }
+
+    .resumen-body {
+      padding: 16px;
+    }
+
+    .resumen-body p {
+      font-size: 13px;
+    }
+
+    .resumen-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .precio {
+      font-size: 20px;
+    }
   }
 </style>

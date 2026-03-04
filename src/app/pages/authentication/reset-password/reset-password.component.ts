@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
   standalone: true,
   imports: [
     MatDialogModule, MatIconModule, MatButtonModule, MatFormFieldModule,
-    MatInputModule, FormsModule
+    MatInputModule, FormsModule, CommonModule
   ],
   template: `
     <div class="reset-password-container">

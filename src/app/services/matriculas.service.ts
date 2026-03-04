@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { getFirestore, collection, doc, getDocs, setDoc, updateDoc, deleteDoc, query, where, orderBy } from 'firebase/firestore';
 import { AuthService } from './auth.service';
 
 export interface Solicitud {
-  id: number;
+  id?: string;
   nombre: string;
   email: string;
   dni: string;
@@ -13,7 +13,7 @@ export interface Solicitud {
   precio: number;
   fecha: string;
   estado: 'pendiente' | 'aprobado' | 'rechazado';
-  password?: string;  // Contraseña generada por admin
+  password?: string;
   fechaAprobacion?: string;
 }
 
@@ -21,82 +21,105 @@ export interface Solicitud {
   providedIn: 'root'
 })
 export class MatriculasService {
-  private solicitudes: Solicitud[] = [
-    // Datos de ejemplo
-    {
-      id: 1,
-      nombre: 'Juan Pérez García',
-      email: 'juan@email.com',
-      dni: '12345678',
-      telefono: '+51 999 999 999',
-      cursoId: 1,
-      cursoNombre: 'Álgebra Lineal: Dominio Total',
-      precio: 45,
-      fecha: new Date().toISOString(),
-      estado: 'pendiente'
-    },
-    {
-      id: 2,
-      nombre: 'María López Rodríguez',
-      email: 'maria@email.com',
-      dni: '87654321',
-      telefono: '+51 888 888 888',
-      cursoId: 3,
-      cursoNombre: 'Física I: Mecánica y Estática',
-      precio: 39,
-      fecha: new Date().toISOString(),
-      estado: 'pendiente'
+  private firestore!: ReturnType<typeof getFirestore>;
+  private authService = new AuthService();
+
+  constructor() {
+    this.firestore = getFirestore();
+  }
+
+  // Obtener todas las solicitudes
+  async getSolicitudes(): Promise<Solicitud[]> {
+    const q = query(collection(this.firestore, 'solicitudes'), orderBy('fecha', 'desc'));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    } as Solicitud));
+  }
+
+  // Obtener solicitudes por estado
+  async getSolicitudesByEstado(estado: string): Promise<Solicitud[]> {
+    const q = query(collection(this.firestore, 'solicitudes'), where('estado', '==', estado));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    } as Solicitud));
+  }
+
+  // Agregar nueva solicitud
+  async addSolicitud(solicitud: Solicitud): Promise<void> {
+    const id = doc(collection(this.firestore, 'solicitudes')).id;
+    const solicitudRef = doc(this.firestore, 'solicitudes', id);
+    await setDoc(solicitudRef, {
+      ...solicitud,
+      id,
+      estado: 'pendiente',
+      fecha: new Date().toISOString()
+    });
+  }
+
+  // Actualizar estado de solicitud
+  async updateEstado(id: string, estado: 'pendiente' | 'aprobado' | 'rechazado', password?: string): Promise<void> {
+    const updateData: any = {
+      estado,
+      fechaAprobacion: estado === 'aprobado' ? new Date().toISOString() : null
+    };
+
+    if (password) {
+      updateData.password = password;
     }
-  ];
 
-  private solicitudesSubject = new BehaviorSubject<Solicitud[]>(this.solicitudes);
-  solicitudes$ = this.solicitudesSubject.asObservable();
+    const solicitudRef = doc(this.firestore, 'solicitudes', id);
+    await updateDoc(solicitudRef, updateData);
 
-  constructor(private authService: AuthService) {}
-
-  getSolicitudes(): Solicitud[] {
-    return this.solicitudes;
-  }
-
-  getSolicitudesByEstado(estado: string): Solicitud[] {
-    return this.solicitudes.filter(s => s.estado === estado);
-  }
-
-  addSolicitud(solicitud: Solicitud): void {
-    solicitud.id = this.solicitudes.length > 0 ? Math.max(...this.solicitudes.map(s => s.id)) + 1 : 1;
-    solicitud.estado = 'pendiente';
-    this.solicitudes.push(solicitud);
-    this.solicitudesSubject.next([...this.solicitudes]);
-  }
-
-  updateEstado(id: number, estado: 'pendiente' | 'aprobado' | 'rechazado', password?: string): void {
-    const index = this.solicitudes.findIndex(s => s.id === id);
-    if (index !== -1) {
-      this.solicitudes[index].estado = estado;
-      if (estado === 'aprobado' && password) {
-        this.solicitudes[index].password = password;
-        this.solicitudes[index].fechaAprobacion = new Date().toISOString();
-
-        // Registrar estudiante en el sistema de autenticación
-        this.authService.registrarEstudiante({
-          ...this.solicitudes[index],
-          password: password
+    // Si es aprobado, registrar estudiante en Firebase Auth
+    if (estado === 'aprobado' && password) {
+      const solicitudDoc = await getDocs(query(collection(this.firestore, 'solicitudes'), where('id', '==', id)));
+      if (!solicitudDoc.empty) {
+        const solicitudData = solicitudDoc.docs[0].data() as Solicitud;
+        
+        await this.authService.registrarEstudiante({
+          ...solicitudData,
+          password
         });
       }
-      this.solicitudesSubject.next([...this.solicitudes]);
     }
   }
 
-  deleteSolicitud(id: number): void {
-    this.solicitudes = this.solicitudes.filter(s => s.id !== id);
-    this.solicitudesSubject.next([...this.solicitudes]);
+  // Eliminar solicitud
+  async deleteSolicitud(id: string): Promise<void> {
+    const solicitudRef = doc(this.firestore, 'solicitudes', id);
+    await deleteDoc(solicitudRef);
   }
 
-  getSolicitudesAprobadas(): Solicitud[] {
-    return this.solicitudes.filter(s => s.estado === 'aprobado');
+  // Obtener solicitudes aprobadas
+  async getSolicitudesAprobadas(): Promise<Solicitud[]> {
+    const q = query(collection(this.firestore, 'solicitudes'), where('estado', '==', 'aprobado'));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    } as Solicitud));
   }
 
-  getEstudianteByEmail(email: string): Solicitud | undefined {
-    return this.solicitudes.find(s => s.email === email && s.estado === 'aprobado');
+  // Obtener estudiante por email
+  async getEstudianteByEmail(email: string): Promise<Solicitud | undefined> {
+    const q = query(
+      collection(this.firestore, 'solicitudes'),
+      where('email', '==', email),
+      where('estado', '==', 'aprobado')
+    );
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      return {
+        ...doc.data(),
+        id: doc.id
+      } as Solicitud;
+    }
+    return undefined;
   }
 }

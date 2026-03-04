@@ -13,7 +13,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
   template: `
     <div class="curso-detalle-container">
       <div class="curso-header">
-        <button mat-button (click)="volver" class="btn-volver">
+        <button mat-button (click)="volver()" class="btn-volver">
           <mat-icon>arrow_back</mat-icon> Volver
         </button>
         <h1>{{cursoNombre}}</h1>

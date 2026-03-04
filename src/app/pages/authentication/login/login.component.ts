@@ -116,6 +116,12 @@ import { ResetPasswordDialogComponent } from '../reset-password/reset-password.c
         font-weight: 900;
         color: #1e293b;
         margin: 0 0 8px;
+        line-height: 1.2;
+        word-wrap: break-word;
+      }
+
+      .login-header h1 .text-gradient {
+        display: inline-block;
       }
 
       .login-header p {
@@ -231,6 +237,35 @@ import { ResetPasswordDialogComponent } from '../reset-password/reset-password.c
         .login-card {
           padding: 32px 24px;
         }
+
+        .login-header h1 {
+          font-size: 24px;
+        }
+
+        .logo-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+        }
+
+        .login-form {
+          gap: 16px;
+        }
+
+        .login-options {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .forgot-password-btn {
+          font-size: 13px;
+        }
+
+        .btn-login {
+          padding: 14px;
+          font-size: 15px;
+        }
       }
     </style>
   `
@@ -253,13 +288,17 @@ export class LoginComponent {
     });
   }
 
-  onLogin(): void {
-    const result = this.authService.login(this.email, this.password);
+  async onLogin(): Promise<void> {
+    const result = await this.authService.login(this.email, this.password);
 
     if (result.success && result.estudiante) {
       this.mensajeError = '';
-      // Redirigir al dashboard del estudiante
-      this.router.navigate(['/estudiante/dashboard']);
+      // Redirigir según el rol
+      if (result.estudiante.rol === 'admin') {
+        this.router.navigate(['/admin/dashboard']);
+      } else {
+        this.router.navigate(['/estudiante/dashboard']);
+      }
     } else {
       this.mensajeError = result.message;
     }

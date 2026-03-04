@@ -322,6 +322,62 @@ import { CommonModule } from '@angular/common';
         color: white;
         margin: 0 0 24px;
         letter-spacing: -2px;
+        line-height: 1.1;
+        word-wrap: break-word;
+      }
+
+      .hero-title .text-gradient {
+        display: inline-block;
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 36px;
+          letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+          font-size: 16px;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .btn-primary, .btn-secondary {
+          width: 100%;
+          max-width: 300px;
+          justify-content: center;
+          padding: 14px 24px;
+          font-size: 15px;
+        }
+
+        .hero-stats {
+          flex-direction: column;
+          gap: 16px;
+          align-items: center;
+        }
+
+        .stat-divider {
+          width: 40px;
+          height: 2px;
+        }
+
+        .stat-item {
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .stat-number {
+          font-size: 28px;
+        }
+
+        .stat-label {
+          font-size: 13px;
+        }
       }
 
       .hero-subtitle {
