@@ -1,6 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { FirestoreService, Curso as CursoFirebase } from './firestore.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { 
+  getFirestore, 
+  collection, 
+  doc, 
+  getDocs, 
+  setDoc, 
+  updateDoc, 
+  deleteDoc,
+  query,
+  where,
+  Timestamp
+} from 'firebase/firestore';
+import { getApps, initializeApp, FirebaseApp } from 'firebase/app';
 
 export interface Curso {
   id: number;
@@ -9,13 +21,14 @@ export interface Curso {
   precio: number;
   categoria: string;
   imagen?: string;
+  activo?: boolean;
 }
 
 export interface Contenido {
   id: number;
   cursoId: number;
   cursoNombre: string;
-  tema: string;  // Solo el nombre del tema (texto)
+  tema: string;
   nombre: string;
   tipo: 'pdf' | 'video';
   url: string;
@@ -26,182 +39,192 @@ export interface Contenido {
   providedIn: 'root'
 })
 export class AcademiaService {
-  // Datos de ejemplo iniciales (solo si Firebase falla)
-  private cursos: Curso[] = [
-    { id: 1, nombre: 'Álgebra Lineal', descripcion: 'De matrices a espacios vectoriales', precio: 45, categoria: 'Matemáticas' },
-    { id: 2, nombre: 'Física I: Mecánica', descripcion: 'Domina las leyes de Newton', precio: 39, categoria: 'Física' },
-    { id: 3, nombre: 'Cálculo Diferencial', descripcion: '200 ejercicios resueltos', precio: 25, categoria: 'Matemáticas' },
-  ];
-
-  private contenidos: Contenido[] = [
-    { id: 1, cursoId: 1, cursoNombre: 'Álgebra Lineal', tema: 'Matrices y Vectores', nombre: 'Teoría (PDF)', tipo: 'pdf', url: '', fecha: '2026-03-01' },
-    { id: 2, cursoId: 1, cursoNombre: 'Álgebra Lineal', tema: 'Matrices y Vectores', nombre: 'Ejercicios Propuestos (PDF)', tipo: 'pdf', url: '', fecha: '2026-03-01' },
-    { id: 3, cursoId: 1, cursoNombre: 'Álgebra Lineal', tema: 'Matrices y Vectores', nombre: 'Ejercicios Resueltos (PDF)', tipo: 'pdf', url: '', fecha: '2026-03-01' },
-    { id: 4, cursoId: 1, cursoNombre: 'Álgebra Lineal', tema: 'Matrices y Vectores', nombre: 'Clase Teoría (Video)', tipo: 'video', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', fecha: '2026-03-01' },
-    { id: 5, cursoId: 1, cursoNombre: 'Álgebra Lineal', tema: 'Matrices y Vectores', nombre: 'Clase Ejercicios (Video)', tipo: 'video', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', fecha: '2026-03-01' },
-  ];
-
-  // Subjects para notificar cambios
-  private cursosSubject = new BehaviorSubject<Curso[]>(this.cursos);
-  private contenidosSubject = new BehaviorSubject<Contenido[]>(this.contenidos);
-
-  // Firebase
-  private firestoreService: FirestoreService;
-  private initialized = false;
-
+  private firestore: any = null;
+  private app: FirebaseApp | null = null;
+  private cursosSubject = new BehaviorSubject<Curso[]>([]);
+  private contenidosSubject = new BehaviorSubject<Contenido[]>([]);
+  
   cursos$ = this.cursosSubject.asObservable();
   contenidos$ = this.contenidosSubject.asObservable();
 
   constructor() {
-    this.firestoreService = new FirestoreService();
-    this.cargarCursosDesdeFirebase();
+    this.initializeFirebase();
   }
 
-  // Cargar cursos desde Firebase
-  private async cargarCursosDesdeFirebase() {
+  private async initializeFirebase() {
     try {
-      const cursosFirebase = await this.firestoreService.getCursos();
-      if (cursosFirebase && cursosFirebase.length > 0) {
-        this.cursos = cursosFirebase.map((c, index) => ({
-          id: index + 1,
-          nombre: c.nombre,
-          descripcion: c.descripcion,
-          precio: c.precio,
-          categoria: c.categoria,
-          imagen: c.imagen
-        }));
-        this.cursosSubject.next([...this.cursos]);
-        this.initialized = true;
+      // Importar environment dinámicamente
+      const { environment } = await import('../../environments/environment');
+      
+      // Inicializar Firebase si no está inicializado
+      if (!getApps().length) {
+        this.app = initializeApp(environment.firebase);
       }
+      
+      this.firestore = getFirestore();
+      console.log('✅ Firebase inicializado en AcademiaService');
+      
+      // Cargar cursos después de inicializar
+      await this.loadCursosFromFirebase();
     } catch (error) {
-      console.error('Error cargando cursos desde Firebase:', error);
-      // Usar datos locales si Firebase falla
-      this.initialized = true;
+      console.error('❌ Error inicializando Firebase en AcademiaService:', error);
+      // Cargar datos de ejemplo si Firebase falla
+      this.loadDefaultCursos();
     }
   }
 
-  // Métodos para Cursos
+  private loadDefaultCursos() {
+    const defaultCursos: Curso[] = [
+      { id: 1, nombre: 'Álgebra Lineal', descripcion: 'De matrices a espacios vectoriales', precio: 45, categoria: 'Matemáticas' },
+      { id: 2, nombre: 'Física I: Mecánica', descripcion: 'Domina las leyes de Newton', precio: 39, categoria: 'Física' },
+      { id: 3, nombre: 'Cálculo Diferencial', descripcion: '200 ejercicios resueltos', precio: 25, categoria: 'Matemáticas' },
+    ];
+    this.cursosSubject.next(defaultCursos);
+  }
+
+  private async loadCursosFromFirebase() {
+    try {
+      const q = query(collection(this.firestore, 'cursos'), where('activo', '==', true));
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.empty) {
+        console.log('⚠️ No hay cursos en Firebase, cargando datos por defecto');
+        this.loadDefaultCursos();
+        return;
+      }
+
+      const cursos: Curso[] = querySnapshot.docs.map((doc: any, index: number) => {
+        const data = doc.data();
+        return {
+          id: index + 1,
+          nombre: data.nombre,
+          descripcion: data.descripcion,
+          precio: data.precio,
+          categoria: data.categoria,
+          imagen: data.imagen,
+          activo: data.activo
+        };
+      });
+
+      console.log('✅ Cursos cargados desde Firebase:', cursos.length);
+      this.cursosSubject.next(cursos);
+    } catch (error) {
+      console.error('❌ Error cargando cursos desde Firebase:', error);
+      this.loadDefaultCursos();
+    }
+  }
+
   getCursos(): Curso[] {
-    return this.cursos;
+    let cursos: Curso[] = [];
+    this.cursosSubject.subscribe(c => cursos = c).unsubscribe();
+    return cursos;
   }
 
   getCursoById(id: number): Curso | undefined {
-    return this.cursos.find(c => c.id === id);
+    return this.getCursos().find(c => c.id === id);
   }
 
   async addCurso(curso: Curso): Promise<void> {
     try {
-      // Guardar en Firebase
-      const cursoFirebase: CursoFirebase = {
+      const cursoData = {
         nombre: curso.nombre,
         descripcion: curso.descripcion,
         precio: curso.precio,
         categoria: curso.categoria,
         activo: true,
-        imagen: curso.imagen
+        imagen: curso.imagen || '',
+        createdAt: Timestamp.now()
       };
 
-      const idFirebase = await this.firestoreService.createCurso(cursoFirebase);
+      // Generar ID único
+      const id = doc(collection(this.firestore, 'cursos')).id;
+      const cursoRef = doc(this.firestore, 'cursos', id);
       
-      // Agregar a la lista local
-      curso.id = this.cursos.length > 0 ? Math.max(...this.cursos.map(c => c.id)) + 1 : 1;
-      this.cursos.push(curso);
-      this.cursosSubject.next([...this.cursos]);
+      // Guardar en Firebase
+      await setDoc(cursoRef, { ...cursoData, id });
+      console.log('✅ Curso guardado en Firebase:', id);
+
+      // Recargar cursos para obtener la lista actualizada
+      await this.loadCursosFromFirebase();
     } catch (error) {
-      console.error('Error agregando curso:', error);
-      // Fallback local
-      curso.id = this.cursos.length > 0 ? Math.max(...this.cursos.map(c => c.id)) + 1 : 1;
-      this.cursos.push(curso);
-      this.cursosSubject.next([...this.cursos]);
+      console.error('❌ Error guardando curso en Firebase:', error);
+      throw error;
     }
   }
 
   async updateCurso(id: number, curso: Curso): Promise<void> {
     try {
-      // Actualizar en Firebase
-      const cursoFirebase: Partial<CursoFirebase> = {
-        nombre: curso.nombre,
-        descripcion: curso.descripcion,
-        precio: curso.precio,
-        categoria: curso.categoria,
-        imagen: curso.imagen
-      };
-
-      // Buscar el ID de Firebase (usando el índice como referencia)
-      const index = this.cursos.findIndex(c => c.id === id);
-      if (index !== -1) {
-        // Actualizar localmente primero
-        this.cursos[index] = curso;
-        this.cursosSubject.next([...this.cursos]);
+      // Obtener todos los cursos para encontrar el ID de Firebase
+      const q = query(collection(this.firestore, 'cursos'), where('activo', '==', true));
+      const querySnapshot = await getDocs(q);
+      
+      if (id <= querySnapshot.docs.length) {
+        const docSnapshot = querySnapshot.docs[id - 1];
+        const cursoRef = doc(this.firestore, 'cursos', docSnapshot.id);
         
-        // Intentar actualizar en Firebase si existe
-        try {
-          const cursosFirebase = await this.firestoreService.getCursos();
-          if (cursosFirebase[index]) {
-            await this.firestoreService.updateCurso(cursosFirebase[index].id!, cursoFirebase);
-          }
-        } catch (fbError) {
-          console.error('Error actualizando en Firebase:', fbError);
-        }
+        await updateDoc(cursoRef, {
+          nombre: curso.nombre,
+          descripcion: curso.descripcion,
+          precio: curso.precio,
+          categoria: curso.categoria,
+          imagen: curso.imagen
+        });
+
+        await this.loadCursosFromFirebase();
       }
     } catch (error) {
-      console.error('Error actualizando curso:', error);
-      // Fallback local
-      const index = this.cursos.findIndex(c => c.id === id);
-      if (index !== -1) {
-        this.cursos[index] = curso;
-        this.cursosSubject.next([...this.cursos]);
-      }
+      console.error('❌ Error actualizando curso:', error);
+      throw error;
     }
   }
 
   async deleteCurso(id: number): Promise<void> {
     try {
-      // Eliminar de Firebase
-      const index = this.cursos.findIndex(c => c.id === id);
-      if (index !== -1) {
-        try {
-          const cursosFirebase = await this.firestoreService.getCursos();
-          if (cursosFirebase[index]) {
-            await this.firestoreService.deleteCurso(cursosFirebase[index].id!);
-          }
-        } catch (fbError) {
-          console.error('Error eliminando de Firebase:', fbError);
-        }
+      // Obtener todos los cursos para encontrar el ID de Firebase
+      const q = query(collection(this.firestore, 'cursos'), where('activo', '==', true));
+      const querySnapshot = await getDocs(q);
+      
+      if (id <= querySnapshot.docs.length) {
+        const docSnapshot = querySnapshot.docs[id - 1];
+        const cursoRef = doc(this.firestore, 'cursos', docSnapshot.id);
         
-        // Eliminar localmente
-        this.cursos = this.cursos.filter(c => c.id !== id);
-        this.cursosSubject.next([...this.cursos]);
+        // En lugar de eliminar, desactivamos el curso
+        await updateDoc(cursoRef, { activo: false });
+        
+        await this.loadCursosFromFirebase();
       }
     } catch (error) {
-      console.error('Error eliminando curso:', error);
-      // Fallback local
-      this.cursos = this.cursos.filter(c => c.id !== id);
-      this.cursosSubject.next([...this.cursos]);
+      console.error('❌ Error eliminando curso:', error);
+      throw error;
     }
   }
 
   // Métodos para Contenidos
   getContenidos(): Contenido[] {
-    return this.contenidos;
+    let contenidos: Contenido[] = [];
+    this.contenidosSubject.subscribe(c => contenidos = c).unsubscribe();
+    return contenidos;
   }
 
   getContenidosByCurso(cursoId: number): Contenido[] {
-    return this.contenidos.filter(c => c.cursoId === cursoId);
+    return this.getContenidos().filter(c => c.cursoId === cursoId);
   }
 
   getContenidosByTema(tema: string): Contenido[] {
-    return this.contenidos.filter(c => c.tema === tema);
+    return this.getContenidos().filter(c => c.tema === tema);
   }
 
   addContenido(contenido: Contenido): void {
-    contenido.id = this.contenidos.length > 0 ? Math.max(...this.contenidos.map(c => c.id)) + 1 : 1;
-    this.contenidos.push(contenido);
-    this.contenidosSubject.next([...this.contenidos]);
+    contenido.id = this.getContenidos().length > 0 
+      ? Math.max(...this.getContenidos().map(c => c.id)) + 1 
+      : 1;
+    const currentContenidos = this.getContenidos();
+    currentContenidos.push(contenido);
+    this.contenidosSubject.next([...currentContenidos]);
   }
 
   deleteContenido(id: number): void {
-    this.contenidos = this.contenidos.filter(c => c.id !== id);
-    this.contenidosSubject.next([...this.contenidos]);
+    const currentContenidos = this.getContenidos().filter(c => c.id !== id);
+    this.contenidosSubject.next(currentContenidos);
   }
 }
