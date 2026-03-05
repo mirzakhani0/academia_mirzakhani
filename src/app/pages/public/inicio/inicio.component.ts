@@ -12,104 +12,162 @@ import { AcademiaService } from 'src/app/services/academia.service';
   imports: [RouterLink, MatIconModule, MatButtonModule, MatCardModule, CommonModule],
   template: `
     <div class="landing-page">
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="hero-bg-overlay"></div>
-        <div class="hero-content">
-          <span class="hero-badge">🎓 ÚNETE A +1000 ESTUDIANTES</span>
-          <h1 class="hero-title">Domina las <span class="text-gradient">Matemáticas y Física</span> con la Academia MIRZAKHANI</h1>
+      <!-- HERO SECTION -->
+      <section class="hero">
+        <div class="hero-bg">
+          <div class="hero-gradient"></div>
+          <div class="hero-pattern"></div>
+        </div>
+        <div class="container hero-content">
+          <span class="hero-badge">🎓 +1000 ESTUDIANTES CONFÍAN EN NOSOTROS</span>
+          <h1 class="hero-title">
+            Domina las <span class="text-red">Matemáticas</span> y <span class="text-blue">Física</span>
+          </h1>
           <p class="hero-subtitle">
-            Potencia tu aprendizaje con cursos diseñados por expertos.
-            Accede a clases grabadas, material PDF y ejercicios resueltos.
+            Clases grabadas, material PDF y ejercicios resueltos por expertos. 
+            Acceso de por vida a todos los cursos.
           </p>
           
           <div class="hero-rating">
             <div class="stars">
-              <mat-icon>star</mat-icon>
-              <mat-icon>star</mat-icon>
-              <mat-icon>star</mat-icon>
-              <mat-icon>star</mat-icon>
-              <mat-icon>star</mat-icon>
+              <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
             </div>
             <span class="rating-text"><strong>4.9/5</strong> basado en 500+ reseñas</span>
           </div>
           
           <div class="hero-actions">
-            <a routerLink="/cursos-public" class="btn-primary btn-large">
+            <a routerLink="/cursos-public" class="btn btn-yellow btn-large">
               <mat-icon>school</mat-icon>
-              <span>Ver Cursos Disponibles</span>
+              <span>Ver Cursos</span>
             </a>
-            <a routerLink="/authentication/login" class="btn-secondary btn-large">
+            <a routerLink="/authentication/login" class="btn btn-white btn-large">
               <mat-icon>login</mat-icon>
               <span>Soy Estudiante</span>
             </a>
           </div>
           
           <div class="hero-benefits">
-            <div class="benefit-item">
+            <div class="benefit">
               <mat-icon>check_circle</mat-icon>
               <span>Acceso de por vida</span>
             </div>
-            <div class="benefit-item">
+            <div class="benefit">
               <mat-icon>check_circle</mat-icon>
-              <span>Certificado</span>
+              <span>Certificado incluido</span>
             </div>
-            <div class="benefit-item">
+            <div class="benefit">
               <mat-icon>check_circle</mat-icon>
               <span>Soporte 24/7</span>
             </div>
-            <div class="benefit-item">
+            <div class="benefit">
               <mat-icon>check_circle</mat-icon>
-              <span>Pago seguro</span>
-            </div>
-          </div>
-          
-          <div class="hero-stats">
-            <div class="stat-item">
-              <span class="stat-number">{{cursos.length}}+</span>
-              <span class="stat-label">Cursos</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-number">1000+</span>
-              <span class="stat-label">Estudiantes</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-number">∞</span>
-              <span class="stat-label">Acceso Vitalicio</span>
+              <span>Pago 100% seguro</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Cursos Destacados Section -->
-      <section class="cursos-section">
+      <!-- ESTADÍSTICAS -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon stat-red">
+                <mat-icon>people</mat-icon>
+              </div>
+              <div class="stat-content">
+                <h3 class="stat-number">1000+</h3>
+                <p class="stat-label">Estudiantes Activos</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon stat-blue">
+                <mat-icon>school</mat-icon>
+              </div>
+              <div class="stat-content">
+                <h3 class="stat-number">50+</h3>
+                <p class="stat-label">Cursos Disponibles</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon stat-yellow">
+                <mat-icon>trending_up</mat-icon>
+              </div>
+              <div class="stat-content">
+                <h3 class="stat-number">95%</h3>
+                <p class="stat-label">Tasa de Aprobación</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon stat-red">
+                <mat-icon>schedule</mat-icon>
+              </div>
+              <div class="stat-content">
+                <h3 class="stat-number">24/7</h3>
+                <p class="stat-label">Soporte Disponible</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURSOS CON FILTROS -->
+      <section class="courses-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title">Nuestros Cursos</h2>
+            <h2 class="section-title text-red">Nuestros Cursos</h2>
             <p class="section-subtitle">Explora nuestra variedad de cursos disponibles</p>
           </div>
-
-          <!-- Loading State -->
-          <div class="loading-state" *ngIf="loading">
-            <mat-icon class="loading-icon">sync</mat-icon>
-            <p>Cargando cursos...</p>
+          
+          <!-- Filtros -->
+          <div class="course-filters">
+            <button class="filter-btn" [class.active]="filtroActual === 'todos'" (click)="filtroActual = 'todos'">
+              <mat-icon>view_list</mat-icon>
+              <span>Todos</span>
+            </button>
+            <button class="filter-btn" [class.active]="filtroActual === 'Matemáticas'" (click)="filtroActual = 'Matemáticas'">
+              <mat-icon>functions</mat-icon>
+              <span>Matemáticas</span>
+            </button>
+            <button class="filter-btn" [class.active]="filtroActual === 'Física'" (click)="filtroActual = 'Física'">
+              <mat-icon>rocket_launch</mat-icon>
+              <span>Física</span>
+            </button>
+            <button class="filter-btn" [class.active]="filtroActual === 'Química'" (click)="filtroActual = 'Química'">
+              <mat-icon>biotech</mat-icon>
+              <span>Química</span>
+            </button>
           </div>
 
           <!-- Cursos Grid -->
-          <div class="cursos-grid" *ngIf="!loading && cursos.length > 0">
-            <div class="curso-card" *ngFor="let curso of cursos">
-              <div class="curso-header" [style.background]="curso.gradiente">
+          <div class="courses-grid" *ngIf="!loading && cursosFiltrados.length > 0">
+            <div class="course-card" *ngFor="let curso of cursosFiltrados">
+              <div class="course-header" [style.background]="curso.gradiente">
                 <mat-icon>{{curso.icono}}</mat-icon>
-                <span class="curso-badge">{{curso.categoria}}</span>
+                <span class="course-badge">{{curso.categoria}}</span>
               </div>
-              <div class="curso-body">
+              <div class="course-body">
                 <h3>{{curso.nombre}}</h3>
                 <p>{{curso.descripcion}}</p>
-                <div class="curso-footer">
-                  <div class="curso-precio">S/ {{curso.precio}}</div>
-                  <a routerLink="/cursos-public" class="btn-ver">
+                <div class="course-meta">
+                  <div class="meta-item">
+                    <mat-icon>play_circle</mat-icon>
+                    <span>20 clases</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon>description</mat-icon>
+                    <span>5 PDFs</span>
+                  </div>
+                </div>
+                <div class="course-rating">
+                  <div class="stars-small">
+                    <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
+                  </div>
+                  <span class="rating-count">(120)</span>
+                </div>
+                <div class="course-footer">
+                  <div class="course-price">S/ {{curso.precio}}</div>
+                  <a routerLink="/cursos-public" class="btn btn-blue btn-small">
                     <mat-icon>visibility</mat-icon>
                     <span>Ver Más</span>
                   </a>
@@ -119,11 +177,14 @@ import { AcademiaService } from 'src/app/services/academia.service';
           </div>
 
           <!-- Empty State -->
-          <div class="empty-state" *ngIf="!loading && cursos.length === 0">
+          <div class="empty-state" *ngIf="!loading && cursosFiltrados.length === 0">
             <mat-icon>inventory_2</mat-icon>
-            <h3>No hay cursos disponibles</h3>
-            <p>Pronto tendremos nuevos cursos para ti</p>
-            <a routerLink="/cursos-public" class="btn-primary">
+            <h3>No hay cursos en esta categoría</h3>
+            <p>Prueba con otro filtro</p>
+          </div>
+          
+          <div class="text-center" *ngIf="!loading && cursosFiltrados.length > 0">
+            <a routerLink="/cursos-public" class="btn btn-red btn-large">
               <mat-icon>school</mat-icon>
               <span>Ver Todos los Cursos</span>
             </a>
@@ -131,201 +192,236 @@ import { AcademiaService } from 'src/app/services/academia.service';
         </div>
       </section>
 
-      <!-- Features Section -->
+      <!-- POR QUÉ ELEGIRNOS -->
       <section class="features-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title">¿Por qué elegirnos?</h2>
+            <h2 class="section-title text-blue">¿Por qué estudiar con nosotros?</h2>
             <p class="section-subtitle">Una experiencia de aprendizaje completa</p>
           </div>
           <div class="features-grid">
             <div class="feature-card">
-              <div class="feature-icon bg-orange">
+              <div class="feature-icon feature-red">
                 <mat-icon>video_library</mat-icon>
               </div>
-              <h3>Clases Grabadas</h3>
-              <p>Accede a clases en video de alta calidad cuando y donde quieras.</p>
+              <h3>Clases en HD</h3>
+              <p>Grabadas por expertos con la mejor calidad de video y audio.</p>
             </div>
             <div class="feature-card">
-              <div class="feature-icon bg-blue">
+              <div class="feature-icon feature-blue">
                 <mat-icon>description</mat-icon>
               </div>
               <h3>Material PDF</h3>
-              <p>Teoría completa, ejercicios propuestos y resueltos.</p>
+              <p>Teoría completa, ejercicios propuestos y 500+ páginas de contenido.</p>
             </div>
             <div class="feature-card">
-              <div class="feature-icon bg-green">
+              <div class="feature-icon feature-yellow">
                 <mat-icon>schedule</mat-icon>
               </div>
-              <h3>Acceso Vitalicio</h3>
-              <p>Una vez adquirido, el curso es tuyo para siempre.</p>
+              <h3>Acceso de Por Vida</h3>
+              <p>Sin límites de tiempo. Repasa las veces que necesites.</p>
             </div>
             <div class="feature-card">
-              <div class="feature-icon bg-purple">
+              <div class="feature-icon feature-red">
                 <mat-icon>emoji_events</mat-icon>
               </div>
               <h3>Certificado</h3>
-              <p>Obtén un certificado al completar cada curso.</p>
+              <p>Obtén un certificado de finalización validable.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon feature-blue">
+                <mat-icon>chat</mat-icon>
+              </div>
+              <h3>Soporte 24/7</h3>
+              <p>Resolvemos tus dudas por WhatsApp en cualquier momento.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon feature-yellow">
+                <mat-icon>security</mat-icon>
+              </div>
+              <h3>Pago Seguro</h3>
+              <p>Yape, BCP. Garantía de satisfacción de 7 días.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Cómo Funciona -->
-      <section class="steps-section">
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">¿Cómo Funciona?</h2>
-            <p class="section-subtitle">Tres simples pasos para comenzar</p>
-          </div>
-          <div class="steps-grid">
-            <div class="step-card">
-              <div class="step-number">1</div>
-              <div class="step-icon">
-                <mat-icon>shopping_cart</mat-icon>
-              </div>
-              <h3>Solicita tu Inscripción</h3>
-              <p>Elige el curso y completa el formulario de inscripción.</p>
-            </div>
-            <div class="step-card">
-              <div class="step-number">2</div>
-              <div class="step-icon">
-                <mat-icon>payment</mat-icon>
-              </div>
-              <h3>Realiza tu Pago</h3>
-              <p>Yape o transfiere al BCP. Verificaremos tu pago.</p>
-            </div>
-            <div class="step-card">
-              <div class="step-number">3</div>
-              <div class="step-icon">
-                <mat-icon>school</mat-icon>
-              </div>
-              <h3>Recibe tu Acceso</h3>
-              <p>Te enviaremos tus credenciales y podrás acceder.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonios -->
+      <!-- TESTIMONIOS -->
       <section class="testimonials-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title">Lo Que Dicen Nuestros Estudiantes</h2>
+            <h2 class="section-title text-red">Lo Que Dicen Nuestros Estudiantes</h2>
             <p class="section-subtitle">Historias de éxito reales</p>
           </div>
           <div class="testimonials-grid">
             <div class="testimonial-card">
               <div class="testimonial-header">
-                <div class="testimonial-avatar">JP</div>
+                <div class="testimonial-logo">
+                  <mat-icon>person</mat-icon>
+                </div>
                 <div class="testimonial-info">
                   <h4>Juan Pérez</h4>
                   <p class="testimonial-course">Álgebra Lineal</p>
                 </div>
                 <div class="testimonial-rating">
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
+                  <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
                 </div>
               </div>
               <p class="testimonial-text">
-                "Excelente curso. Las explicaciones son muy claras y el material PDF es completo.
-                Pude aprobar mi examen universitario gracias a Academia MIRZAKHANI."
+                "Aprobé mi examen de álgebra gracias a las clases. El material PDF es increíble y los ejercicios resueltos me ayudaron mucho."
               </p>
+              <p class="testimonial-uni">Universidad Nacional de Ingeniería</p>
             </div>
 
             <div class="testimonial-card">
               <div class="testimonial-header">
-                <div class="testimonial-avatar">ML</div>
+                <div class="testimonial-logo">
+                  <mat-icon>person</mat-icon>
+                </div>
                 <div class="testimonial-info">
                   <h4>María López</h4>
                   <p class="testimonial-course">Física I</p>
                 </div>
                 <div class="testimonial-rating">
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
+                  <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
                 </div>
               </div>
               <p class="testimonial-text">
-                "Los videos son de excelente calidad y puedo verlos las veces que necesite.
-                El acceso vitalicio es una gran ventaja. ¡Totalmente recomendado!"
+                "Las clases de física me ayudaron a entender temas que en la U no lograba comprender. El acceso de por vida es una gran ventaja."
               </p>
+              <p class="testimonial-uni">PUCP - Ingeniería Civil</p>
             </div>
 
             <div class="testimonial-card">
               <div class="testimonial-header">
-                <div class="testimonial-avatar">CR</div>
+                <div class="testimonial-logo">
+                  <mat-icon>person</mat-icon>
+                </div>
                 <div class="testimonial-info">
                   <h4>Carlos Ruiz</h4>
                   <p class="testimonial-course">Cálculo Diferencial</p>
                 </div>
                 <div class="testimonial-rating">
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
-                  <mat-icon>star</mat-icon>
+                  <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
                 </div>
               </div>
               <p class="testimonial-text">
-                "El material PDF con ejercicios resueltos es increíble.
-                Pude practicar mucho y entender temas que en la universidad no lograba comprender."
+                "Puedo repasar cuando quiera antes de mis exámenes. El soporte por WhatsApp es rápido y siempre resuelven mis dudas."
               </p>
+              <p class="testimonial-uni">UNI - Ingeniería Mecánica</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- CTA Section -->
-      <section class="cta-section">
-        <div class="cta-content">
-          <h2>Comienza tu aprendizaje hoy</h2>
-          <p>Únete a miles de estudiantes que ya están mejorando sus habilidades</p>
-          <div class="cta-actions">
-            <a routerLink="/cursos-public" class="btn-large btn-primary">
-              <mat-icon>school</mat-icon>
-              <span>Ver Cursos Disponibles</span>
-            </a>
-            <a routerLink="/authentication/login" class="btn-large btn-outline">
-              <mat-icon>login</mat-icon>
-              <span>Ya soy Estudiante</span>
-            </a>
+      <!-- GARANTÍA -->
+      <section class="guarantee-section">
+        <div class="container">
+          <div class="guarantee-card">
+            <div class="guarantee-icon">
+              <mat-icon>security</mat-icon>
+            </div>
+            <div class="guarantee-content">
+              <h3>Tu compra está 100% protegida</h3>
+              <div class="guarantee-badges">
+                <div class="badge-item">
+                  <mat-icon>lock</mat-icon>
+                  <span>Pago Seguro SSL</span>
+                </div>
+                <div class="badge-item">
+                  <mat-icon>email</mat-icon>
+                  <span>Email Inmediato</span>
+                </div>
+                <div class="badge-item">
+                  <mat-icon>favorite</mat-icon>
+                  <span>Garantía 7 días</span>
+                </div>
+                <div class="badge-item">
+                  <mat-icon>support</mat-icon>
+                  <span>Soporte Dedicado</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Footer -->
+      <!-- PREGUNTAS FRECUENTES -->
+      <section class="faq-section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title text-blue">Preguntas Frecuentes</h2>
+            <p class="section-subtitle">Resolvemos tus dudas</p>
+          </div>
+          <div class="faq-grid">
+            <div class="faq-card">
+              <h4>¿Cómo accedo a los cursos después de pagar?</h4>
+              <p>Después de aprobar tu matrícula, recibirás un email con tus credenciales en menos de 24 horas. Podrás acceder desde cualquier dispositivo.</p>
+            </div>
+            <div class="faq-card">
+              <h4>¿Los cursos tienen certificado?</h4>
+              <p>¡Sí! Todos nuestros cursos incluyen un certificado de finalización que puedes validar y compartir en LinkedIn.</p>
+            </div>
+            <div class="faq-card">
+              <h4>¿Puedo pagar con tarjeta de crédito?</h4>
+              <p>Aceptamos Yape, BCP y transferencias bancarias. Todos los pagos son seguros y verificados.</p>
+            </div>
+            <div class="faq-card">
+              <h4>¿Qué pasa si no estoy satisfecho?</h4>
+              <p>Ofrecemos garantía de satisfacción de 7 días. Si no estás contento, te devolvemos tu dinero sin preguntas.</p>
+            </div>
+            <div class="faq-card">
+              <h4>¿Por cuánto tiempo tengo acceso?</h4>
+              <p>¡De por vida! Una vez que compras un curso, puedes acceder a él las veces que quieras, sin límites de tiempo.</p>
+            </div>
+            <div class="faq-card">
+              <h4>¿Hay soporte si tengo dudas?</h4>
+              <p>Sí, nuestro soporte está disponible 24/7 por WhatsApp. Respondemos en menos de 1 hora.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-card">
+            <h2>Comienza tu aprendizaje hoy</h2>
+            <p>Únete a miles de estudiantes que ya están mejorando sus habilidades</p>
+            <div class="cta-actions">
+              <a routerLink="/cursos-public" class="btn btn-yellow btn-large">
+                <mat-icon>school</mat-icon>
+                <span>Ver Cursos Disponibles</span>
+              </a>
+              <a routerLink="/authentication/login" class="btn btn-white-outline btn-large">
+                <mat-icon>login</mat-icon>
+                <span>Ya soy Estudiante</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
       <footer class="landing-footer">
-        <!-- Top Section -->
         <div class="footer-top">
           <div class="container">
             <div class="footer-cta">
-              <h2>Comienza tu aprendizaje hoy</h2>
-              <p>Únete a miles de estudiantes que ya están mejorando sus habilidades</p>
+              <h2>¿Listo para empezar?</h2>
+              <p>Únete a nuestra comunidad de estudiantes</p>
               <div class="footer-cta-actions">
-                <a routerLink="/cursos-public" class="btn-cta-primary">
+                <a routerLink="/cursos-public" class="btn btn-yellow btn-large">
                   <mat-icon>school</mat-icon>
                   <span>Ver Cursos</span>
-                </a>
-                <a routerLink="/authentication/login" class="btn-cta-secondary">
-                  <mat-icon>login</mat-icon>
-                  <span>Soy Estudiante</span>
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Main Footer -->
         <div class="footer-main">
           <div class="container">
             <div class="footer-grid">
-              <!-- Columna 1: Brand -->
               <div class="footer-brand">
                 <div class="brand-logo">
                   <div class="logo-icon">
@@ -335,22 +431,21 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 </div>
                 <p class="brand-tagline">Educación de calidad al alcance de todos</p>
                 <div class="social-links">
-                  <a href="https://facebook.com" target="_blank" class="social-link facebook" title="Facebook">
+                  <a href="https://facebook.com" target="_blank" class="social-link facebook">
                     <mat-icon>facebook</mat-icon>
                   </a>
-                  <a href="https://instagram.com" target="_blank" class="social-link instagram" title="Instagram">
+                  <a href="https://instagram.com" target="_blank" class="social-link instagram">
                     <mat-icon>favorite</mat-icon>
                   </a>
-                  <a href="https://youtube.com" target="_blank" class="social-link youtube" title="YouTube">
+                  <a href="https://youtube.com" target="_blank" class="social-link youtube">
                     <mat-icon>play_circle</mat-icon>
                   </a>
-                  <a href="https://wa.me/51965890475" target="_blank" class="social-link whatsapp" title="WhatsApp">
+                  <a href="https://wa.me/51965890475" target="_blank" class="social-link whatsapp">
                     <mat-icon>phone</mat-icon>
                   </a>
                 </div>
               </div>
 
-              <!-- Columna 2: Cursos -->
               <div class="footer-column">
                 <h4>Materias</h4>
                 <ul class="footer-list">
@@ -358,11 +453,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   <li><a routerLink="/cursos-public">Física</a></li>
                   <li><a routerLink="/cursos-public">Química</a></li>
                   <li><a routerLink="/cursos-public">Biología</a></li>
-                  <li><a routerLink="/cursos-public">Letras</a></li>
                 </ul>
               </div>
 
-              <!-- Columna 3: Compañía -->
               <div class="footer-column">
                 <h4>Compañía</h4>
                 <ul class="footer-list">
@@ -373,7 +466,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 </ul>
               </div>
 
-              <!-- Columna 4: Contacto -->
               <div class="footer-column">
                 <h4>Contáctanos</h4>
                 <div class="contact-info">
@@ -402,15 +494,11 @@ import { AcademiaService } from 'src/app/services/academia.service';
           </div>
         </div>
 
-        <!-- Bottom Bar -->
         <div class="footer-bottom">
           <div class="container">
             <div class="footer-bottom-content">
-              <p class="copyright">
-                © 2026 Academia MIRZAKHANI. Todos los derechos reservados.
-              </p>
+              <p class="copyright">© 2026 Academia MIRZAKHANI. Todos los derechos reservados.</p>
               
-              <!-- Developer Credits -->
               <div class="developer-badge">
                 <div class="dev-info">
                   <span class="dev-label">Desarrollado por</span>
@@ -429,11 +517,21 @@ import { AcademiaService } from 'src/app/services/academia.service';
     </div>
   `,
   styles: [`
-    /* Estilos generales */
+    /* COLORES PRINCIPALES */
+    :host {
+      --red: #dc3545;
+      --blue: #007bff;
+      --yellow: #ffc107;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --light: #f8f9fa;
+    }
+
+    /* ESTILOS GENERALES */
     .landing-page {
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
-      background: #ffffff;
+      background: var(--white);
     }
 
     .container {
@@ -450,33 +548,131 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .section-title {
       font-size: 42px;
       font-weight: 900;
-      color: #dc3545;
       margin: 0 0 16px;
     }
 
+    .text-red { color: var(--red); }
+    .text-blue { color: var(--blue); }
+    .text-yellow { color: var(--yellow); }
+
     .section-subtitle {
       font-size: 18px;
-      color: #6c757d;
+      color: var(--gray);
       margin: 0;
     }
 
-    .text-gradient {
-      background: linear-gradient(135deg, #dc3545 0%, #ff4757 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    /* BOTONES */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
     }
 
-    /* Hero Section */
-    .hero-section {
-      background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-      padding: 120px 20px 140px;
-      text-align: center;
+    .btn mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .btn-yellow {
+      background: var(--yellow);
+      color: #212529;
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+    }
+
+    .btn-yellow:hover {
+      background: #ffca2c;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+
+    .btn-blue:hover {
+      background: #0056b3;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-red:hover {
+      background: #c82333;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--blue);
+      border: 2px solid var(--white);
+    }
+
+    .btn-white:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-3px);
+    }
+
+    .btn-white-outline {
+      background: transparent;
+      color: var(--white);
+      border: 3px solid var(--white);
+    }
+
+    .btn-white-outline:hover {
+      background: var(--white);
+      color: var(--blue);
+    }
+
+    .btn-large {
+      padding: 20px 40px;
+      font-size: 18px;
+    }
+
+    .btn-small {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+
+    /* HERO SECTION */
+    .hero {
       position: relative;
+      padding: 120px 0 140px;
       overflow: hidden;
     }
 
-    .hero-bg-overlay {
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, var(--red) 0%, var(--blue) 100%);
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-pattern {
       position: absolute;
       top: 0;
       left: 0;
@@ -491,25 +687,25 @@ import { AcademiaService } from 'src/app/services/academia.service';
       z-index: 1;
       max-width: 900px;
       margin: 0 auto;
+      text-align: center;
     }
 
     .hero-badge {
       display: inline-block;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
+      background: var(--yellow);
+      color: #212529;
       padding: 8px 20px;
       border-radius: 50px;
-      color: white;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       margin-bottom: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid var(--white);
     }
 
     .hero-title {
       font-size: 64px;
       font-weight: 900;
-      color: white;
+      color: var(--white);
       margin: 0 0 24px;
       letter-spacing: -2px;
       line-height: 1.1;
@@ -517,9 +713,38 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .hero-subtitle {
       font-size: 20px;
-      color: rgba(255, 255, 255, 0.95);
+      color: var(--white);
       margin: 0 0 48px;
       line-height: 1.6;
+    }
+
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .stars mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: var(--yellow);
+    }
+
+    .rating-text {
+      font-size: 16px;
+      color: var(--white);
+    }
+
+    .rating-text strong {
+      font-weight: 900;
     }
 
     .hero-actions {
@@ -530,121 +755,150 @@ import { AcademiaService } from 'src/app/services/academia.service';
       margin-bottom: 60px;
     }
 
-    .btn-primary, .btn-secondary, .btn-large {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 32px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.3s;
-    }
-
-    .btn-primary {
-      background: white;
-      color: #dc2626;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-3px);
-    }
-
-    .btn-large {
-      padding: 20px 40px;
-      font-size: 18px;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: white;
-      border: 3px solid white;
-    }
-
-    .btn-outline:hover {
-      background: white;
-      color: #dc2626;
-    }
-
-    .hero-stats {
+    .hero-benefits {
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: 50px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      padding: 32px 48px;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      gap: 32px;
+      flex-wrap: wrap;
     }
 
-    .stat-item {
+    .benefit {
       display: flex;
-      flex-direction: column;
       align-items: center;
+      gap: 8px;
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
     }
+
+    .benefit mat-icon {
+      font-size: 20px;
+      color: var(--yellow);
+    }
+
+    /* STATS SECTION */
+    .stats-section {
+      padding: 80px 0;
+      background: var(--light);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      padding: 32px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-icon mat-icon {
+      font-size: 30px;
+      color: var(--white);
+    }
+
+    .stat-red { background: var(--red); }
+    .stat-blue { background: var(--blue); }
+    .stat-yellow { background: var(--yellow); }
 
     .stat-number {
-      font-size: 40px;
+      font-size: 32px;
       font-weight: 900;
-      color: white;
+      color: #212529;
+      margin: 0;
     }
 
     .stat-label {
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.85);
-      margin-top: 6px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      color: var(--gray);
+      margin: 0;
     }
 
-    .stat-divider {
-      width: 1px;
-      height: 50px;
-      background: rgba(255, 255, 255, 0.3);
+    /* COURSES SECTION */
+    .courses-section {
+      padding: 100px 0;
+      background: var(--white);
     }
 
-    /* Cursos Section */
-    .cursos-section {
-      padding: 100px 20px;
-      background: white;
+    .course-filters {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
     }
 
-    .cursos-grid {
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--light);
+      border: 2px solid transparent;
+      border-radius: 50px;
+      color: var(--gray);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn mat-icon {
+      font-size: 18px;
+    }
+
+    .filter-btn:hover {
+      background: rgba(0, 123, 255, 0.1);
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .filter-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: var(--white);
+    }
+
+    .filter-btn.active mat-icon {
+      color: var(--white);
+    }
+
+    .courses-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 32px;
+      margin-bottom: 48px;
     }
 
-    .curso-card {
-      background: white;
+    .course-card {
+      background: var(--white);
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .curso-card:hover {
+    .course-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     }
 
-    .curso-header {
+    .course-header {
       height: 180px;
       display: flex;
       align-items: center;
@@ -652,20 +906,20 @@ import { AcademiaService } from 'src/app/services/academia.service';
       position: relative;
     }
 
-    .curso-header mat-icon {
+    .course-header mat-icon {
       font-size: 80px;
       width: 80px;
       height: 80px;
-      color: white;
+      color: var(--white);
       opacity: 0.9;
     }
 
-    .curso-badge {
+    .course-badge {
       position: absolute;
       top: 16px;
       right: 16px;
       background: rgba(0, 0, 0, 0.7);
-      color: white;
+      color: var(--white);
       padding: 6px 14px;
       border-radius: 50px;
       font-size: 11px;
@@ -673,123 +927,98 @@ import { AcademiaService } from 'src/app/services/academia.service';
       text-transform: uppercase;
     }
 
-    .curso-body {
+    .course-body {
       padding: 24px;
     }
 
-    .curso-body h3 {
+    .course-body h3 {
       font-size: 20px;
       font-weight: 800;
-      color: #1e293b;
+      color: #212529;
       margin: 0 0 12px;
     }
 
-    .curso-body p {
-      color: #64748b;
+    .course-body p {
+      color: var(--gray);
       font-size: 14px;
       line-height: 1.6;
       margin: 0 0 20px;
     }
 
-    .curso-footer {
+    .course-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gray);
+      font-size: 13px;
+    }
+
+    .meta-item mat-icon {
+      font-size: 16px;
+      color: var(--blue);
+    }
+
+    .course-rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .stars-small {
+      display: flex;
+      gap: 2px;
+    }
+
+    .stars-small mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      color: var(--yellow);
+    }
+
+    .rating-count {
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    .course-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding-top: 20px;
-      border-top: 2px solid #f1f5f9;
+      border-top: 2px solid var(--light);
     }
 
-    .curso-precio {
+    .course-price {
       font-size: 28px;
       font-weight: 900;
-      color: #dc2626;
+      color: var(--red);
     }
 
-    .btn-ver {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-      transition: all 0.3s;
-    }
-
-    .btn-ver:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
-    }
-
-    .btn-ver mat-icon {
-      font-size: 18px;
-    }
-
-    /* Loading & Empty States */
-    .loading-state, .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 20px;
-      text-align: center;
-      background: #f8fafc;
-      border-radius: 16px;
-    }
-
-    .loading-icon {
-      font-size: 48px;
-      color: #f97316;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .loading-state p, .empty-state p {
-      color: #64748b;
-      margin: 16px 0 0;
-      font-size: 16px;
-    }
-
-    .empty-state mat-icon {
-      font-size: 64px;
-      color: #cbd5e1;
-      margin-bottom: 16px;
-    }
-
-    .empty-state h3 {
-      font-size: 22px;
-      font-weight: 800;
-      color: #1e293b;
-      margin: 0 0 8px;
-    }
-
-    .empty-state .btn-primary {
-      margin-top: 24px;
-    }
-
-    /* Features Section */
+    /* FEATURES SECTION */
     .features-section {
-      padding: 100px 20px;
-      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      padding: 100px 0;
+      background: var(--light);
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 32px;
     }
 
     .feature-card {
-      text-align: center;
+      background: var(--white);
       padding: 40px 24px;
-      background: white;
       border-radius: 20px;
+      text-align: center;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
       transition: transform 0.3s, box-shadow 0.3s;
     }
@@ -811,116 +1040,31 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .feature-icon mat-icon {
       font-size: 40px;
-      color: white;
+      color: var(--white);
     }
 
-    .feature-icon.bg-orange {
-      background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-      box-shadow: 0 12px 24px rgba(220, 38, 38, 0.3);
-    }
-
-    .feature-icon.bg-blue {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      box-shadow: 0 12px 24px rgba(59, 130, 246, 0.3);
-    }
-
-    .feature-icon.bg-green {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-      box-shadow: 0 12px 24px rgba(34, 197, 94, 0.3);
-    }
-
-    .feature-icon.bg-purple {
-      background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
-      box-shadow: 0 12px 24px rgba(168, 85, 247, 0.3);
-    }
+    .feature-red { background: var(--red); }
+    .feature-blue { background: var(--blue); }
+    .feature-yellow { background: var(--yellow); }
 
     .feature-card h3 {
       font-size: 22px;
       font-weight: 800;
-      color: #1e293b;
+      color: #212529;
       margin: 0 0 12px;
     }
 
     .feature-card p {
       font-size: 15px;
-      color: #64748b;
+      color: var(--gray);
       line-height: 1.6;
       margin: 0;
     }
 
-    /* Steps Section */
-    .steps-section {
-      padding: 100px 20px;
-      background: white;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-    }
-
-    .step-card {
-      text-align: center;
-      padding: 40px 24px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-      position: relative;
-    }
-
-    .step-number {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 24px;
-      font-weight: 900;
-      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
-    }
-
-    .step-icon {
-      width: 100px;
-      height: 100px;
-      margin: 20px auto;
-      background: linear-gradient(135deg, #fef3c7 0%, #ffedd5 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .step-icon mat-icon {
-      font-size: 50px;
-      color: #f97316;
-    }
-
-    .step-card h3 {
-      font-size: 22px;
-      font-weight: 800;
-      color: #1e293b;
-      margin: 0 0 12px;
-    }
-
-    .step-card p {
-      font-size: 15px;
-      color: #64748b;
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* Testimonials Section */
+    /* TESTIMONIALS SECTION */
     .testimonials-section {
-      padding: 100px 20px;
-      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      padding: 100px 0;
+      background: var(--white);
     }
 
     .testimonials-grid {
@@ -930,15 +1074,15 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .testimonial-card {
-      background: white;
+      background: var(--white);
       padding: 32px;
       border-radius: 20px;
-      border: 2px solid #e2e8f0;
+      border: 2px solid var(--light);
       transition: all 0.3s;
     }
 
     .testimonial-card:hover {
-      border-color: #f97316;
+      border-color: var(--blue);
       transform: translateY(-4px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
@@ -950,17 +1094,19 @@ import { AcademiaService } from 'src/app/services/academia.service';
       margin-bottom: 20px;
     }
 
-    .testimonial-avatar {
+    .testimonial-logo {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+      background: linear-gradient(135deg, var(--red) 0%, var(--blue) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 20px;
-      font-weight: 800;
+    }
+
+    .testimonial-logo mat-icon {
+      font-size: 30px;
+      color: var(--white);
     }
 
     .testimonial-info {
@@ -970,13 +1116,13 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .testimonial-info h4 {
       font-size: 18px;
       font-weight: 800;
-      color: #1e293b;
+      color: #212529;
       margin: 0 0 4px;
     }
 
     .testimonial-course {
       font-size: 14px;
-      color: #64748b;
+      color: var(--gray);
       margin: 0;
     }
 
@@ -987,39 +1133,137 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .testimonial-rating mat-icon {
       font-size: 20px;
-      color: #fbbf24;
+      color: var(--yellow);
     }
 
     .testimonial-text {
       font-size: 15px;
       color: #475569;
       line-height: 1.7;
-      margin: 0;
+      margin: 0 0 16px;
       font-style: italic;
     }
 
-    /* CTA Section */
-    .cta-section {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      padding: 100px 20px;
-      text-align: center;
+    .testimonial-uni {
+      font-size: 13px;
+      color: var(--blue);
+      font-weight: 600;
+      margin: 0;
     }
 
-    .cta-content {
-      max-width: 700px;
+    /* GUARANTEE SECTION */
+    .guarantee-section {
+      padding: 80px 0;
+      background: var(--light);
+    }
+
+    .guarantee-card {
+      background: var(--white);
+      padding: 48px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .guarantee-icon {
+      width: 100px;
+      height: 100px;
+      background: var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .guarantee-icon mat-icon {
+      font-size: 50px;
+      color: var(--white);
+    }
+
+    .guarantee-content h3 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #212529;
+      margin: 0 0 24px;
+    }
+
+    .guarantee-badges {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gray);
+      font-size: 15px;
+    }
+
+    .badge-item mat-icon {
+      color: var(--blue);
+      font-size: 20px;
+    }
+
+    /* FAQ SECTION */
+    .faq-section {
+      padding: 100px 0;
+      background: var(--white);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .faq-card {
+      background: var(--light);
+      padding: 32px;
+      border-radius: 16px;
+      border-left: 4px solid var(--blue);
+    }
+
+    .faq-card h4 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #212529;
+      margin: 0 0 12px;
+    }
+
+    .faq-card p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      padding: 100px 0;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
+    }
+
+    .cta-card {
+      text-align: center;
+      max-width: 800px;
       margin: 0 auto;
     }
 
-    .cta-content h2 {
+    .cta-card h2 {
       font-size: 42px;
       font-weight: 900;
-      color: white;
+      color: var(--white);
       margin: 0 0 16px;
     }
 
-    .cta-content p {
+    .cta-card p {
       font-size: 18px;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.95);
       margin: 0 0 40px;
     }
 
@@ -1030,30 +1274,26 @@ import { AcademiaService } from 'src/app/services/academia.service';
       flex-wrap: wrap;
     }
 
-    /* Footer - Estilo Khan Academy Profesional */
+    /* FOOTER */
     .landing-footer {
-      background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+      background: var(--light);
       color: #212529;
-      border-top: 1px solid #e9ecef;
     }
 
     .footer-top {
-      background: linear-gradient(135deg, #0056b3 0%, #007bff 50%, #0099ff 100%);
+      background: var(--blue);
       padding: 80px 0;
     }
 
     .footer-cta {
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
     }
 
     .footer-cta h2 {
       font-size: 42px;
       font-weight: 900;
-      color: white;
+      color: var(--white);
       margin: 0 0 16px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .footer-cta p {
@@ -1066,63 +1306,11 @@ import { AcademiaService } from 'src/app/services/academia.service';
       display: flex;
       gap: 16px;
       justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-cta-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 32px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.3s;
-      background: #ffc107;
-      color: #212529;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-cta-primary:hover {
-      background: #ffca2c;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
-    }
-
-    .btn-cta-primary mat-icon {
-      color: #212529;
-    }
-
-    .btn-cta-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 32px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.3s;
-      background: white;
-      color: #007bff;
-      border: 2px solid white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-cta-secondary:hover {
-      background: rgba(255, 255, 255, 0.9);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-cta-secondary mat-icon {
-      color: #007bff;
     }
 
     .footer-main {
       padding: 80px 0 60px;
-      background: white;
+      background: var(--white);
     }
 
     .footer-grid {
@@ -1141,31 +1329,27 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .logo-icon {
       width: 50px;
       height: 50px;
-      background: linear-gradient(135deg, #dc3545 0%, #ff4757 100%);
+      background: var(--red);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
     }
 
     .logo-icon mat-icon {
       font-size: 28px;
-      color: white;
+      color: var(--white);
     }
 
     .logo-text {
       font-size: 26px;
       font-weight: 900;
-      background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
+      color: var(--blue);
     }
 
     .brand-tagline {
       font-size: 15px;
-      color: #6c757d;
+      color: var(--gray);
       line-height: 1.8;
       margin: 0 0 24px;
     }
@@ -1183,7 +1367,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
       align-items: center;
       justify-content: center;
       transition: all 0.3s;
-      border: 2px solid #e9ecef;
+      border: 2px solid var(--light);
     }
 
     .social-link mat-icon {
@@ -1191,73 +1375,25 @@ import { AcademiaService } from 'src/app/services/academia.service';
       transition: color 0.3s;
     }
 
-    .social-link.facebook {
-      background: #f0f2f5;
-    }
+    .social-link.facebook { background: #f0f2f5; }
+    .social-link.facebook:hover { background: #1877f2; }
+    .social-link.facebook:hover mat-icon { color: var(--white); }
+    .social-link.facebook mat-icon { color: #1877f2; }
 
-    .social-link.facebook:hover {
-      background: #1877f2;
-      border-color: #1877f2;
-    }
+    .social-link.instagram { background: #f0f2f5; }
+    .social-link.instagram:hover { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .social-link.instagram:hover mat-icon { color: var(--white); }
+    .social-link.instagram mat-icon { color: #dc2743; }
 
-    .social-link.facebook mat-icon {
-      color: #1877f2;
-    }
+    .social-link.youtube { background: #f0f2f5; }
+    .social-link.youtube:hover { background: #ff0000; }
+    .social-link.youtube:hover mat-icon { color: var(--white); }
+    .social-link.youtube mat-icon { color: #ff0000; }
 
-    .social-link.facebook:hover mat-icon {
-      color: white;
-    }
-
-    .social-link.instagram {
-      background: #f0f2f5;
-    }
-
-    .social-link.instagram:hover {
-      background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      border-color: #dc2743;
-    }
-
-    .social-link.instagram mat-icon {
-      color: #dc2743;
-    }
-
-    .social-link.instagram:hover mat-icon {
-      color: white;
-    }
-
-    .social-link.youtube {
-      background: #f0f2f5;
-    }
-
-    .social-link.youtube:hover {
-      background: #ff0000;
-      border-color: #ff0000;
-    }
-
-    .social-link.youtube mat-icon {
-      color: #ff0000;
-    }
-
-    .social-link.youtube:hover mat-icon {
-      color: white;
-    }
-
-    .social-link.whatsapp {
-      background: #f0f2f5;
-    }
-
-    .social-link.whatsapp:hover {
-      background: #25D366;
-      border-color: #25D366;
-    }
-
-    .social-link.whatsapp mat-icon {
-      color: #25D366;
-    }
-
-    .social-link.whatsapp:hover mat-icon {
-      color: white;
-    }
+    .social-link.whatsapp { background: #f0f2f5; }
+    .social-link.whatsapp:hover { background: #25D366; }
+    .social-link.whatsapp:hover mat-icon { color: var(--white); }
+    .social-link.whatsapp mat-icon { color: #25D366; }
 
     .footer-column h4 {
       font-size: 15px;
@@ -1279,15 +1415,14 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .footer-list a {
-      color: #6c757d;
+      color: var(--gray);
       text-decoration: none;
       font-size: 15px;
       transition: all 0.3s;
-      display: inline-block;
     }
 
     .footer-list a:hover {
-      color: #007bff;
+      color: var(--blue);
       transform: translateX(5px);
     }
 
@@ -1300,37 +1435,36 @@ import { AcademiaService } from 'src/app/services/academia.service';
       align-items: center;
       gap: 12px;
       margin-bottom: 16px;
-      color: #6c757d;
+      color: var(--gray);
       font-size: 15px;
     }
 
     .contact-row mat-icon {
-      color: #007bff;
+      color: var(--blue);
       font-size: 20px;
     }
 
     .contact-row a {
-      color: #6c757d;
+      color: var(--gray);
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .contact-row a:hover {
-      color: #007bff;
+      color: var(--blue);
     }
 
     .payment-info {
       padding-top: 24px;
-      border-top: 1px solid #e9ecef;
+      border-top: 1px solid var(--light);
     }
 
     .payment-title {
       display: block;
       font-size: 13px;
-      color: #6c757d;
+      color: var(--gray);
       margin-bottom: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .payment-icons {
@@ -1344,21 +1478,20 @@ import { AcademiaService } from 'src/app/services/academia.service';
       border-radius: 8px;
       font-size: 13px;
       font-weight: 700;
-      text-transform: uppercase;
     }
 
     .payment-icon-yape {
-      background: linear-gradient(135deg, #742194 0%, #9333ea 100%);
-      color: white;
+      background: linear-gradient(135deg, #742194, #9333ea);
+      color: var(--white);
     }
 
     .payment-icon-bcp {
-      background: linear-gradient(135deg, #00A9E0 0%, #0288d1 100%);
-      color: white;
+      background: linear-gradient(135deg, #00A9E0, #0288d1);
+      color: var(--white);
     }
 
     .footer-bottom {
-      background: #f8f9fa;
+      background: var(--light);
       padding: 40px 0;
       border-top: 1px solid #e9ecef;
     }
@@ -1368,25 +1501,18 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .copyright {
-      color: #6c757d;
+      color: var(--gray);
       font-size: 14px;
       margin: 0 0 24px;
     }
 
     .developer-badge {
       display: inline-block;
-      background: white;
+      background: var(--white);
       padding: 24px 32px;
       border-radius: 16px;
       border: 2px solid #e9ecef;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s;
-    }
-
-    .developer-badge:hover {
-      border-color: #007bff;
-      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.15);
-      transform: translateY(-2px);
     }
 
     .dev-info {
@@ -1398,14 +1524,12 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .dev-label {
       font-size: 14px;
-      color: #6c757d;
+      color: var(--gray);
     }
 
     .dev-name {
       font-size: 18px;
-      background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--blue);
       font-weight: 900;
     }
 
@@ -1413,14 +1537,13 @@ import { AcademiaService } from 'src/app/services/academia.service';
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: #ffc107;
+      color: var(--yellow);
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
       padding: 8px 16px;
       background: rgba(255, 193, 7, 0.1);
       border-radius: 8px;
-      transition: all 0.3s;
       margin-bottom: 12px;
     }
 
@@ -1428,19 +1551,21 @@ import { AcademiaService } from 'src/app/services/academia.service';
       font-size: 18px;
     }
 
-    .dev-contact:hover {
-      background: rgba(255, 193, 7, 0.2);
-      color: #ffca2c;
-    }
-
     .dev-tagline {
       font-size: 13px;
-      color: #6c757d;
+      color: var(--gray);
       margin: 0;
       font-style: italic;
     }
 
-    /* Responsive */
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
     @media (max-width: 768px) {
       .hero-title {
         font-size: 36px;
@@ -1450,45 +1575,98 @@ import { AcademiaService } from 'src/app/services/academia.service';
         font-size: 16px;
       }
 
-      .hero-actions {
+      .hero-actions,
+      .hero-benefits {
         flex-direction: column;
         align-items: center;
-      }
-
-      .btn-primary, .btn-secondary, .btn-large {
-        width: 100%;
-        max-width: 300px;
-        justify-content: center;
-      }
-
-      .hero-stats {
-        flex-direction: column;
-        gap: 24px;
-        padding: 24px;
-      }
-
-      .stat-divider {
-        width: 40px;
-        height: 1px;
       }
 
       .section-title {
         font-size: 32px;
       }
 
-      .cursos-grid, .features-grid, .testimonials-grid, .steps-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-content {
+      .footer-grid {
         grid-template-columns: 1fr;
         gap: 32px;
       }
+
+      .stats-grid,
+      .features-grid,
+      .testimonials-grid,
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .guarantee-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .guarantee-badges {
+        justify-content: center;
+      }
+
+      .footer-cta-actions,
+      .cta-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-large {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+
+    /* LOADING & EMPTY STATES */
+    .loading-state, .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .loading-state mat-icon {
+      font-size: 48px;
+      color: var(--blue);
+      animation: spin 1s linear infinite;
+    }
+
+    .empty-state mat-icon {
+      font-size: 64px;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+
+    .loading-state p, .empty-state p {
+      color: var(--gray);
+      margin: 16px 0 0;
+      font-size: 16px;
+    }
+
+    .empty-state h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #212529;
+      margin: 0 0 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .text-center {
+      text-align: center;
     }
   `]
 })
 export class InicioComponent implements OnInit {
   cursos: any[] = [];
+  cursosFiltrados: any[] = [];
+  filtroActual: string = 'todos';
   loading = true;
 
   constructor(
@@ -1512,6 +1690,7 @@ export class InicioComponent implements OnInit {
       icono: this.getIconoPorCategoria(curso.categoria)
     }));
 
+    this.cursosFiltrados = this.cursos;
     this.loading = false;
   }
 
@@ -1528,12 +1707,24 @@ export class InicioComponent implements OnInit {
 
   getGradientePorCategoria(categoria: string): string {
     const gradientes: { [key: string]: string } = {
-      'Matemáticas': 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
-      'Física': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-      'Química': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-      'Biología': 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
-      'Letras': 'linear-gradient(135deg, #a855f7 0%, #9333ea 100%)'
+      'Matemáticas': 'linear-gradient(135deg, #dc3545 0%, #ff4757 100%)',
+      'Física': 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
+      'Química': 'linear-gradient(135deg, #ffc107 0%, #ffca2c 100%)',
+      'Biología': 'linear-gradient(135deg, #28a745 0%, #218838 100%)',
+      'Letras': 'linear-gradient(135deg, #6f42c1 0%, #5930a8 100%)'
     };
-    return gradientes[categoria] || 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)';
+    return gradientes[categoria] || 'linear-gradient(135deg, #dc3545 0%, #ff4757 100%)';
+  }
+
+  ngOnChanges(): void {
+    this.aplicarFiltro();
+  }
+
+  aplicarFiltro(): void {
+    if (this.filtroActual === 'todos') {
+      this.cursosFiltrados = this.cursos;
+    } else {
+      this.cursosFiltrados = this.cursos.filter(curso => curso.categoria === this.filtroActual);
+    }
   }
 }
