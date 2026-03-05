@@ -214,13 +214,69 @@ export class AcademiaService {
     return this.getContenidos().filter(c => c.tema === tema);
   }
 
-  addContenido(contenido: Contenido): void {
-    contenido.id = this.getContenidos().length > 0 
-      ? Math.max(...this.getContenidos().map(c => c.id)) + 1 
-      : 1;
-    const currentContenidos = this.getContenidos();
-    currentContenidos.push(contenido);
-    this.contenidosSubject.next([...currentContenidos]);
+  async addContenido(contenido: Contenido): Promise<void> {
+    try {
+      // Guardar en Firebase
+      const { getFirestore, collection, doc, setDoc, Timestamp } = await import('firebase/firestore');
+      const firestore = getFirestore();
+      
+      const id = doc(collection(firestore, 'contenidos')).id;
+      const contenidoRef = doc(firestore, 'contenidos', id);
+      
+      await setDoc(contenidoRef, {
+        ...contenido,
+        id: parseInt(id),
+        fecha: new Date().toISOString(),
+        createdAt: Timestamp.now()
+      });
+
+      console.log('✅ Contenido guardado en Firebase:', id);
+      
+      // Recargar contenidos después de guardar
+      await this.cargarContenidosDesdeFirebase();
+    } catch (error) {
+      console.error('❌ Error guardando contenido:', error);
+      // Fallback local
+      contenido.id = this.getContenidos().length > 0
+        ? Math.max(...this.getContenidos().map(c => c.id)) + 1
+        : 1;
+      const currentContenidos = this.getContenidos();
+      currentContenidos.push(contenido);
+      this.contenidosSubject.next([...currentContenidos]);
+    }
+  }
+
+  async cargarContenidosDesdeFirebase(): Promise<void> {
+    try {
+      const { getFirestore, collection, getDocs } = await import('firebase/firestore');
+      const firestore = getFirestore();
+      
+      const querySnapshot = await getDocs(collection(firestore, 'contenidos'));
+      
+      if (querySnapshot.empty) {
+        console.log('⚠️ No hay contenidos en Firebase');
+        return;
+      }
+
+      const contenidos: Contenido[] = querySnapshot.docs.map((doc: any) => {
+        const data = doc.data();
+        return {
+          id: data['id'] || parseInt(doc.id),
+          cursoId: data['cursoId'],
+          cursoNombre: data['cursoNombre'],
+          tema: data['tema'],
+          nombre: data['nombre'],
+          tipo: data['tipo'],
+          url: data['url'],
+          fecha: data['fecha']
+        };
+      });
+
+      console.log('✅ Contenidos cargados desde Firebase:', contenidos.length);
+      this.contenidosSubject.next(contenidos);
+    } catch (error) {
+      console.error('❌ Error cargando contenidos desde Firebase:', error);
+    }
   }
 
   deleteContenido(id: number): void {

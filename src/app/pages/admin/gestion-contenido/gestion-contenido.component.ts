@@ -835,6 +835,13 @@ export class GestionContenidoComponent {
   ) {
     this.contenidos = this.academiaService.getContenidos();
     this.contenidosFiltrados = this.contenidos;
+    this.cargarContenidos();
+  }
+
+  async cargarContenidos(): Promise<void> {
+    await this.academiaService.cargarContenidosDesdeFirebase();
+    this.contenidos = this.academiaService.getContenidos();
+    this.contenidosFiltrados = this.contenidos;
   }
 
   getConteos(tipo: string): number {
@@ -864,11 +871,12 @@ export class GestionContenidoComponent {
       width: '500px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result) {
-        this.academiaService.addContenido(result);
-        this.contenidos = this.academiaService.getContenidos();
+        await this.academiaService.addContenido(result);
+        await this.cargarContenidos();
         this.filtrarContenidos();
+        alert('✅ Contenido guardado exitosamente');
       }
     });
   }
