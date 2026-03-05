@@ -124,7 +124,9 @@ import { CarritoService, CursoCarrito } from 'src/app/services/carrito.service';
       }
 
       .carrito-info mat-icon {
-        font-size: 28px;
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
         color: #16a34a;
       }
 
@@ -293,10 +295,18 @@ import { CarritoService, CursoCarrito } from 'src/app/services/carrito.service';
         position: absolute;
         top: 12px;
         left: 12px;
+        width: 40px !important;
+        height: 40px !important;
         background: white !important;
         color: #f97316 !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         transition: all 0.3s;
+      }
+
+      .btn-agregar-carrito mat-icon {
+        font-size: 20px !important;
+        width: 20px !important;
+        height: 20px !important;
       }
 
       .btn-agregar-carrito:hover {
