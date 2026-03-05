@@ -297,20 +297,29 @@ import { CarritoService, CursoCarrito } from 'src/app/services/carrito.service';
         left: 12px;
         width: 40px !important;
         height: 40px !important;
-        background: white !important;
-        color: #f97316 !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #f97316 0%, #dc2626 100%) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
         transition: all 0.3s;
+        border: 2px solid rgba(255, 255, 255, 0.3);
       }
 
       .btn-agregar-carrito mat-icon {
         font-size: 20px !important;
         width: 20px !important;
         height: 20px !important;
+        color: white !important;
       }
 
       .btn-agregar-carrito:hover {
         transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(249, 115, 22, 0.6);
+        background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%) !important;
+      }
+
+      .btn-agregar-carrito.mat-mdc-button-disabled {
+        background: #94a3b8 !important;
+        color: #cbd5e1 !important;
       }
 
       .curso-body { 
