@@ -21,7 +21,7 @@ import { MatriculaManualDialog } from './matricula-manual-dialog';
   imports: [
     MatIconModule, MatButtonModule, MatChipsModule, MatDialogModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule,
-    FormsModule, CommonModule, DatePipe, MatCardModule, MatriculaManualDialog
+    FormsModule, CommonModule, DatePipe
   ],
   template: `
     <div class="matriculas-container">
@@ -31,10 +31,6 @@ import { MatriculaManualDialog } from './matricula-manual-dialog';
           <h1>Gestión de Matrículas</h1>
           <p>Administra las solicitudes de inscripción de estudiantes</p>
         </div>
-        <button mat-raised-button color="primary" (click)="openMatriculaManual()">
-          <mat-icon>person_add</mat-icon>
-          <span>Matricular Estudiante</span>
-        </button>
       </div>
 
       <!-- Tarjetas de Estadísticas -->
@@ -440,7 +436,7 @@ export class GestionMatriculasComponent {
     });
   }
 
-  openMatriculaManual(): void {\n    const dialogRef = this.dialog.open(MatriculaManualDialog, {\n      width: '600px',\n      data: { cursos: this.academiaService.getCursos() }\n    });\n\n    dialogRef.afterClosed().subscribe(async result => {\n      if (result) {\n        const solicitud: Solicitud = {\n          id: '',\n          nombre: result.nombre,\n          email: result.email,\n          dni: result.dni,\n          telefono: result.telefono,\n          cursoId: result.cursoId,\n          cursoNombre: result.cursoNombre,\n          precio: result.precio,\n          fecha: new Date().toISOString(),\n          estado: 'pendiente',\n          password: result.password\n        };\n        await this.matriculasService.addSolicitud(solicitud);\n        alert('? Solicitud creada. Ahora aprueba la matr�cula.');\n        await this.cargarSolicitudes();\n      }\n    });\n  }\n\n  async rechazarSolicitud(solicitud: Solicitud): Promise<void> {
+  async rechazarSolicitud(solicitud: Solicitud): Promise<void> {
     if (confirm('¿Estás seguro de rechazar esta solicitud?')) {
       if (solicitud.id) {
         await this.matriculasService.updateEstado(solicitud.id, 'rechazado');
@@ -899,3 +895,4 @@ export class AprobarSolicitudDialog {
     // El servicio se encargará de registrar al estudiante
   }
 }
+
