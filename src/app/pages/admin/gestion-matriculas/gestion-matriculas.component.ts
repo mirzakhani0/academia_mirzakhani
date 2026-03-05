@@ -13,6 +13,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatriculasService, Solicitud } from 'src/app/services/matriculas.service';
 import { AuthService, Estudiante } from 'src/app/services/auth.service';
 import { AcademiaService, Curso } from 'src/app/services/academia.service';
+import { MatriculaManualDialog } from './matricula-manual-dialog';
 
 @Component({
   selector: 'app-gestion-matriculas',
@@ -20,7 +21,7 @@ import { AcademiaService, Curso } from 'src/app/services/academia.service';
   imports: [
     MatIconModule, MatButtonModule, MatChipsModule, MatDialogModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule,
-    FormsModule, CommonModule, DatePipe
+    FormsModule, CommonModule, DatePipe, MatCardModule, MatriculaManualDialog
   ],
   template: `
     <div class="matriculas-container">
@@ -30,6 +31,10 @@ import { AcademiaService, Curso } from 'src/app/services/academia.service';
           <h1>Gestión de Matrículas</h1>
           <p>Administra las solicitudes de inscripción de estudiantes</p>
         </div>
+        <button mat-raised-button color="primary" (click)="openMatriculaManual()">
+          <mat-icon>person_add</mat-icon>
+          <span>Matricular Estudiante</span>
+        </button>
       </div>
 
       <!-- Tarjetas de Estadísticas -->
