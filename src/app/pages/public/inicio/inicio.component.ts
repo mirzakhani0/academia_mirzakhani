@@ -433,6 +433,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .landing-page {
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+      background: #ffffff;
     }
 
     .container {
@@ -449,22 +450,21 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .section-title {
       font-size: 42px;
       font-weight: 900;
-      color: #1e293b;
+      color: #dc3545;
       margin: 0 0 16px;
     }
 
     .section-subtitle {
       font-size: 18px;
-      color: #64748b;
+      color: #6c757d;
       margin: 0;
     }
 
     .text-gradient {
-      background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
+      background: linear-gradient(135deg, #dc3545 0%, #ff4757 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
 
     /* Hero Section */
