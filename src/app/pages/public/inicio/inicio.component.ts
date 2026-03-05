@@ -269,70 +269,104 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
       <!-- Footer -->
       <footer class="landing-footer">
-        <div class="footer-content">
-          <div class="footer-column footer-about">
-            <h3>Academia MIRZAKHANI</h3>
-            <p class="footer-tagline">Educación de calidad al alcance de todos</p>
-            <div class="footer-social">
-              <a href="#" class="social-icon" title="Facebook">
-                <mat-icon>facebook</mat-icon>
-              </a>
-              <a href="#" class="social-icon" title="Instagram">
-                <mat-icon>favorite</mat-icon>
-              </a>
-              <a href="#" class="social-icon" title="YouTube">
-                <mat-icon>play_circle</mat-icon>
-              </a>
-              <a href="https://wa.me/51965890475" class="social-icon" title="WhatsApp">
-                <mat-icon>phone</mat-icon>
-              </a>
-            </div>
-          </div>
-
-          <div class="footer-column footer-contact">
-            <h4>📞 Contacto</h4>
-            <p><mat-icon>phone</mat-icon><span>+51 965 890 475</span></p>
-            <p><mat-icon>email</mat-icon><a href="mailto:contacto@mirzakhani.com">contacto@mirzakhani.com</a></p>
-            <p><mat-icon>location_on</mat-icon><span>Perú</span></p>
-          </div>
-
-          <div class="footer-column footer-payment">
-            <h4>💳 Métodos de Pago</h4>
-            <div class="payment-methods">
-              <div class="payment-item">
-                <mat-icon class="payment-icon yape">wallet</mat-icon>
-                <span>Yape</span>
+        <div class="footer-main">
+          <div class="container">
+            <div class="footer-grid">
+              <!-- Columna 1: Brand -->
+              <div class="footer-brand">
+                <h3 class="brand-name">
+                  <mat-icon>school</mat-icon>
+                  Academia MIRZAKHANI
+                </h3>
+                <p class="brand-description">
+                  Educación de calidad al alcance de todos. Potencia tu aprendizaje con cursos diseñados por expertos.
+                </p>
+                <div class="social-links">
+                  <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook">
+                    <mat-icon>facebook</mat-icon>
+                  </a>
+                  <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram">
+                    <mat-icon>favorite</mat-icon>
+                  </a>
+                  <a href="https://youtube.com" target="_blank" class="social-link" title="YouTube">
+                    <mat-icon>play_circle</mat-icon>
+                  </a>
+                  <a href="https://wa.me/51965890475" target="_blank" class="social-link whatsapp" title="WhatsApp">
+                    <mat-icon>phone</mat-icon>
+                  </a>
+                </div>
               </div>
-              <div class="payment-item">
-                <mat-icon class="payment-icon bcp">account_balance</mat-icon>
-                <span>BCP</span>
+
+              <!-- Columna 2: Enlaces Rápidos -->
+              <div class="footer-links">
+                <h4>Cursos</h4>
+                <ul>
+                  <li><a routerLink="/cursos-public">Ver todos los cursos</a></li>
+                  <li><a routerLink="/cursos-public">Matemáticas</a></li>
+                  <li><a routerLink="/cursos-public">Física</a></li>
+                  <li><a routerLink="/cursos-public">Química</a></li>
+                </ul>
+              </div>
+
+              <!-- Columna 3: Compañía -->
+              <div class="footer-links">
+                <h4>Compañía</h4>
+                <ul>
+                  <li><a routerLink="/inicio">Inicio</a></li>
+                  <li><a routerLink="/authentication/login">Iniciar Sesión</a></li>
+                  <li><a href="mailto:contacto@mirzakhani.com">Contáctanos</a></li>
+                </ul>
+              </div>
+
+              <!-- Columna 4: Contacto -->
+              <div class="footer-contact">
+                <h4>Contacto</h4>
+                <div class="contact-item">
+                  <mat-icon>phone</mat-icon>
+                  <span>+51 965 890 475</span>
+                </div>
+                <div class="contact-item">
+                  <mat-icon>email</mat-icon>
+                  <a href="mailto:contacto@mirzakhani.com">contacto@mirzakhani.com</a>
+                </div>
+                <div class="contact-item">
+                  <mat-icon>location_on</mat-icon>
+                  <span>Perú</span>
+                </div>
+                <div class="payment-methods">
+                  <span class="payment-label">Métodos de pago:</span>
+                  <div class="payment-badges">
+                    <span class="payment-badge yape">Yape</span>
+                    <span class="payment-badge bcp">BCP</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Bottom Bar -->
         <div class="footer-bottom">
-          <div class="footer-bottom-content">
-            <p class="copyright">
-              © 2026 Academia MIRZAKHANI. Todos los derechos reservados.
-            </p>
-
-            <!-- Developer Credits -->
-            <div class="developer-credits">
-              <p class="credits-title">
-                💻 Desarrollado por <strong>CARLOS</strong>
+          <div class="container">
+            <div class="footer-bottom-content">
+              <p class="copyright">
+                © 2026 Academia MIRZAKHANI. Todos los derechos reservados.
               </p>
-              <p class="credits-contact">
-                📧 ¿Quieres un proyecto similar?
+              
+              <!-- Developer Credits -->
+              <div class="developer-credits">
+                <p class="credits-text">
+                  Desarrollado con ❤️ por <strong class="developer-name">CARLOS</strong>
+                </p>
                 <a href="mailto:llanovilca79@gmail.com" class="credits-email">
+                  <mat-icon>email</mat-icon>
                   llanovilca79@gmail.com
                 </a>
-              </p>
+                <p class="credits-tagline">
+                  ¿Quieres un proyecto similar? ¡Contáctame!
+                </p>
+              </div>
             </div>
-
-            <p class="footer-legal">
-              DERECHOS RESERVADOS @MIRZAKHANI - 2026
-            </p>
           </div>
         </div>
       </footer>
