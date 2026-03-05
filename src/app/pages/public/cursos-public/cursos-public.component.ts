@@ -490,19 +490,28 @@ export class CursosPublicComponent implements OnInit {
   }
 
   openSolicitud(curso: any): void {
-    const dialogRef = this.dialog.open(SolicitudInscripcionDialog, {
+    const mensaje = this.getMensajeWhatsAppInscripcion(curso);
+    
+    const dialogRef = this.dialog.open(ConfirmacionWhatsAppDialog, {
       width: '600px',
-      data: { curso }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        result.cursoNombre = curso.titulo;
-        result.precio = curso.precio;
-        this.matriculasService.addSolicitud(result);
-        alert('✅ Solicitud enviada con éxito. El administrador revisará tu pago.');
+      data: {
+        curso: curso,
+        mensaje: mensaje
       }
     });
+  }
+
+  getMensajeWhatsAppInscripcion(curso: any): string {
+    let mensaje = '*🎓 SOLICITUD DE INSCRIPCIÓN - Academia MIRZAKHANI* 🎓\n\n';
+    mensaje += `📚 *Curso seleccionado:*\n${curso.titulo}\n\n`;
+    mensaje += `💰 *Monto total:* S/ ${curso.precio.toFixed(2)}\n\n`;
+    mensaje += `*📱 Métodos de Pago:*\n\n`;
+    mensaje += `*Yape/Plin:* 926 454 594 (JOSE LLAN*)\n\n`;
+    mensaje += `*BCP:* 191-XXXXXXXX-0-XX\n\n`;
+    mensaje += `*📝 Nota:* Adjuntaré la captura del pago por este medio para recibir mis accesos de inmediato.\n\n`;
+    mensaje += `*📲 WhatsApp de soporte:* +51 965 890 475`;
+    
+    return encodeURIComponent(mensaje);
   }
 }
 
@@ -577,6 +586,113 @@ export class CursosPublicComponent implements OnInit {
   `]
 })
 export class CarritoDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+}
+
+// Diálogo de Confirmación WhatsApp (Inscripción Rápida)
+@Component({
+  selector: 'confirmacion-whatsapp-dialog',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule, MatIconModule, CommonModule],
+  template: `
+    <h2 mat-dialog-title>
+      <mat-icon>whatsapp</mat-icon>
+      Solicitud de Inscripción
+    </h2>
+    <mat-dialog-content>
+      <div class="curso-info">
+        <h3>{{data.curso.titulo}}</h3>
+        <p class="curso-precio">S/ {{data.curso.precio}}</p>
+      </div>
+      <p>Se abrirá WhatsApp con tu solicitud lista para enviar.</p>
+      <div class="whatsapp-info">
+        <mat-icon>chat</mat-icon>
+        <span>Serás redirigido a WhatsApp para enviar tu solicitud</span>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <a [href]="'https://wa.me/51965890475?text=' + data.mensaje" 
+         target="_blank"
+         mat-raised-button 
+         color="success">
+        <mat-icon>whatsapp</mat-icon>
+        Abrir WhatsApp (+51 965 890 475)
+      </a>
+    </mat-dialog-actions>
+  `,
+  styles: [`
+    mat-dialog-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #1e293b;
+    }
+    
+    mat-dialog-title mat-icon {
+      color: #2563eb;
+      font-size: 28px;
+    }
+
+    .curso-info {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #f59e0b;
+      text-align: center;
+    }
+
+    .curso-info h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #92400e;
+      margin: 0 0 8px;
+    }
+
+    .curso-precio {
+      font-size: 24px;
+      font-weight: 900;
+      color: #dc2626;
+      margin: 0;
+    }
+
+    mat-dialog-content p {
+      color: #64748b;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+
+    .whatsapp-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: #f0fdf4;
+      border-radius: 12px;
+      border: 2px solid #22c55e;
+      margin-top: 16px;
+    }
+
+    .whatsapp-info mat-icon {
+      color: #16a34a;
+      font-size: 32px;
+    }
+
+    .whatsapp-info span {
+      color: #166534;
+      font-size: 14px;
+    }
+
+    a[mat-raised-button] {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+  `]
+})
+export class ConfirmacionWhatsAppDialog {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 }
 

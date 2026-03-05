@@ -75,23 +75,31 @@ export class CarritoService {
     const descuento = this.getDescuento();
     const total = this.getTotal();
 
-    let mensaje = '🎓 *SOLICITUD DE INSCRIPCIÓN - Academia MIRZAKHANI* 🎓\n\n';
-    mensaje += '📚 *Cursos seleccionados:*\n';
-
-    cursos.forEach((curso, index) => {
-      mensaje += `${index + 1}. ${curso.nombre} - S/ ${curso.precio}\n`;
-    });
-
-    mensaje += `\n💰 *Subtotal:* S/ ${subtotal.toFixed(2)}`;
-
-    if (descuento > 0) {
-      mensaje += `\n🎉 *Descuento:* ${this.getDescuentoPorcentaje()}% - S/ ${(subtotal * descuento).toFixed(2)}`;
+    let mensaje = '*🎓 SOLICITUD DE INSCRIPCIÓN - Academia MIRZAKHANI* 🎓\n\n';
+    
+    if (cursos.length === 1) {
+      mensaje += `📚 *Curso seleccionado:*\n${cursos[0].nombre}\n\n`;
+    } else {
+      mensaje += `📚 *Cursos seleccionados:*\n`;
+      cursos.forEach((curso, index) => {
+        mensaje += `${index + 1}. ${curso.nombre}\n`;
+      });
+      mensaje += `\n`;
     }
 
-    mensaje += `\n✅ *TOTAL A PAGAR:* S/ ${total.toFixed(2)}`;
-    mensaje += `\n\n📱 *Métodos de Pago:*\n- Yape: 926 454 594\n- BCP: 191-XXXXXXXX-0-XX`;
-    mensaje += `\n\n📝 *Nota:* Una vez realizado el pago, enviaré el comprobante para recibir mis credenciales de acceso.`;
-    mensaje += `\n\n📲 *WhatsApp:* +51 965 890 475`;
+    mensaje += `💰 *Monto total:* S/ ${total.toFixed(2)}\n`;
+
+    if (descuento > 0) {
+      mensaje += `🎉 *¡Descuento aplicado:* ${this.getDescuentoPorcentaje()}%\n\n`;
+    } else {
+      mensaje += `\n`;
+    }
+
+    mensaje += `*📱 Métodos de Pago:*\n\n`;
+    mensaje += `*Yape/Plin:* 926 454 594 (JOSE LLAN*)\n\n`;
+    mensaje += `*BCP:* 191-XXXXXXXX-0-XX\n\n`;
+    mensaje += `*📝 Nota:* Adjuntaré la captura del pago por este medio para recibir mis accesos de inmediato.\n\n`;
+    mensaje += `*📲 WhatsApp de soporte:* +51 965 890 475`;
 
     return encodeURIComponent(mensaje);
   }
