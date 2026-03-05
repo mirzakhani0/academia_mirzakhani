@@ -15,24 +15,23 @@ import { AcademiaService } from 'src/app/services/academia.service';
       <!-- HERO SECTION -->
       <section class="hero">
         <div class="hero-bg">
-          <div class="hero-gradient"></div>
           <div class="hero-pattern"></div>
         </div>
         <div class="container hero-content">
-          <span class="hero-badge">🎓 +1000 ESTUDIANTES CONFÍAN EN NOSOTROS</span>
+          <span class="hero-badge">🎓 +1000 ESTUDIANTES PREPARÁNDOSE PARA SU FUTURO</span>
           <h1 class="hero-title">
-            Domina las <span class="text-red">Matemáticas</span> y <span class="text-blue">Física</span>
+            Tu Camino a la <span class="text-gradient">Medicina</span> e <span class="text-gradient-blue">Ingeniería</span> Comienza Aquí
           </h1>
           <p class="hero-subtitle">
-            Clases grabadas, material PDF y ejercicios resueltos por expertos. 
-            Acceso de por vida a todos los cursos.
+            Preparación preuniversitaria desde nivel básico hasta avanzado. 
+            Clases grabadas, material PDF, ejercicios resueltos y simulacros de examen.
           </p>
           
           <div class="hero-rating">
             <div class="stars">
               <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
             </div>
-            <span class="rating-text"><strong>4.9/5</strong> basado en 500+ reseñas</span>
+            <span class="rating-text"><strong>4.9/5</strong> basado en 500+ estudiantes aprobados</span>
           </div>
           
           <div class="hero-actions">
@@ -49,19 +48,19 @@ import { AcademiaService } from 'src/app/services/academia.service';
           <div class="hero-benefits">
             <div class="benefit">
               <mat-icon>check_circle</mat-icon>
-              <span>Acceso de por vida</span>
+              <span>Desde básico hasta avanzado</span>
             </div>
             <div class="benefit">
               <mat-icon>check_circle</mat-icon>
-              <span>Certificado incluido</span>
+              <span>Simulacros de examen</span>
             </div>
             <div class="benefit">
               <mat-icon>check_circle</mat-icon>
-              <span>Soporte 24/7</span>
+              <span>Profesores expertos</span>
             </div>
             <div class="benefit">
               <mat-icon>check_circle</mat-icon>
-              <span>Pago 100% seguro</span>
+              <span>Garantía de ingreso</span>
             </div>
           </div>
         </div>
@@ -90,65 +89,175 @@ import { AcademiaService } from 'src/app/services/academia.service';
               </div>
             </div>
             <div class="stat-card">
-              <div class="stat-icon stat-yellow">
+              <div class="stat-icon stat-green">
                 <mat-icon>trending_up</mat-icon>
               </div>
               <div class="stat-content">
-                <h3 class="stat-number">95%</h3>
-                <p class="stat-label">Tasa de Aprobación</p>
+                <h3 class="stat-number">92%</h3>
+                <p class="stat-label">Ingresan a la Universidad</p>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon stat-red">
-                <mat-icon>schedule</mat-icon>
+                <mat-icon>emoji_events</mat-icon>
               </div>
               <div class="stat-content">
-                <h3 class="stat-number">24/7</h3>
-                <p class="stat-label">Soporte Disponible</p>
+                <h3 class="stat-number">15+</h3>
+                <p class="stat-label">Años de Experiencia</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- CURSOS CON FILTROS -->
+      <!-- ÁREAS DE ESTUDIO -->
+      <section class="areas-section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title text-red">Elige tu Camino</h2>
+            <p class="section-subtitle">Tres áreas especializadas para tu éxito universitario</p>
+          </div>
+          
+          <div class="areas-grid">
+            <!-- Medicina -->
+            <div class="area-card area-medicina">
+              <div class="area-icon">
+                <mat-icon>favorite</mat-icon>
+              </div>
+              <h3>Medicina</h3>
+              <p>Preparación completa para ingresar a la facultad de medicina. Biología, química, física y razonamiento verbal.</p>
+              <ul class="area-features">
+                <li><mat-icon>check</mat-icon>Anatomía y fisiología</li>
+                <li><mat-icon>check</mat-icon>Biología celular</li>
+                <li><mat-icon>check</mat-icon>Química orgánica</li>
+                <li><mat-icon>check</mat-icon>Simulacros tipo ADMISIÓN</li>
+              </ul>
+              <a routerLink="/cursos-public" class="btn btn-red">
+                <span>Ver Cursos de Medicina</span>
+              </a>
+            </div>
+
+            <!-- Ingeniería -->
+            <div class="area-card area-ingenieria">
+              <div class="area-icon">
+                <mat-icon>engineering</mat-icon>
+              </div>
+              <h3>Ingeniería</h3>
+              <p>Domina las matemáticas y física necesarias para cualquier rama de la ingeniería. Desde civil hasta sistemas.</p>
+              <ul class="area-features">
+                <li><mat-icon>check</mat-icon>Cálculo diferencial e integral</li>
+                <li><mat-icon>check</mat-icon>Álgebra lineal</li>
+                <li><mat-icon>check</mat-icon>Física mecánica</li>
+                <li><mat-icon>check</mat-icon>Razonamiento matemático</li>
+              </ul>
+              <a routerLink="/cursos-public" class="btn btn-blue">
+                <span>Ver Cursos de Ingeniería</span>
+              </a>
+            </div>
+
+            <!-- Preuniversitario -->
+            <div class="area-card area-pre">
+              <div class="area-icon">
+                <mat-icon>menu_book</mat-icon>
+              </div>
+              <h3>Preuniversitario</h3>
+              <p>Preparación integral desde nivel básico. Ideal si empezamos desde cero y quieres llegar al nivel avanzado.</p>
+              <ul class="area-features">
+                <li><mat-icon>check</mat-icon>Nivelación académica</li>
+                <li><mat-icon>check</mat-icon>Técnicas de estudio</li>
+                <li><mat-icon>check</mat-icon>Simulacros semanales</li>
+                <li><mat-icon>check</mat-icon>Orientación vocacional</li>
+              </ul>
+              <a routerLink="/cursos-public" class="btn btn-green">
+                <span>Ver Cursos Preuniversitarios</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURSOS DESTACADOS -->
       <section class="courses-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title text-red">Nuestros Cursos</h2>
-            <p class="section-subtitle">Explora nuestra variedad de cursos disponibles</p>
+            <h2 class="section-title text-blue">Cursos Más Populares</h2>
+            <p class="section-subtitle">Los favoritos de nuestros estudiantes</p>
           </div>
           
-          <!-- Filtros -->
-          <div class="course-filters">
-            <button class="filter-btn" [class.active]="filtroActual === 'todos'" (click)="filtroActual = 'todos'">
-              <mat-icon>view_list</mat-icon>
-              <span>Todos</span>
-            </button>
-            <button class="filter-btn" [class.active]="filtroActual === 'Matemáticas'" (click)="filtroActual = 'Matemáticas'">
-              <mat-icon>functions</mat-icon>
-              <span>Matemáticas</span>
-            </button>
-            <button class="filter-btn" [class.active]="filtroActual === 'Física'" (click)="filtroActual = 'Física'">
-              <mat-icon>rocket_launch</mat-icon>
-              <span>Física</span>
-            </button>
-            <button class="filter-btn" [class.active]="filtroActual === 'Química'" (click)="filtroActual = 'Química'">
-              <mat-icon>biotech</mat-icon>
-              <span>Química</span>
-            </button>
-          </div>
-
-          <!-- Cursos Grid -->
-          <div class="courses-grid" *ngIf="!loading && cursosFiltrados.length > 0">
-            <div class="course-card" *ngFor="let curso of cursosFiltrados">
-              <div class="course-header" [style.background]="curso.gradiente">
-                <mat-icon>{{curso.icono}}</mat-icon>
-                <span class="course-badge">{{curso.categoria}}</span>
+          <div class="courses-grid">
+            <div class="course-card">
+              <div class="course-header course-medicina">
+                <mat-icon>biotech</mat-icon>
+                <span class="course-badge">Medicina</span>
               </div>
               <div class="course-body">
-                <h3>{{curso.nombre}}</h3>
-                <p>{{curso.descripcion}}</p>
+                <h3>Biología Celular y Molecular</h3>
+                <p>Desde la célula hasta los sistemas complejos. Ideal para postulantes a medicina.</p>
+                <div class="course-meta">
+                  <div class="meta-item">
+                    <mat-icon>play_circle</mat-icon>
+                    <span>25 clases</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon>description</mat-icon>
+                    <span>8 PDFs</span>
+                  </div>
+                </div>
+                <div class="course-level">
+                  <span class="level-badge level-basico">Básico</span>
+                  <span class="level-badge level-avanzado">Avanzado</span>
+                </div>
+                <div class="course-footer">
+                  <div class="course-price">S/ 45</div>
+                  <a routerLink="/cursos-public" class="btn btn-blue btn-small">
+                    <mat-icon>visibility</mat-icon>
+                    <span>Ver Más</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card">
+              <div class="course-header course-ingenieria">
+                <mat-icon>functions</mat-icon>
+                <span class="course-badge">Ingeniería</span>
+              </div>
+              <div class="course-body">
+                <h3>Cálculo Diferencial Completo</h3>
+                <p>Límites, derivadas y aplicaciones. Esencial para ingeniería.</p>
+                <div class="course-meta">
+                  <div class="meta-item">
+                    <mat-icon>play_circle</mat-icon>
+                    <span>30 clases</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon>description</mat-icon>
+                    <span>10 PDFs</span>
+                  </div>
+                </div>
+                <div class="course-level">
+                  <span class="level-badge level-basico">Básico</span>
+                  <span class="level-badge level-intermedio">Intermedio</span>
+                  <span class="level-badge level-avanzado">Avanzado</span>
+                </div>
+                <div class="course-footer">
+                  <div class="course-price">S/ 55</div>
+                  <a routerLink="/cursos-public" class="btn btn-blue btn-small">
+                    <mat-icon>visibility</mat-icon>
+                    <span>Ver Más</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card">
+              <div class="course-header course-pre">
+                <mat-icon>quiz</mat-icon>
+                <span class="course-badge">Preuniversitario</span>
+              </div>
+              <div class="course-body">
+                <h3>Razonamiento Matemático Intensivo</h3>
+                <p>Problemas tipo examen de admisión. Técnicas y trucos resolutivos.</p>
                 <div class="course-meta">
                   <div class="meta-item">
                     <mat-icon>play_circle</mat-icon>
@@ -156,17 +265,15 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   </div>
                   <div class="meta-item">
                     <mat-icon>description</mat-icon>
-                    <span>5 PDFs</span>
+                    <span>15 PDFs</span>
                   </div>
                 </div>
-                <div class="course-rating">
-                  <div class="stars-small">
-                    <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
-                  </div>
-                  <span class="rating-count">(120)</span>
+                <div class="course-level">
+                  <span class="level-badge level-basico">Básico</span>
+                  <span class="level-badge level-avanzado">Avanzado</span>
                 </div>
                 <div class="course-footer">
-                  <div class="course-price">S/ {{curso.precio}}</div>
+                  <div class="course-price">S/ 35</div>
                   <a routerLink="/cursos-public" class="btn btn-blue btn-small">
                     <mat-icon>visibility</mat-icon>
                     <span>Ver Más</span>
@@ -175,15 +282,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
               </div>
             </div>
           </div>
-
-          <!-- Empty State -->
-          <div class="empty-state" *ngIf="!loading && cursosFiltrados.length === 0">
-            <mat-icon>inventory_2</mat-icon>
-            <h3>No hay cursos en esta categoría</h3>
-            <p>Prueba con otro filtro</p>
-          </div>
           
-          <div class="text-center" *ngIf="!loading && cursosFiltrados.length > 0">
+          <div class="text-center">
             <a routerLink="/cursos-public" class="btn btn-red btn-large">
               <mat-icon>school</mat-icon>
               <span>Ver Todos los Cursos</span>
@@ -192,55 +292,48 @@ import { AcademiaService } from 'src/app/services/academia.service';
         </div>
       </section>
 
-      <!-- POR QUÉ ELEGIRNOS -->
-      <section class="features-section">
+      <!-- METODOLOGÍA -->
+      <section class="methodology-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title text-blue">¿Por qué estudiar con nosotros?</h2>
-            <p class="section-subtitle">Una experiencia de aprendizaje completa</p>
+            <h2 class="section-title text-red">Nuestra Metodología</h2>
+            <p class="section-subtitle">Así garantizamos tu ingreso a la universidad</p>
           </div>
-          <div class="features-grid">
-            <div class="feature-card">
-              <div class="feature-icon feature-red">
-                <mat-icon>video_library</mat-icon>
+          
+          <div class="methodology-steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h3>Evaluación Inicial</h3>
+                <p>Identificamos tu nivel actual y las áreas que necesitas reforzar.</p>
               </div>
-              <h3>Clases en HD</h3>
-              <p>Grabadas por expertos con la mejor calidad de video y audio.</p>
             </div>
-            <div class="feature-card">
-              <div class="feature-icon feature-blue">
-                <mat-icon>description</mat-icon>
+            <div class="step-connector"></div>
+            
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h3>Plan Personalizado</h3>
+                <p>Diseñamos una ruta de aprendizaje desde lo básico hasta lo avanzado.</p>
               </div>
-              <h3>Material PDF</h3>
-              <p>Teoría completa, ejercicios propuestos y 500+ páginas de contenido.</p>
             </div>
-            <div class="feature-card">
-              <div class="feature-icon feature-yellow">
-                <mat-icon>schedule</mat-icon>
+            <div class="step-connector"></div>
+            
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h3>Clases y Práctica</h3>
+                <p>Accede a clases grabadas, material PDF y ejercicios resueltos.</p>
               </div>
-              <h3>Acceso de Por Vida</h3>
-              <p>Sin límites de tiempo. Repasa las veces que necesites.</p>
             </div>
-            <div class="feature-card">
-              <div class="feature-icon feature-red">
-                <mat-icon>emoji_events</mat-icon>
+            <div class="step-connector"></div>
+            
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h3>Simulacros</h3>
+                <p>Evaluaciones tipo examen de admisión para medir tu progreso.</p>
               </div>
-              <h3>Certificado</h3>
-              <p>Obtén un certificado de finalización validable.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon feature-blue">
-                <mat-icon>chat</mat-icon>
-              </div>
-              <h3>Soporte 24/7</h3>
-              <p>Resolvemos tus dudas por WhatsApp en cualquier momento.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon feature-yellow">
-                <mat-icon>security</mat-icon>
-              </div>
-              <h3>Pago Seguro</h3>
-              <p>Yape, BCP. Garantía de satisfacción de 7 días.</p>
             </div>
           </div>
         </div>
@@ -250,65 +343,66 @@ import { AcademiaService } from 'src/app/services/academia.service';
       <section class="testimonials-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title text-red">Lo Que Dicen Nuestros Estudiantes</h2>
-            <p class="section-subtitle">Historias de éxito reales</p>
+            <h2 class="section-title text-blue">Historias de Éxito</h2>
+            <p class="section-subtitle">Estudiantes que lograron ingresar a la universidad</p>
           </div>
+          
           <div class="testimonials-grid">
             <div class="testimonial-card">
               <div class="testimonial-header">
-                <div class="testimonial-logo">
-                  <mat-icon>person</mat-icon>
+                <div class="testimonial-logo medicina">
+                  <mat-icon>favorite</mat-icon>
                 </div>
                 <div class="testimonial-info">
-                  <h4>Juan Pérez</h4>
-                  <p class="testimonial-course">Álgebra Lineal</p>
-                </div>
-                <div class="testimonial-rating">
-                  <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
+                  <h4>María González</h4>
+                  <p class="testimonial-uni">Ingresó a Medicina - UNMSM</p>
                 </div>
               </div>
               <p class="testimonial-text">
-                "Aprobé mi examen de álgebra gracias a las clases. El material PDF es increíble y los ejercicios resueltos me ayudaron mucho."
+                "Empecé desde cero en química y biología. Los cursos van desde lo básico hasta lo avanzado. ¡Logré ingresar a mi primera opción!"
               </p>
-              <p class="testimonial-uni">Universidad Nacional de Ingeniería</p>
+              <div class="testimonial-courses">
+                <span class="course-tag">Biología Celular</span>
+                <span class="course-tag">Química Orgánica</span>
+              </div>
             </div>
 
             <div class="testimonial-card">
               <div class="testimonial-header">
-                <div class="testimonial-logo">
-                  <mat-icon>person</mat-icon>
+                <div class="testimonial-logo ingenieria">
+                  <mat-icon>engineering</mat-icon>
                 </div>
                 <div class="testimonial-info">
-                  <h4>María López</h4>
-                  <p class="testimonial-course">Física I</p>
-                </div>
-                <div class="testimonial-rating">
-                  <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
+                  <h4>Carlos Ramírez</h4>
+                  <p class="testimonial-uni">Ingresó a Ingeniería Civil - PUCP</p>
                 </div>
               </div>
               <p class="testimonial-text">
-                "Las clases de física me ayudaron a entender temas que en la U no lograba comprender. El acceso de por vida es una gran ventaja."
+                "El curso de cálculo es increíble. Explican desde lo más básico hasta problemas complejos. Los simulacros me ayudaron mucho."
               </p>
-              <p class="testimonial-uni">PUCP - Ingeniería Civil</p>
+              <div class="testimonial-courses">
+                <span class="course-tag">Cálculo I</span>
+                <span class="course-tag">Álgebra</span>
+              </div>
             </div>
 
             <div class="testimonial-card">
               <div class="testimonial-header">
-                <div class="testimonial-logo">
-                  <mat-icon>person</mat-icon>
+                <div class="testimonial-logo pre">
+                  <mat-icon>menu_book</mat-icon>
                 </div>
                 <div class="testimonial-info">
-                  <h4>Carlos Ruiz</h4>
-                  <p class="testimonial-course">Cálculo Diferencial</p>
-                </div>
-                <div class="testimonial-rating">
-                  <mat-icon *ngFor="let star of [1,2,3,4,5]">star</mat-icon>
+                  <h4>Ana Torres</h4>
+                  <p class="testimonial-uni">Ingresó a Ingeniería de Sistemas - UNI</p>
                 </div>
               </div>
               <p class="testimonial-text">
-                "Puedo repasar cuando quiera antes de mis exámenes. El soporte por WhatsApp es rápido y siempre resuelven mis dudas."
+                "El preuniversitario me dio las bases que necesitaba. Los profesores explican súper bien y el material es completo."
               </p>
-              <p class="testimonial-uni">UNI - Ingeniería Mecánica</p>
+              <div class="testimonial-courses">
+                <span class="course-tag">Razonamiento Matemático</span>
+                <span class="course-tag">Física</span>
+              </div>
             </div>
           </div>
         </div>
@@ -319,26 +413,23 @@ import { AcademiaService } from 'src/app/services/academia.service';
         <div class="container">
           <div class="guarantee-card">
             <div class="guarantee-icon">
-              <mat-icon>security</mat-icon>
+              <mat-icon>verified</mat-icon>
             </div>
             <div class="guarantee-content">
-              <h3>Tu compra está 100% protegida</h3>
+              <h3>Garantía de Satisfacción</h3>
+              <p>Si no estás satisfecho con tu primer curso, te devolvemos tu dinero en los primeros 7 días. Sin preguntas.</p>
               <div class="guarantee-badges">
                 <div class="badge-item">
-                  <mat-icon>lock</mat-icon>
-                  <span>Pago Seguro SSL</span>
+                  <mat-icon>security</mat-icon>
+                  <span>Pago 100% Seguro</span>
                 </div>
                 <div class="badge-item">
-                  <mat-icon>email</mat-icon>
-                  <span>Email Inmediato</span>
+                  <mat-icon>access_time</mat-icon>
+                  <span>Acceso Inmediato</span>
                 </div>
                 <div class="badge-item">
-                  <mat-icon>favorite</mat-icon>
-                  <span>Garantía 7 días</span>
-                </div>
-                <div class="badge-item">
-                  <mat-icon>support</mat-icon>
-                  <span>Soporte Dedicado</span>
+                  <mat-icon>support_agent</mat-icon>
+                  <span>Soporte 24/7</span>
                 </div>
               </div>
             </div>
@@ -350,33 +441,33 @@ import { AcademiaService } from 'src/app/services/academia.service';
       <section class="faq-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title text-blue">Preguntas Frecuentes</h2>
-            <p class="section-subtitle">Resolvemos tus dudas</p>
+            <h2 class="section-title text-red">Preguntas Frecuentes</h2>
+            <p class="section-subtitle">Resolvemos tus dudas sobre la preparación</p>
           </div>
           <div class="faq-grid">
             <div class="faq-card">
-              <h4>¿Cómo accedo a los cursos después de pagar?</h4>
-              <p>Después de aprobar tu matrícula, recibirás un email con tus credenciales en menos de 24 horas. Podrás acceder desde cualquier dispositivo.</p>
+              <h4>¿Los cursos son desde nivel básico?</h4>
+              <p>¡Sí! Todos nuestros cursos están diseñados para llevarte desde el nivel más básico hasta el nivel avanzado necesario para ingresar a la universidad.</p>
             </div>
             <div class="faq-card">
-              <h4>¿Los cursos tienen certificado?</h4>
-              <p>¡Sí! Todos nuestros cursos incluyen un certificado de finalización que puedes validar y compartir en LinkedIn.</p>
+              <h4>¿Qué incluye cada curso?</h4>
+              <p>Cada curso incluye clases grabadas en HD, material PDF descargable, ejercicios resueltos, ejercicios propuestos y acceso a simulacros.</p>
             </div>
             <div class="faq-card">
-              <h4>¿Puedo pagar con tarjeta de crédito?</h4>
-              <p>Aceptamos Yape, BCP y transferencias bancarias. Todos los pagos son seguros y verificados.</p>
+              <h4>¿Cuánto tiempo tengo acceso?</h4>
+              <p>Tienes acceso de por vida. Puedes repasar las clases las veces que necesites, incluso después de ingresar a la universidad.</p>
             </div>
             <div class="faq-card">
-              <h4>¿Qué pasa si no estoy satisfecho?</h4>
-              <p>Ofrecemos garantía de satisfacción de 7 días. Si no estás contento, te devolvemos tu dinero sin preguntas.</p>
+              <h4>¿Los cursos son específicos para mi universidad?</h4>
+              <p>Nuestros cursos cubren el contenido necesario para todas las universidades del país. Incluye ejercicios tipo ADMISIÓN, UNI, PUCP, etc.</p>
             </div>
             <div class="faq-card">
-              <h4>¿Por cuánto tiempo tengo acceso?</h4>
-              <p>¡De por vida! Una vez que compras un curso, puedes acceder a él las veces que quieras, sin límites de tiempo.</p>
+              <h4>¿Puedo pagar en cuotas?</h4>
+              <p>Aceptamos Yape, BCP y transferencias bancarias. Cada curso es un pago único sin mensualidades.</p>
             </div>
             <div class="faq-card">
               <h4>¿Hay soporte si tengo dudas?</h4>
-              <p>Sí, nuestro soporte está disponible 24/7 por WhatsApp. Respondemos en menos de 1 hora.</p>
+              <p>Sí, nuestro equipo de profesores está disponible por WhatsApp para resolver tus dudas de cada curso.</p>
             </div>
           </div>
         </div>
@@ -387,12 +478,12 @@ import { AcademiaService } from 'src/app/services/academia.service';
         <div class="footer-top">
           <div class="container">
             <div class="footer-cta">
-              <h2>¿Listo para empezar?</h2>
-              <p>Únete a nuestra comunidad de estudiantes</p>
+              <h2>¿Listo para empezar tu preparación?</h2>
+              <p>Únete a los más de 1000 estudiantes que ya están preparándose para ingresar a la universidad</p>
               <div class="footer-cta-actions">
                 <a routerLink="/cursos-public" class="btn btn-yellow btn-large">
                   <mat-icon>school</mat-icon>
-                  <span>Ver Cursos</span>
+                  <span>Ver Cursos Disponibles</span>
                 </a>
               </div>
             </div>
@@ -409,7 +500,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   </div>
                   <span class="logo-text">MIRZAKHANI</span>
                 </div>
-                <p class="brand-tagline">Educación de calidad al alcance de todos</p>
+                <p class="brand-tagline">Preparación preuniversitaria de calidad para Medicina e Ingeniería</p>
                 <div class="social-links">
                   <a href="https://facebook.com" target="_blank" class="social-link facebook">
                     <mat-icon>facebook</mat-icon>
@@ -427,22 +518,22 @@ import { AcademiaService } from 'src/app/services/academia.service';
               </div>
 
               <div class="footer-column">
-                <h4>Materias</h4>
+                <h4>Medicina</h4>
                 <ul class="footer-list">
-                  <li><a routerLink="/cursos-public">Matemáticas</a></li>
-                  <li><a routerLink="/cursos-public">Física</a></li>
-                  <li><a routerLink="/cursos-public">Química</a></li>
-                  <li><a routerLink="/cursos-public">Biología</a></li>
+                  <li><a routerLink="/cursos-public">Biología Celular</a></li>
+                  <li><a routerLink="/cursos-public">Química Orgánica</a></li>
+                  <li><a routerLink="/cursos-public">Anatomía</a></li>
+                  <li><a routerLink="/cursos-public">Física Médica</a></li>
                 </ul>
               </div>
 
               <div class="footer-column">
-                <h4>Compañía</h4>
+                <h4>Ingeniería</h4>
                 <ul class="footer-list">
-                  <li><a routerLink="/inicio">Inicio</a></li>
-                  <li><a routerLink="/cursos-public">Cursos</a></li>
-                  <li><a routerLink="/authentication/login">Ingresar</a></li>
-                  <li><a href="mailto:contacto@mirzakhani.com">Contacto</a></li>
+                  <li><a routerLink="/cursos-public">Cálculo I</a></li>
+                  <li><a routerLink="/cursos-public">Álgebra Lineal</a></li>
+                  <li><a routerLink="/cursos-public">Física Mecánica</a></li>
+                  <li><a routerLink="/cursos-public">Razonamiento Matemático</a></li>
                 </ul>
               </div>
 
@@ -463,7 +554,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   </div>
                 </div>
                 <div class="payment-info">
-                  <span class="payment-title">Aceptamos:</span>
+                  <span class="payment-title">Métodos de pago:</span>
                   <div class="payment-icons">
                     <span class="payment-icon-yape">Yape</span>
                     <span class="payment-icon-bcp">BCP</span>
@@ -488,12 +579,13 @@ import { AcademiaService } from 'src/app/services/academia.service';
   styles: [`
     /* COLORES PRINCIPALES */
     :host {
-      --red: #dc3545;
-      --blue: #007bff;
-      --yellow: #ffc107;
+      --red: #dc2626;
+      --blue: #2563eb;
+      --yellow: #fbbf24;
+      --green: #059669;
       --white: #ffffff;
-      --gray: #6c757d;
-      --light: #f8f9fa;
+      --gray: #6b7280;
+      --light: #f3f4f6;
     }
 
     /* ESTILOS GENERALES */
@@ -523,6 +615,21 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .text-red { color: var(--red); }
     .text-blue { color: var(--blue); }
     .text-yellow { color: var(--yellow); }
+    .text-green { color: var(--green); }
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-blue {
+      background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     .section-subtitle {
       font-size: 18px;
@@ -553,38 +660,43 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .btn-yellow {
       background: var(--yellow);
-      color: #212529;
-      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+      color: #1f2937;
+      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
     }
 
     .btn-yellow:hover {
-      background: #ffca2c;
+      background: #f59e0b;
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
     }
 
     .btn-blue {
       background: var(--blue);
       color: var(--white);
-      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
 
     .btn-blue:hover {
-      background: #0056b3;
+      background: #1d4ed8;
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
     }
 
     .btn-red {
       background: var(--red);
       color: var(--white);
-      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
     }
 
     .btn-red:hover {
-      background: #c82333;
+      background: #b91c1c;
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: var(--white);
     }
 
     .btn-white {
@@ -596,17 +708,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .btn-white:hover {
       background: rgba(255, 255, 255, 0.9);
       transform: translateY(-3px);
-    }
-
-    .btn-white-outline {
-      background: transparent;
-      color: var(--white);
-      border: 3px solid var(--white);
-    }
-
-    .btn-white-outline:hover {
-      background: var(--white);
-      color: var(--blue);
     }
 
     .btn-large {
@@ -636,12 +737,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
       z-index: 0;
     }
 
-    .hero-gradient {
-      background: transparent;
-      width: 100%;
-      height: 100%;
-    }
-
     .hero-pattern {
       position: absolute;
       top: 0;
@@ -663,7 +758,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .hero-badge {
       display: inline-block;
       background: var(--yellow);
-      color: #212529;
+      color: #1f2937;
       padding: 8px 20px;
       border-radius: 50px;
       font-weight: 700;
@@ -673,7 +768,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .hero-title {
-      font-size: 64px;
+      font-size: 56px;
       font-weight: 900;
       color: var(--white);
       margin: 0 0 24px;
@@ -683,7 +778,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .hero-subtitle {
       font-size: 20px;
-      color: var(--white);
+      color: rgba(255, 255, 255, 0.95);
       margin: 0 0 48px;
       line-height: 1.6;
     }
@@ -785,12 +880,12 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .stat-red { background: var(--red); }
     .stat-blue { background: var(--blue); }
-    .stat-yellow { background: var(--yellow); }
+    .stat-green { background: var(--green); }
 
     .stat-number {
       font-size: 32px;
       font-weight: 900;
-      color: #212529;
+      color: #1f2937;
       margin: 0;
     }
 
@@ -800,52 +895,115 @@ import { AcademiaService } from 'src/app/services/academia.service';
       margin: 0;
     }
 
-    /* COURSES SECTION */
-    .courses-section {
+    /* AREAS SECTION */
+    .areas-section {
       padding: 100px 0;
       background: var(--white);
     }
 
-    .course-filters {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
     }
 
-    .filter-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: var(--light);
-      border: 2px solid transparent;
-      border-radius: 50px;
-      color: var(--gray);
-      font-weight: 600;
-      cursor: pointer;
+    .area-card {
+      background: var(--white);
+      padding: 40px 32px;
+      border-radius: 20px;
+      border: 2px solid var(--light);
+      text-align: center;
       transition: all 0.3s;
     }
 
-    .filter-btn mat-icon {
-      font-size: 18px;
+    .area-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     }
 
-    .filter-btn:hover {
-      background: rgba(0, 123, 255, 0.1);
-      border-color: var(--blue);
-      color: var(--blue);
+    .area-medicina:hover {
+      border-color: var(--red);
     }
 
-    .filter-btn.active {
-      background: var(--blue);
+    .area-ingenieria:hover {
       border-color: var(--blue);
+    }
+
+    .area-pre:hover {
+      border-color: var(--green);
+    }
+
+    .area-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .area-icon mat-icon {
+      font-size: 40px;
       color: var(--white);
     }
 
-    .filter-btn.active mat-icon {
-      color: var(--white);
+    .area-medicina .area-icon {
+      background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
+    }
+
+    .area-ingenieria .area-icon {
+      background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
+    }
+
+    .area-pre .area-icon {
+      background: linear-gradient(135deg, var(--green) 0%, #10b981 100%);
+    }
+
+    .area-card h3 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #1f2937;
+      margin: 0 0 16px;
+    }
+
+    .area-card > p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin: 0 0 24px;
+    }
+
+    .area-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px;
+      text-align: left;
+    }
+
+    .area-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 15px;
+      color: #374151;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .area-features li:last-child {
+      border-bottom: none;
+    }
+
+    .area-features mat-icon {
+      color: var(--green);
+      font-size: 20px;
+    }
+
+    /* COURSES SECTION */
+    .courses-section {
+      padding: 100px 0;
+      background: var(--light);
     }
 
     .courses-grid {
@@ -897,6 +1055,18 @@ import { AcademiaService } from 'src/app/services/academia.service';
       text-transform: uppercase;
     }
 
+    .course-medicina {
+      background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
+    }
+
+    .course-ingenieria {
+      background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
+    }
+
+    .course-pre {
+      background: linear-gradient(135deg, var(--green) 0%, #10b981 100%);
+    }
+
     .course-body {
       padding: 24px;
     }
@@ -904,7 +1074,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .course-body h3 {
       font-size: 20px;
       font-weight: 800;
-      color: #212529;
+      color: #1f2937;
       margin: 0 0 12px;
     }
 
@@ -934,28 +1104,34 @@ import { AcademiaService } from 'src/app/services/academia.service';
       color: var(--blue);
     }
 
-    .course-rating {
+    .course-level {
       display: flex;
-      align-items: center;
       gap: 8px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
-    .stars-small {
-      display: flex;
-      gap: 2px;
+    .level-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
-    .stars-small mat-icon {
-      font-size: 16px;
-      width: 16px;
-      height: 16px;
-      color: var(--yellow);
+    .level-basico {
+      background: #dbeafe;
+      color: #1d4ed8;
     }
 
-    .rating-count {
-      font-size: 13px;
-      color: var(--gray);
+    .level-intermedio {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .level-avanzado {
+      background: #dcfce7;
+      color: #059669;
     }
 
     .course-footer {
@@ -972,69 +1148,70 @@ import { AcademiaService } from 'src/app/services/academia.service';
       color: var(--red);
     }
 
-    /* FEATURES SECTION */
-    .features-section {
+    /* METHODOLOGY SECTION */
+    .methodology-section {
       padding: 100px 0;
-      background: var(--light);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-    }
-
-    .feature-card {
       background: var(--white);
-      padding: 40px 24px;
-      border-radius: 20px;
+    }
+
+    .methodology-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 200px;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-    }
-
-    .feature-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 24px;
-      border-radius: 20px;
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .feature-icon mat-icon {
-      font-size: 40px;
+      margin: 0 auto 16px;
+      font-size: 28px;
+      font-weight: 900;
       color: var(--white);
     }
 
-    .feature-red { background: var(--red); }
-    .feature-blue { background: var(--blue); }
-    .feature-yellow { background: var(--yellow); }
-
-    .feature-card h3 {
-      font-size: 22px;
+    .step-content h3 {
+      font-size: 18px;
       font-weight: 800;
-      color: #212529;
-      margin: 0 0 12px;
+      color: #1f2937;
+      margin: 0 0 8px;
     }
 
-    .feature-card p {
-      font-size: 15px;
+    .step-content p {
+      font-size: 14px;
       color: var(--gray);
-      line-height: 1.6;
       margin: 0;
+    }
+
+    .step-connector {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--blue) 100%);
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .step-connector {
+        display: block;
+      }
     }
 
     /* TESTIMONIALS SECTION */
     .testimonials-section {
       padding: 100px 0;
-      background: var(--white);
+      background: var(--light);
     }
 
     .testimonials-grid {
@@ -1067,7 +1244,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .testimonial-logo {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--red) 0%, var(--blue) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1079,6 +1255,18 @@ import { AcademiaService } from 'src/app/services/academia.service';
       color: var(--white);
     }
 
+    .testimonial-logo.medicina {
+      background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
+    }
+
+    .testimonial-logo.ingenieria {
+      background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
+    }
+
+    .testimonial-logo.pre {
+      background: linear-gradient(135deg, var(--green) 0%, #10b981 100%);
+    }
+
     .testimonial-info {
       flex: 1;
     }
@@ -1086,32 +1274,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .testimonial-info h4 {
       font-size: 18px;
       font-weight: 800;
-      color: #212529;
+      color: #1f2937;
       margin: 0 0 4px;
-    }
-
-    .testimonial-course {
-      font-size: 14px;
-      color: var(--gray);
-      margin: 0;
-    }
-
-    .testimonial-rating {
-      display: flex;
-      gap: 4px;
-    }
-
-    .testimonial-rating mat-icon {
-      font-size: 20px;
-      color: var(--yellow);
-    }
-
-    .testimonial-text {
-      font-size: 15px;
-      color: #475569;
-      line-height: 1.7;
-      margin: 0 0 16px;
-      font-style: italic;
     }
 
     .testimonial-uni {
@@ -1121,26 +1285,49 @@ import { AcademiaService } from 'src/app/services/academia.service';
       margin: 0;
     }
 
+    .testimonial-text {
+      font-size: 15px;
+      color: #374151;
+      line-height: 1.7;
+      margin: 0 0 16px;
+      font-style: italic;
+    }
+
+    .testimonial-courses {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .course-tag {
+      padding: 4px 12px;
+      background: var(--light);
+      border-radius: 20px;
+      font-size: 12px;
+      color: #374151;
+      font-weight: 600;
+    }
+
     /* GUARANTEE SECTION */
     .guarantee-section {
       padding: 80px 0;
-      background: var(--light);
+      background: var(--white);
     }
 
     .guarantee-card {
-      background: var(--white);
+      background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
       padding: 48px;
       border-radius: 20px;
       display: flex;
       align-items: center;
       gap: 32px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 60px rgba(37, 99, 235, 0.2);
     }
 
     .guarantee-icon {
       width: 100px;
       height: 100px;
-      background: var(--blue);
+      background: var(--white);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1150,14 +1337,25 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .guarantee-icon mat-icon {
       font-size: 50px;
-      color: var(--white);
+      color: var(--blue);
+    }
+
+    .guarantee-content {
+      flex: 1;
     }
 
     .guarantee-content h3 {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 900;
-      color: #212529;
-      margin: 0 0 24px;
+      color: var(--white);
+      margin: 0 0 16px;
+    }
+
+    .guarantee-content p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.95);
+      margin: 0 0 32px;
+      line-height: 1.6;
     }
 
     .guarantee-badges {
@@ -1170,19 +1368,20 @@ import { AcademiaService } from 'src/app/services/academia.service';
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--gray);
+      color: var(--white);
       font-size: 15px;
+      font-weight: 600;
     }
 
     .badge-item mat-icon {
-      color: var(--blue);
-      font-size: 20px;
+      color: var(--yellow);
+      font-size: 24px;
     }
 
     /* FAQ SECTION */
     .faq-section {
       padding: 100px 0;
-      background: var(--white);
+      background: var(--light);
     }
 
     .faq-grid {
@@ -1192,7 +1391,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .faq-card {
-      background: var(--light);
+      background: var(--white);
       padding: 32px;
       border-radius: 16px;
       border-left: 4px solid var(--blue);
@@ -1201,7 +1400,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .faq-card h4 {
       font-size: 18px;
       font-weight: 800;
-      color: #212529;
+      color: #1f2937;
       margin: 0 0 12px;
     }
 
@@ -1212,42 +1411,10 @@ import { AcademiaService } from 'src/app/services/academia.service';
       margin: 0;
     }
 
-    /* CTA SECTION */
-    .cta-section {
-      padding: 100px 0;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
-    }
-
-    .cta-card {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .cta-card h2 {
-      font-size: 42px;
-      font-weight: 900;
-      color: var(--white);
-      margin: 0 0 16px;
-    }
-
-    .cta-card p {
-      font-size: 18px;
-      color: rgba(255, 255, 255, 0.95);
-      margin: 0 0 40px;
-    }
-
-    .cta-actions {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
     /* FOOTER */
     .landing-footer {
-      background: var(--light);
-      color: #212529;
+      background: var(--white);
+      color: #1f2937;
     }
 
     .footer-top {
@@ -1280,7 +1447,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .footer-main {
       padding: 80px 0 60px;
-      background: var(--white);
     }
 
     .footer-grid {
@@ -1368,7 +1534,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .footer-column h4 {
       font-size: 15px;
       font-weight: 800;
-      color: #212529;
+      color: #1f2937;
       margin: 0 0 24px;
       text-transform: uppercase;
       letter-spacing: 0.8px;
@@ -1463,7 +1629,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .footer-bottom {
       background: var(--light);
       padding: 40px 0;
-      border-top: 1px solid #e9ecef;
+      border-top: 1px solid #e5e7eb;
     }
 
     .footer-bottom-content {
@@ -1495,38 +1661,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .dev-email:hover {
       text-decoration: underline;
-    }
-
-    /* CTA SECTION */
-    .cta-section {
-      padding: 100px 0;
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-    }
-
-    .cta-card {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .cta-card h2 {
-      font-size: 42px;
-      font-weight: 900;
-      color: var(--white);
-      margin: 0 0 16px;
-    }
-
-    .cta-card p {
-      font-size: 18px;
-      color: rgba(255, 255, 255, 0.95);
-      margin: 0 0 40px;
-    }
-
-    .cta-actions {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
     }
 
     /* RESPONSIVE */
@@ -1562,10 +1696,19 @@ import { AcademiaService } from 'src/app/services/academia.service';
       }
 
       .stats-grid,
-      .features-grid,
+      .areas-grid,
+      .courses-grid,
       .testimonials-grid,
       .faq-grid {
         grid-template-columns: 1fr;
+      }
+
+      .methodology-steps {
+        flex-direction: column;
+      }
+
+      .step-connector {
+        display: none;
       }
 
       .guarantee-card {
@@ -1577,8 +1720,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
         justify-content: center;
       }
 
-      .footer-cta-actions,
-      .cta-actions {
+      .footer-cta-actions {
         flex-direction: column;
         align-items: center;
       }
@@ -1608,7 +1750,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .empty-state mat-icon {
       font-size: 64px;
-      color: #cbd5e1;
+      color: #9ca3af;
       margin-bottom: 16px;
     }
 
@@ -1621,7 +1763,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .empty-state h3 {
       font-size: 22px;
       font-weight: 800;
-      color: #212529;
+      color: #1f2937;
       margin: 0 0 8px;
     }
 
@@ -1636,8 +1778,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
 })
 export class InicioComponent implements OnInit {
   cursos: any[] = [];
-  cursosFiltrados: any[] = [];
-  filtroActual: string = 'todos';
   loading = true;
 
   constructor(
@@ -1661,41 +1801,29 @@ export class InicioComponent implements OnInit {
       icono: this.getIconoPorCategoria(curso.categoria)
     }));
 
-    this.cursosFiltrados = this.cursos;
     this.loading = false;
   }
 
   getIconoPorCategoria(categoria: string): string {
     const iconos: { [key: string]: string } = {
+      'Medicina': 'biotech',
+      'Ingeniería': 'functions',
+      'Preuniversitario': 'quiz',
       'Matemáticas': 'functions',
       'Física': 'rocket_launch',
-      'Química': 'biotech',
-      'Biología': 'science',
-      'Letras': 'menu_book'
+      'Química': 'biotech'
     };
     return iconos[categoria] || 'school';
   }
 
   getGradientePorCategoria(categoria: string): string {
-    const gradientes: { [key: string]: string } = {
-      'Matemáticas': 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
-      'Física': 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)',
-      'Química': 'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)',
-      'Biología': 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
-      'Letras': 'linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%)'
-    };
-    return gradientes[categoria] || 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';
-  }
-
-  ngOnChanges(): void {
-    this.aplicarFiltro();
-  }
-
-  aplicarFiltro(): void {
-    if (this.filtroActual === 'todos') {
-      this.cursosFiltrados = this.cursos;
-    } else {
-      this.cursosFiltrados = this.cursos.filter(curso => curso.categoria === this.filtroActual);
+    if (categoria.includes('Medicina') || categoria.includes('Biología')) {
+      return 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';
+    } else if (categoria.includes('Ingeniería') || categoria.includes('Matemáticas')) {
+      return 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)';
+    } else if (categoria.includes('Preuniversitario')) {
+      return 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
     }
+    return 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';
   }
 }
