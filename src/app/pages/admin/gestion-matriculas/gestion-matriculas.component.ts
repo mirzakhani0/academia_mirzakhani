@@ -440,7 +440,7 @@ export class GestionMatriculasComponent {
     });
   }
 
-  async rechazarSolicitud(solicitud: Solicitud): Promise<void> {
+  openMatriculaManual(): void {\n    const dialogRef = this.dialog.open(MatriculaManualDialog, {\n      width: '600px',\n      data: { cursos: this.academiaService.getCursos() }\n    });\n\n    dialogRef.afterClosed().subscribe(async result => {\n      if (result) {\n        const solicitud: Solicitud = {\n          id: '',\n          nombre: result.nombre,\n          email: result.email,\n          dni: result.dni,\n          telefono: result.telefono,\n          cursoId: result.cursoId,\n          cursoNombre: result.cursoNombre,\n          precio: result.precio,\n          fecha: new Date().toISOString(),\n          estado: 'pendiente',\n          password: result.password\n        };\n        await this.matriculasService.addSolicitud(solicitud);\n        alert('? Solicitud creada. Ahora aprueba la matr�cula.');\n        await this.cargarSolicitudes();\n      }\n    });\n  }\n\n  async rechazarSolicitud(solicitud: Solicitud): Promise<void> {
     if (confirm('¿Estás seguro de rechazar esta solicitud?')) {
       if (solicitud.id) {
         await this.matriculasService.updateEstado(solicitud.id, 'rechazado');
