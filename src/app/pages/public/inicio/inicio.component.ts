@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { AcademiaService } from 'src/app/services/academia.service';
 
 @Component({
   selector: 'app-inicio',
@@ -17,7 +18,7 @@ import { CommonModule } from '@angular/common';
           <span class="hero-badge">🎓 Educación de Excelencia</span>
           <h1 class="hero-title">Academia <span class="text-gradient">MIRZAKHANI</span></h1>
           <p class="hero-subtitle">
-            Potencia tu aprendizaje con cursos diseñados por expertos. 
+            Potencia tu aprendizaje con cursos diseñados por expertos.
             Accede a clases grabadas, material PDF y ejercicios resueltos.
           </p>
           <div class="hero-actions">
@@ -32,7 +33,7 @@ import { CommonModule } from '@angular/common';
           </div>
           <div class="hero-stats">
             <div class="stat-item">
-              <span class="stat-number">50+</span>
+              <span class="stat-number">{{cursos.length}}+</span>
               <span class="stat-label">Cursos</span>
             </div>
             <div class="stat-divider"></div>
@@ -45,6 +46,60 @@ import { CommonModule } from '@angular/common';
               <span class="stat-number">∞</span>
               <span class="stat-label">Acceso Vitalicio</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cursos Destacados Section -->
+      <section class="cursos-destacados-section">
+        <div class="container">
+          <h2 class="section-title">Nuestros Cursos</h2>
+          <p class="section-subtitle">
+            Explora nuestra variedad de cursos disponibles
+          </p>
+          
+          <!-- Loading State -->
+          <div class="loading-state" *ngIf="loading">
+            <mat-icon class="loading-icon">sync</mat-icon>
+            <p>Cargando cursos...</p>
+          </div>
+          
+          <!-- Cursos Grid -->
+          <div class="cursos-grid" *ngIf="!loading">
+            <div class="curso-card" *ngFor="let curso of cursos">
+              <div class="curso-header" [style.background]="curso.gradiente">
+                <mat-icon>{{curso.icono}}</mat-icon>
+              </div>
+              <div class="curso-body">
+                <span class="curso-categoria">{{curso.categoria}}</span>
+                <h3>{{curso.nombre}}</h3>
+                <p>{{curso.descripcion}}</p>
+                <div class="curso-footer">
+                  <span class="curso-precio">S/ {{curso.precio}}</span>
+                  <a routerLink="/cursos-public" class="btn-ver">
+                    <mat-icon>visibility</mat-icon>
+                    <span>Ver Más</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="!loading && cursos.length === 0">
+            <mat-icon>inventory_2</mat-icon>
+            <p>No hay cursos disponibles en este momento</p>
+            <a routerLink="/cursos-public" class="btn-primary">
+              <mat-icon>school</mat-icon>
+              <span>Ver Todos los Cursos</span>
+            </a>
+          </div>
+          
+          <div class="text-center" *ngIf="!loading && cursos.length > 0">
+            <a routerLink="/cursos-public" class="btn-ver-todos">
+              <mat-icon>school</mat-icon>
+              <span>Ver Todos los Cursos</span>
+            </a>
           </div>
         </div>
       </section>
@@ -437,6 +492,200 @@ import { CommonModule } from '@angular/common';
         color: rgba(255, 255, 255, 0.95);
         margin: 0 0 48px;
         line-height: 1.6;
+      }
+
+      /* Cursos Destacados Section */
+      .cursos-destacados-section {
+        padding: 100px 20px;
+        background: white;
+      }
+
+      .cursos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .curso-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .curso-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+      }
+
+      .curso-header {
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .curso-header mat-icon {
+        font-size: 70px;
+        width: 70px;
+        height: 70px;
+        color: white;
+        opacity: 0.9;
+      }
+
+      .curso-body {
+        padding: 24px;
+      }
+
+      .curso-categoria {
+        background: #eff6ff;
+        color: #3b82f6;
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+
+      .curso-body h3 {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1e293b;
+        margin: 0 0 12px;
+      }
+
+      .curso-body p {
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0 0 20px;
+      }
+
+      .curso-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 2px solid #f1f5f9;
+      }
+
+      .curso-precio {
+        font-size: 28px;
+        font-weight: 900;
+        color: #dc2626;
+      }
+
+      .btn-ver {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+
+      .btn-ver:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+      }
+
+      .btn-ver mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .btn-ver-todos {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: white;
+        color: #f97316;
+        padding: 16px 32px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 16px;
+        border: 3px solid #f97316;
+        transition: all 0.3s;
+      }
+
+      .btn-ver-todos:hover {
+        background: #f97316;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(249, 115, 22, 0.3);
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      /* Loading & Empty States */
+      .loading-state, .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        text-align: center;
+        background: #f8fafc;
+        border-radius: 16px;
+      }
+
+      .loading-icon {
+        font-size: 48px;
+        color: #f97316;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .loading-state p, .empty-state p {
+        color: #64748b;
+        margin: 16px 0 0;
+        font-size: 16px;
+      }
+
+      .empty-state mat-icon {
+        font-size: 64px;
+        color: #cbd5e1;
+        margin-bottom: 16px;
+      }
+
+      .empty-state .btn-primary {
+        margin-top: 24px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+        color: white;
+        padding: 14px 28px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s;
+      }
+
+      .empty-state .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(249, 115, 22, 0.3);
+      }
+
+      .empty-state .btn-primary mat-icon {
+        font-size: 20px;
       }
 
       .hero-actions {
@@ -1042,6 +1291,53 @@ import { CommonModule } from '@angular/common';
     </style>
   `
 })
-export class InicioComponent {
+export class InicioComponent implements OnInit {
+  cursos: any[] = [];
+  loading = true;
 
+  constructor(
+    private academiaService: AcademiaService
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarCursos();
+  }
+
+  cargarCursos(): void {
+    const cursosData = this.academiaService.getCursos();
+    
+    this.cursos = cursosData.map(curso => ({
+      id: curso.id,
+      nombre: curso.nombre,
+      descripcion: curso.descripcion,
+      precio: curso.precio,
+      categoria: curso.categoria,
+      gradiente: this.getGradientePorCategoria(curso.categoria),
+      icono: this.getIconoPorCategoria(curso.categoria)
+    }));
+
+    this.loading = false;
+  }
+
+  getIconoPorCategoria(categoria: string): string {
+    const iconos: { [key: string]: string } = {
+      'Matemáticas': 'functions',
+      'Física': 'rocket_launch',
+      'Química': 'biotech',
+      'Biología': 'science',
+      'Letras': 'menu_book'
+    };
+    return iconos[categoria] || 'school';
+  }
+
+  getGradientePorCategoria(categoria: string): string {
+    const gradientes: { [key: string]: string } = {
+      'Matemáticas': 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
+      'Física': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      'Química': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+      'Biología': 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
+      'Letras': 'linear-gradient(135deg, #a855f7 0%, #9333ea 100%)'
+    };
+    return gradientes[categoria] || 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)';
+  }
 }
