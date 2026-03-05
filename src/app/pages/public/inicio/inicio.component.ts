@@ -16,12 +16,24 @@ import { AcademiaService } from 'src/app/services/academia.service';
       <section class="hero-section">
         <div class="hero-bg-overlay"></div>
         <div class="hero-content">
-          <span class="hero-badge">🎓 Educación de Excelencia</span>
-          <h1 class="hero-title">Academia <span class="text-gradient">MIRZAKHANI</span></h1>
+          <span class="hero-badge">🎓 ÚNETE A +1000 ESTUDIANTES</span>
+          <h1 class="hero-title">Domina las <span class="text-gradient">Matemáticas y Física</span> con la Academia MIRZAKHANI</h1>
           <p class="hero-subtitle">
             Potencia tu aprendizaje con cursos diseñados por expertos.
             Accede a clases grabadas, material PDF y ejercicios resueltos.
           </p>
+          
+          <div class="hero-rating">
+            <div class="stars">
+              <mat-icon>star</mat-icon>
+              <mat-icon>star</mat-icon>
+              <mat-icon>star</mat-icon>
+              <mat-icon>star</mat-icon>
+              <mat-icon>star</mat-icon>
+            </div>
+            <span class="rating-text"><strong>4.9/5</strong> basado en 500+ reseñas</span>
+          </div>
+          
           <div class="hero-actions">
             <a routerLink="/cursos-public" class="btn-primary btn-large">
               <mat-icon>school</mat-icon>
@@ -32,6 +44,26 @@ import { AcademiaService } from 'src/app/services/academia.service';
               <span>Soy Estudiante</span>
             </a>
           </div>
+          
+          <div class="hero-benefits">
+            <div class="benefit-item">
+              <mat-icon>check_circle</mat-icon>
+              <span>Acceso de por vida</span>
+            </div>
+            <div class="benefit-item">
+              <mat-icon>check_circle</mat-icon>
+              <span>Certificado</span>
+            </div>
+            <div class="benefit-item">
+              <mat-icon>check_circle</mat-icon>
+              <span>Soporte 24/7</span>
+            </div>
+            <div class="benefit-item">
+              <mat-icon>check_circle</mat-icon>
+              <span>Pago seguro</span>
+            </div>
+          </div>
+          
           <div class="hero-stats">
             <div class="stat-item">
               <span class="stat-number">{{cursos.length}}+</span>
