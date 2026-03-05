@@ -269,26 +269,47 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
       <!-- Footer -->
       <footer class="landing-footer">
+        <!-- Top Section -->
+        <div class="footer-top">
+          <div class="container">
+            <div class="footer-cta">
+              <h2>Comienza tu aprendizaje hoy</h2>
+              <p>Únete a miles de estudiantes que ya están mejorando sus habilidades</p>
+              <div class="footer-cta-actions">
+                <a routerLink="/cursos-public" class="btn-cta-primary">
+                  <mat-icon>school</mat-icon>
+                  <span>Ver Cursos</span>
+                </a>
+                <a routerLink="/authentication/login" class="btn-cta-secondary">
+                  <mat-icon>login</mat-icon>
+                  <span>Soy Estudiante</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Footer -->
         <div class="footer-main">
           <div class="container">
             <div class="footer-grid">
               <!-- Columna 1: Brand -->
               <div class="footer-brand">
-                <h3 class="brand-name">
-                  <mat-icon>school</mat-icon>
-                  Academia MIRZAKHANI
-                </h3>
-                <p class="brand-description">
-                  Educación de calidad al alcance de todos. Potencia tu aprendizaje con cursos diseñados por expertos.
-                </p>
+                <div class="brand-logo">
+                  <div class="logo-icon">
+                    <mat-icon>school</mat-icon>
+                  </div>
+                  <span class="logo-text">MIRZAKHANI</span>
+                </div>
+                <p class="brand-tagline">Educación de calidad al alcance de todos</p>
                 <div class="social-links">
-                  <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook">
+                  <a href="https://facebook.com" target="_blank" class="social-link facebook" title="Facebook">
                     <mat-icon>facebook</mat-icon>
                   </a>
-                  <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram">
+                  <a href="https://instagram.com" target="_blank" class="social-link instagram" title="Instagram">
                     <mat-icon>favorite</mat-icon>
                   </a>
-                  <a href="https://youtube.com" target="_blank" class="social-link" title="YouTube">
+                  <a href="https://youtube.com" target="_blank" class="social-link youtube" title="YouTube">
                     <mat-icon>play_circle</mat-icon>
                   </a>
                   <a href="https://wa.me/51965890475" target="_blank" class="social-link whatsapp" title="WhatsApp">
@@ -297,47 +318,51 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 </div>
               </div>
 
-              <!-- Columna 2: Enlaces Rápidos -->
-              <div class="footer-links">
-                <h4>Cursos</h4>
-                <ul>
-                  <li><a routerLink="/cursos-public">Ver todos los cursos</a></li>
+              <!-- Columna 2: Cursos -->
+              <div class="footer-column">
+                <h4>Materias</h4>
+                <ul class="footer-list">
                   <li><a routerLink="/cursos-public">Matemáticas</a></li>
                   <li><a routerLink="/cursos-public">Física</a></li>
                   <li><a routerLink="/cursos-public">Química</a></li>
+                  <li><a routerLink="/cursos-public">Biología</a></li>
+                  <li><a routerLink="/cursos-public">Letras</a></li>
                 </ul>
               </div>
 
               <!-- Columna 3: Compañía -->
-              <div class="footer-links">
+              <div class="footer-column">
                 <h4>Compañía</h4>
-                <ul>
+                <ul class="footer-list">
                   <li><a routerLink="/inicio">Inicio</a></li>
-                  <li><a routerLink="/authentication/login">Iniciar Sesión</a></li>
-                  <li><a href="mailto:contacto@mirzakhani.com">Contáctanos</a></li>
+                  <li><a routerLink="/cursos-public">Cursos</a></li>
+                  <li><a routerLink="/authentication/login">Ingresar</a></li>
+                  <li><a href="mailto:contacto@mirzakhani.com">Contacto</a></li>
                 </ul>
               </div>
 
               <!-- Columna 4: Contacto -->
-              <div class="footer-contact">
-                <h4>Contacto</h4>
-                <div class="contact-item">
-                  <mat-icon>phone</mat-icon>
-                  <span>+51 965 890 475</span>
+              <div class="footer-column">
+                <h4>Contáctanos</h4>
+                <div class="contact-info">
+                  <div class="contact-row">
+                    <mat-icon>phone</mat-icon>
+                    <span>+51 965 890 475</span>
+                  </div>
+                  <div class="contact-row">
+                    <mat-icon>email</mat-icon>
+                    <a href="mailto:contacto@mirzakhani.com">contacto@mirzakhani.com</a>
+                  </div>
+                  <div class="contact-row">
+                    <mat-icon>location_on</mat-icon>
+                    <span>Perú</span>
+                  </div>
                 </div>
-                <div class="contact-item">
-                  <mat-icon>email</mat-icon>
-                  <a href="mailto:contacto@mirzakhani.com">contacto@mirzakhani.com</a>
-                </div>
-                <div class="contact-item">
-                  <mat-icon>location_on</mat-icon>
-                  <span>Perú</span>
-                </div>
-                <div class="payment-methods">
-                  <span class="payment-label">Métodos de pago:</span>
-                  <div class="payment-badges">
-                    <span class="payment-badge yape">Yape</span>
-                    <span class="payment-badge bcp">BCP</span>
+                <div class="payment-info">
+                  <span class="payment-title">Aceptamos:</span>
+                  <div class="payment-icons">
+                    <span class="payment-icon-yape">Yape</span>
+                    <span class="payment-icon-bcp">BCP</span>
                   </div>
                 </div>
               </div>
@@ -354,17 +379,16 @@ import { AcademiaService } from 'src/app/services/academia.service';
               </p>
               
               <!-- Developer Credits -->
-              <div class="developer-credits">
-                <p class="credits-text">
-                  Desarrollado con ❤️ por <strong class="developer-name">CARLOS</strong>
-                </p>
-                <a href="mailto:llanovilca79@gmail.com" class="credits-email">
+              <div class="developer-badge">
+                <div class="dev-info">
+                  <span class="dev-label">Desarrollado por</span>
+                  <strong class="dev-name">CARLOS</strong>
+                </div>
+                <a href="mailto:llanovilca79@gmail.com" class="dev-contact">
                   <mat-icon>email</mat-icon>
-                  llanovilca79@gmail.com
+                  <span>llanovilca79@gmail.com</span>
                 </a>
-                <p class="credits-tagline">
-                  ¿Quieres un proyecto similar? ¡Contáctame!
-                </p>
+                <p class="dev-tagline">¿Quieres un proyecto similar?</p>
               </div>
             </div>
           </div>
