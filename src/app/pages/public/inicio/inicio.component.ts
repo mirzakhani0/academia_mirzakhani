@@ -653,9 +653,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .btn mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
     }
 
     .btn-yellow {
@@ -797,9 +797,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .stars mat-icon {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
       color: var(--yellow);
     }
 
@@ -837,7 +837,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .benefit mat-icon {
-      font-size: 20px;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
       color: var(--yellow);
     }
 
@@ -864,8 +866,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .stat-icon {
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -874,7 +876,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .stat-icon mat-icon {
-      font-size: 30px;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
       color: var(--white);
     }
 
@@ -945,6 +949,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .area-icon mat-icon {
       font-size: 40px;
+      width: 40px;
+      height: 40px;
       color: var(--white);
     }
 
@@ -997,7 +1003,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .area-features mat-icon {
       color: var(--green);
-      font-size: 20px;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
     }
 
     /* COURSES SECTION */
@@ -1035,9 +1043,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .course-header mat-icon {
-      font-size: 80px;
-      width: 80px;
-      height: 80px;
+      font-size: 72px;
+      width: 72px;
+      height: 72px;
       color: var(--white);
       opacity: 0.9;
     }
@@ -1100,7 +1108,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .meta-item mat-icon {
-      font-size: 16px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
       color: var(--blue);
     }
 
@@ -1169,8 +1179,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .step-number {
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
       border-radius: 50%;
       display: flex;
@@ -1242,8 +1252,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .testimonial-logo {
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1251,7 +1261,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .testimonial-logo mat-icon {
-      font-size: 30px;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
       color: var(--white);
     }
 
@@ -1336,7 +1348,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .guarantee-icon mat-icon {
-      font-size: 50px;
+      font-size: 56px;
+      width: 56px;
+      height: 56px;
       color: var(--blue);
     }
 
@@ -1375,7 +1389,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .badge-item mat-icon {
       color: var(--yellow);
-      font-size: 24px;
+      font-size: 26px;
+      width: 26px;
+      height: 26px;
     }
 
     /* FAQ SECTION */
@@ -1463,8 +1479,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .logo-icon {
-      width: 50px;
-      height: 50px;
+      width: 56px;
+      height: 56px;
       background: var(--red);
       border-radius: 12px;
       display: flex;
@@ -1473,7 +1489,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .logo-icon mat-icon {
-      font-size: 28px;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
       color: var(--white);
     }
 
@@ -1496,8 +1514,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .social-link {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1507,7 +1525,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .social-link mat-icon {
-      font-size: 22px;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
       transition: color 0.3s;
     }
 
@@ -1577,7 +1597,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
 
     .contact-row mat-icon {
       color: var(--blue);
-      font-size: 20px;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
     }
 
     .contact-row a {
