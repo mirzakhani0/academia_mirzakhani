@@ -382,26 +382,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
         </div>
       </section>
 
-      <!-- CTA FINAL -->
-      <section class="cta-section">
-        <div class="container">
-          <div class="cta-card">
-            <h2>Comienza tu aprendizaje hoy</h2>
-            <p>Únete a miles de estudiantes que ya están mejorando sus habilidades</p>
-            <div class="cta-actions">
-              <a routerLink="/cursos-public" class="btn btn-yellow btn-large">
-                <mat-icon>school</mat-icon>
-                <span>Ver Cursos Disponibles</span>
-              </a>
-              <a routerLink="/authentication/login" class="btn btn-white-outline btn-large">
-                <mat-icon>login</mat-icon>
-                <span>Ya soy Estudiante</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- FOOTER -->
       <footer class="landing-footer">
         <div class="footer-top">
@@ -498,18 +478,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
           <div class="container">
             <div class="footer-bottom-content">
               <p class="copyright">© 2026 Academia MIRZAKHANI. Todos los derechos reservados.</p>
-              
-              <div class="developer-badge">
-                <div class="dev-info">
-                  <span class="dev-label">Desarrollado por</span>
-                  <strong class="dev-name">CARLOS</strong>
-                </div>
-                <a href="mailto:llanovilca79@gmail.com" class="dev-contact">
-                  <mat-icon>email</mat-icon>
-                  <span>llanovilca79@gmail.com</span>
-                </a>
-                <p class="dev-tagline">¿Quieres un proyecto similar?</p>
-              </div>
+              <p class="developer-credit">Desarrollado por <strong class="dev-name">CARLOS</strong> - <a href="mailto:llanovilca79@gmail.com" class="dev-email">llanovilca79@gmail.com</a></p>
             </div>
           </div>
         </div>
@@ -655,6 +624,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
       position: relative;
       padding: 120px 0 140px;
       overflow: hidden;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     }
 
     .hero-bg {
@@ -667,7 +637,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .hero-gradient {
-      background: linear-gradient(135deg, var(--red) 0%, var(--blue) 100%);
+      background: transparent;
       width: 100%;
       height: 100%;
     }
@@ -1503,59 +1473,60 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .copyright {
       color: var(--gray);
       font-size: 14px;
-      margin: 0 0 24px;
+      margin: 0 0 12px;
     }
 
-    .developer-badge {
-      display: inline-block;
-      background: var(--white);
-      padding: 24px 32px;
-      border-radius: 16px;
-      border: 2px solid #e9ecef;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .dev-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .dev-label {
-      font-size: 14px;
+    .developer-credit {
       color: var(--gray);
+      font-size: 13px;
+      margin: 0;
     }
 
     .dev-name {
-      font-size: 18px;
       color: var(--blue);
       font-weight: 900;
     }
 
-    .dev-contact {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .dev-email {
       color: var(--yellow);
       text-decoration: none;
       font-weight: 600;
-      font-size: 14px;
-      padding: 8px 16px;
-      background: rgba(255, 193, 7, 0.1);
-      border-radius: 8px;
-      margin-bottom: 12px;
     }
 
-    .dev-contact mat-icon {
+    .dev-email:hover {
+      text-decoration: underline;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    }
+
+    .cta-card {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta-card h2 {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--white);
+      margin: 0 0 16px;
+    }
+
+    .cta-card p {
       font-size: 18px;
+      color: rgba(255, 255, 255, 0.95);
+      margin: 0 0 40px;
     }
 
-    .dev-tagline {
-      font-size: 13px;
-      color: var(--gray);
-      margin: 0;
-      font-style: italic;
+    .cta-actions {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     /* RESPONSIVE */
@@ -1707,13 +1678,13 @@ export class InicioComponent implements OnInit {
 
   getGradientePorCategoria(categoria: string): string {
     const gradientes: { [key: string]: string } = {
-      'Matemáticas': 'linear-gradient(135deg, #dc3545 0%, #ff4757 100%)',
-      'Física': 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
-      'Química': 'linear-gradient(135deg, #ffc107 0%, #ffca2c 100%)',
-      'Biología': 'linear-gradient(135deg, #28a745 0%, #218838 100%)',
-      'Letras': 'linear-gradient(135deg, #6f42c1 0%, #5930a8 100%)'
+      'Matemáticas': 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+      'Física': 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)',
+      'Química': 'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)',
+      'Biología': 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+      'Letras': 'linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%)'
     };
-    return gradientes[categoria] || 'linear-gradient(135deg, #dc3545 0%, #ff4757 100%)';
+    return gradientes[categoria] || 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';
   }
 
   ngOnChanges(): void {
