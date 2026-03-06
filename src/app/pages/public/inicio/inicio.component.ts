@@ -957,6 +957,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
       border-radius: 20px;
       border: 2px solid var(--light);
       transition: all 0.3s;
+      overflow: visible;
     }
 
     .level-card:hover {
@@ -975,6 +976,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .level-header {
       text-align: center;
       margin-bottom: 32px;
+      overflow: visible;
     }
 
     .level-icon {
