@@ -121,7 +121,13 @@ import { AcademiaService } from 'src/app/services/academia.service';
             <!-- Nivel Universitario -->
             <div class="level-card level-universitario">
               <div class="level-header">
-                <div class="level-icon-emoji">🎓</div>
+                <div class="level-logo">
+                  <svg viewBox="0 0 100 100" class="level-logo-svg">
+                    <path d="M50 5 L95 25 L50 45 L5 25 Z" fill="#1f2937"/>
+                    <path d="M50 50 L95 30 L95 70 L50 90 L5 70 L5 30 Z" fill="#374151"/>
+                    <rect x="45" y="60" width="10" height="30" fill="#fbbf24"/>
+                  </svg>
+                </div>
                 <h3>Nivel Universitario</h3>
                 <p class="level-subtitle">Carreras especializadas</p>
               </div>
@@ -165,7 +171,15 @@ import { AcademiaService } from 'src/app/services/academia.service';
             <!-- Nivel Preuniversitario -->
             <div class="level-card level-pre">
               <div class="level-header">
-                <div class="level-icon-emoji">📚</div>
+                <div class="level-logo">
+                  <svg viewBox="0 0 100 100" class="level-logo-svg">
+                    <rect x="20" y="30" width="60" height="45" rx="5" fill="#1f2937"/>
+                    <rect x="25" y="35" width="50" height="35" rx="3" fill="#fbbf24"/>
+                    <line x1="30" y1="45" x2="70" y2="45" stroke="#1f2937" stroke-width="2"/>
+                    <line x1="30" y1="52" x2="70" y2="52" stroke="#1f2937" stroke-width="2"/>
+                    <line x1="30" y1="59" x2="60" y2="59" stroke="#1f2937" stroke-width="2"/>
+                  </svg>
+                </div>
                 <h3>Nivel Preuniversitario</h3>
                 <p class="level-subtitle">Preparación integral para el examen de admisión</p>
               </div>
@@ -973,6 +987,25 @@ import { AcademiaService } from 'src/app/services/academia.service';
       text-align: center;
       margin-bottom: 32px;
       overflow: visible;
+    }
+
+    .level-logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--yellow) 0%, #f59e0b 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(251, 191, 36, 0.5);
+      border: 4px solid var(--white);
+      padding: 8px;
+    }
+
+    .level-logo-svg {
+      width: 100%;
+      height: 100%;
     }
 
     .level-icon-emoji {
