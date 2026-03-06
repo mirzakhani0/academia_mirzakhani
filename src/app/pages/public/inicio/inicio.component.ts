@@ -122,7 +122,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
             <div class="level-card level-universitario">
               <div class="level-header">
                 <div class="level-icon">
-                  <mat-icon>graduation_cap</mat-icon>
+                  <div class="level-icon-badge">
+                    <mat-icon>graduation_cap</mat-icon>
+                  </div>
                 </div>
                 <h3>Nivel Universitario</h3>
                 <p class="level-subtitle">Carreras especializadas</p>
@@ -168,7 +170,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
             <div class="level-card level-pre">
               <div class="level-header">
                 <div class="level-icon">
-                  <mat-icon>menu_book</mat-icon>
+                  <div class="level-icon-badge">
+                    <mat-icon>menu_book</mat-icon>
+                  </div>
                 </div>
                 <h3>Nivel Preuniversitario</h3>
                 <p class="level-subtitle">Preparación integral para el examen de admisión</p>
@@ -989,6 +993,25 @@ import { AcademiaService } from 'src/app/services/academia.service';
       justify-content: center;
       position: relative;
       z-index: 10;
+    }
+
+    .level-icon-badge {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, var(--yellow) 0%, #f59e0b 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(251, 191, 36, 0.5);
+      border: 4px solid var(--white);
+    }
+
+    .level-icon-badge mat-icon {
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
+      color: #1f2937;
     }
 
     .level-icon mat-icon {
