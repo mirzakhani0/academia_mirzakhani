@@ -985,6 +985,8 @@ import { AcademiaService } from 'src/app/services/academia.service';
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      z-index: 10;
     }
 
     .level-icon mat-icon {
@@ -992,14 +994,18 @@ import { AcademiaService } from 'src/app/services/academia.service';
       width: 40px;
       height: 40px;
       color: var(--white);
+      position: relative;
+      z-index: 11;
     }
 
     .level-universitario .level-icon {
       background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
     }
 
     .level-pre .level-icon {
       background: linear-gradient(135deg, var(--green) 0%, #10b981 100%);
+      box-shadow: 0 8px 24px rgba(5, 150, 105, 0.4);
     }
 
     .level-header h3 {
