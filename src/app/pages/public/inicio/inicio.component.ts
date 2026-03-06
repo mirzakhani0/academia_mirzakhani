@@ -19,7 +19,9 @@ import { AcademiaService } from 'src/app/services/academia.service';
         </div>
         <div class="container hero-content">
           <div class="hero-level-badge">
-            <mat-icon>graduation_cap</mat-icon>
+            <div class="level-badge-logo">
+              <mat-icon>graduation_cap</mat-icon>
+            </div>
             <span>Nivel Universitario y Preuniversitario</span>
           </div>
           <span class="hero-badge">🎓 ESPECIALISTAS EN MEDICINA E INGENIERÍA CIVIL</span>
@@ -593,7 +595,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   </div>
                   <div class="contact-row">
                     <mat-icon>email</mat-icon>
-                    <a href="mailto:contacto@mirzakhani.com">contacto@mirzakhani.com</a>
+                    <a href="mailto:llanovilca97@gmail.com">llanovilca97@gmail.com</a>
                   </div>
                   <div class="contact-row">
                     <mat-icon>location_on</mat-icon>
@@ -615,7 +617,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
         <div class="footer-bottom">
           <div class="container">
             <div class="footer-bottom-content">
-              <p class="copyright">© 2026 Academia MIRZAKHANI. Todos los derechos reservados.</p>
+              <p class="copyright">© 2026 Academia MIRZAKHANI.</p>
               <p class="developer-credit">Desarrollado por <strong class="dev-name">CARLOS</strong> - <a href="mailto:llanovilca97@gmail.com" class="dev-email">llanovilca97@gmail.com</a></p>
             </div>
           </div>
@@ -805,23 +807,34 @@ import { AcademiaService } from 'src/app/services/academia.service';
     .hero-level-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
-      padding: 8px 20px;
+      padding: 10px 24px;
       border-radius: 50px;
       color: var(--white);
       font-weight: 600;
-      font-size: 14px;
+      font-size: 15px;
       margin-bottom: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      justify-content: center;
     }
 
-    .hero-level-badge mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-      color: var(--yellow);
+    .level-badge-logo {
+      width: 40px;
+      height: 40px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .level-badge-logo mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: #1f2937;
     }
 
     .hero-badge {
