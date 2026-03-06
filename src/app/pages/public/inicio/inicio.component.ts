@@ -18,13 +18,13 @@ import { AcademiaService } from 'src/app/services/academia.service';
           <div class="hero-pattern"></div>
         </div>
         <div class="container hero-content">
-          <span class="hero-badge">🎓 +1000 ESTUDIANTES PREPARÁNDOSE PARA SU FUTURO</span>
+          <span class="hero-badge">🎓 ESPECIALISTAS EN MEDICINA E INGENIERÍA CIVIL</span>
           <h1 class="hero-title">
-            Tu Camino a la <span class="text-gradient">Medicina</span> e <span class="text-gradient-blue">Ingeniería</span> Comienza Aquí
+            Tu Camino a la <span class="text-gradient">Medicina Humana</span> e <span class="text-gradient-blue">Ingeniería Civil</span> Comienza Aquí
           </h1>
           <p class="hero-subtitle">
-            Preparación preuniversitaria desde nivel básico hasta avanzado. 
-            Clases grabadas, material PDF, ejercicios resueltos y simulacros de examen.
+            Preparación preuniversitaria y universitaria desde nivel básico hasta avanzado. 
+            Clases grabadas, material PDF, ejercicios resueltos y simulacros de examen de admisión.
           </p>
           
           <div class="hero-rating">
@@ -52,7 +52,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
             </div>
             <div class="benefit">
               <mat-icon>check_circle</mat-icon>
-              <span>Simulacros de examen</span>
+              <span>Simulacros de admisión</span>
             </div>
             <div class="benefit">
               <mat-icon>check_circle</mat-icon>
@@ -110,65 +110,107 @@ import { AcademiaService } from 'src/app/services/academia.service';
         </div>
       </section>
 
-      <!-- ÁREAS DE ESTUDIO -->
-      <section class="areas-section">
+      <!-- NIVELES DE ESTUDIO -->
+      <section class="levels-section">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title text-red">Elige tu Camino</h2>
-            <p class="section-subtitle">Tres áreas especializadas para tu éxito universitario</p>
+            <h2 class="section-title text-red">Elige tu Nivel</h2>
+            <p class="section-subtitle">Dos programas especializados para tu éxito académico</p>
           </div>
           
-          <div class="areas-grid">
-            <!-- Medicina -->
-            <div class="area-card area-medicina">
-              <div class="area-icon">
-                <mat-icon>favorite</mat-icon>
+          <div class="levels-grid">
+            <!-- Nivel Universitario -->
+            <div class="level-card level-universitario">
+              <div class="level-header">
+                <div class="level-icon">
+                  <mat-icon>graduation_cap</mat-icon>
+                </div>
+                <h3>Nivel Universitario</h3>
+                <p class="level-subtitle">Carreras especializadas</p>
               </div>
-              <h3>Medicina</h3>
-              <p>Preparación completa para ingresar a la facultad de medicina. Biología, química, física y razonamiento verbal.</p>
-              <ul class="area-features">
-                <li><mat-icon>check</mat-icon>Anatomía y fisiología</li>
-                <li><mat-icon>check</mat-icon>Biología celular</li>
-                <li><mat-icon>check</mat-icon>Química orgánica</li>
-                <li><mat-icon>check</mat-icon>Simulacros tipo ADMISIÓN</li>
-              </ul>
-              <a routerLink="/cursos-public" class="btn btn-red">
-                <span>Ver Cursos de Medicina</span>
+              <div class="level-careers">
+                <div class="career-item medicina">
+                  <div class="career-icon">
+                    <mat-icon>favorite</mat-icon>
+                  </div>
+                  <div class="career-info">
+                    <h4>Medicina Humana</h4>
+                    <p>Cursos especializados para estudiantes de medicina</p>
+                    <ul class="career-courses">
+                      <li><mat-icon>check</mat-icon>Anatomía Humana</li>
+                      <li><mat-icon>check</mat-icon>Biología Celular</li>
+                      <li><mat-icon>check</mat-icon>Química Orgánica</li>
+                      <li><mat-icon>check</mat-icon>Fisiología</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="career-item ingenieria">
+                  <div class="career-icon">
+                    <mat-icon>engineering</mat-icon>
+                  </div>
+                  <div class="career-info">
+                    <h4>Ingeniería Civil</h4>
+                    <p>Cursos especializados para ingenieros civiles</p>
+                    <ul class="career-courses">
+                      <li><mat-icon>check</mat-icon>Cálculo Avanzado</li>
+                      <li><mat-icon>check</mat-icon>Física Mecánica</li>
+                      <li><mat-icon>check</mat-icon>Álgebra Lineal</li>
+                      <li><mat-icon>check</mat-icon>Estática</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <a routerLink="/cursos-public" class="btn btn-blue btn-large">
+                <span>Ver Cursos Universitarios</span>
               </a>
             </div>
 
-            <!-- Ingeniería -->
-            <div class="area-card area-ingenieria">
-              <div class="area-icon">
-                <mat-icon>engineering</mat-icon>
+            <!-- Nivel Preuniversitario -->
+            <div class="level-card level-pre">
+              <div class="level-header">
+                <div class="level-icon">
+                  <mat-icon>menu_book</mat-icon>
+                </div>
+                <h3>Nivel Preuniversitario</h3>
+                <p class="level-subtitle">Preparación integral para el examen de admisión</p>
               </div>
-              <h3>Ingeniería</h3>
-              <p>Domina las matemáticas y física necesarias para cualquier rama de la ingeniería. Desde civil hasta sistemas.</p>
-              <ul class="area-features">
-                <li><mat-icon>check</mat-icon>Cálculo diferencial e integral</li>
-                <li><mat-icon>check</mat-icon>Álgebra lineal</li>
-                <li><mat-icon>check</mat-icon>Física mecánica</li>
-                <li><mat-icon>check</mat-icon>Razonamiento matemático</li>
-              </ul>
-              <a routerLink="/cursos-public" class="btn btn-blue">
-                <span>Ver Cursos de Ingeniería</span>
-              </a>
-            </div>
-
-            <!-- Preuniversitario -->
-            <div class="area-card area-pre">
-              <div class="area-icon">
-                <mat-icon>menu_book</mat-icon>
+              <div class="pre-subjects">
+                <div class="subject-group">
+                  <h4>🔬 Ciencias</h4>
+                  <div class="subject-tags">
+                    <span class="subject-tag">Biología</span>
+                    <span class="subject-tag">Anatomía</span>
+                    <span class="subject-tag">Física</span>
+                    <span class="subject-tag">Química</span>
+                    <span class="subject-tag">Psicología</span>
+                  </div>
+                </div>
+                <div class="subject-group">
+                  <h4>📚 Humanidades</h4>
+                  <div class="subject-tags">
+                    <span class="subject-tag">Filosofía</span>
+                    <span class="subject-tag">Geografía</span>
+                    <span class="subject-tag">Historia</span>
+                    <span class="subject-tag">Educación Cívica</span>
+                    <span class="subject-tag">Economía</span>
+                    <span class="subject-tag">Comunicación</span>
+                    <span class="subject-tag">Literatura</span>
+                    <span class="subject-tag">Inglés</span>
+                  </div>
+                </div>
+                <div class="subject-group">
+                  <h4>📐 Matemáticas</h4>
+                  <div class="subject-tags">
+                    <span class="subject-tag">Aritmética</span>
+                    <span class="subject-tag">Álgebra</span>
+                    <span class="subject-tag">Geometría</span>
+                    <span class="subject-tag">Trigonometría</span>
+                    <span class="subject-tag">Razonamiento Verbal</span>
+                    <span class="subject-tag">Razonamiento Matemático</span>
+                  </div>
+                </div>
               </div>
-              <h3>Preuniversitario</h3>
-              <p>Preparación integral desde nivel básico. Ideal si empezamos desde cero y quieres llegar al nivel avanzado.</p>
-              <ul class="area-features">
-                <li><mat-icon>check</mat-icon>Nivelación académica</li>
-                <li><mat-icon>check</mat-icon>Técnicas de estudio</li>
-                <li><mat-icon>check</mat-icon>Simulacros semanales</li>
-                <li><mat-icon>check</mat-icon>Orientación vocacional</li>
-              </ul>
-              <a routerLink="/cursos-public" class="btn btn-green">
+              <a routerLink="/cursos-public" class="btn btn-green btn-large">
                 <span>Ver Cursos Preuniversitarios</span>
               </a>
             </div>
@@ -191,24 +233,25 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 <span class="course-badge">Medicina</span>
               </div>
               <div class="course-body">
-                <h3>Biología Celular y Molecular</h3>
-                <p>Desde la célula hasta los sistemas complejos. Ideal para postulantes a medicina.</p>
+                <h3>Anatomía Humana Completa</h3>
+                <p>Sistemas, aparatos y estructuras del cuerpo humano. Ideal para postulantes a medicina.</p>
                 <div class="course-meta">
                   <div class="meta-item">
                     <mat-icon>play_circle</mat-icon>
-                    <span>25 clases</span>
+                    <span>30 clases</span>
                   </div>
                   <div class="meta-item">
                     <mat-icon>description</mat-icon>
-                    <span>8 PDFs</span>
+                    <span>12 PDFs</span>
                   </div>
                 </div>
                 <div class="course-level">
                   <span class="level-badge level-basico">Básico</span>
+                  <span class="level-badge level-intermedio">Intermedio</span>
                   <span class="level-badge level-avanzado">Avanzado</span>
                 </div>
                 <div class="course-footer">
-                  <div class="course-price">S/ 45</div>
+                  <div class="course-price">S/ 55</div>
                   <a routerLink="/cursos-public" class="btn btn-blue btn-small">
                     <mat-icon>visibility</mat-icon>
                     <span>Ver Más</span>
@@ -223,16 +266,16 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 <span class="course-badge">Ingeniería</span>
               </div>
               <div class="course-body">
-                <h3>Cálculo Diferencial Completo</h3>
-                <p>Límites, derivadas y aplicaciones. Esencial para ingeniería.</p>
+                <h3>Cálculo Diferencial e Integral</h3>
+                <p>Límites, derivadas, integrales y aplicaciones. Esencial para ingeniería civil.</p>
                 <div class="course-meta">
                   <div class="meta-item">
                     <mat-icon>play_circle</mat-icon>
-                    <span>30 clases</span>
+                    <span>35 clases</span>
                   </div>
                   <div class="meta-item">
                     <mat-icon>description</mat-icon>
-                    <span>10 PDFs</span>
+                    <span>15 PDFs</span>
                   </div>
                 </div>
                 <div class="course-level">
@@ -241,7 +284,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   <span class="level-badge level-avanzado">Avanzado</span>
                 </div>
                 <div class="course-footer">
-                  <div class="course-price">S/ 55</div>
+                  <div class="course-price">S/ 60</div>
                   <a routerLink="/cursos-public" class="btn btn-blue btn-small">
                     <mat-icon>visibility</mat-icon>
                     <span>Ver Más</span>
@@ -261,11 +304,11 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 <div class="course-meta">
                   <div class="meta-item">
                     <mat-icon>play_circle</mat-icon>
-                    <span>20 clases</span>
+                    <span>25 clases</span>
                   </div>
                   <div class="meta-item">
                     <mat-icon>description</mat-icon>
-                    <span>15 PDFs</span>
+                    <span>20 PDFs</span>
                   </div>
                 </div>
                 <div class="course-level">
@@ -273,7 +316,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   <span class="level-badge level-avanzado">Avanzado</span>
                 </div>
                 <div class="course-footer">
-                  <div class="course-price">S/ 35</div>
+                  <div class="course-price">S/ 40</div>
                   <a routerLink="/cursos-public" class="btn btn-blue btn-small">
                     <mat-icon>visibility</mat-icon>
                     <span>Ver Más</span>
@@ -355,15 +398,15 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 </div>
                 <div class="testimonial-info">
                   <h4>María González</h4>
-                  <p class="testimonial-uni">Ingresó a Medicina - UNMSM</p>
+                  <p class="testimonial-uni">Ingresó a Medicina Humana - UNMSM</p>
                 </div>
               </div>
               <p class="testimonial-text">
-                "Empecé desde cero en química y biología. Los cursos van desde lo básico hasta lo avanzado. ¡Logré ingresar a mi primera opción!"
+                "Empecé desde cero en biología y anatomía. Los cursos van desde lo básico hasta lo avanzado. ¡Logré ingresar a mi primera opción!"
               </p>
               <div class="testimonial-courses">
-                <span class="course-tag">Biología Celular</span>
-                <span class="course-tag">Química Orgánica</span>
+                <span class="course-tag">Anatomía</span>
+                <span class="course-tag">Biología</span>
               </div>
             </div>
 
@@ -381,7 +424,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 "El curso de cálculo es increíble. Explican desde lo más básico hasta problemas complejos. Los simulacros me ayudaron mucho."
               </p>
               <div class="testimonial-courses">
-                <span class="course-tag">Cálculo I</span>
+                <span class="course-tag">Cálculo</span>
                 <span class="course-tag">Álgebra</span>
               </div>
             </div>
@@ -393,14 +436,14 @@ import { AcademiaService } from 'src/app/services/academia.service';
                 </div>
                 <div class="testimonial-info">
                   <h4>Ana Torres</h4>
-                  <p class="testimonial-uni">Ingresó a Ingeniería de Sistemas - UNI</p>
+                  <p class="testimonial-uni">Ingresó a Medicina - UNI</p>
                 </div>
               </div>
               <p class="testimonial-text">
                 "El preuniversitario me dio las bases que necesitaba. Los profesores explican súper bien y el material es completo."
               </p>
               <div class="testimonial-courses">
-                <span class="course-tag">Razonamiento Matemático</span>
+                <span class="course-tag">Química</span>
                 <span class="course-tag">Física</span>
               </div>
             </div>
@@ -479,7 +522,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
           <div class="container">
             <div class="footer-cta">
               <h2>¿Listo para empezar tu preparación?</h2>
-              <p>Únete a los más de 1000 estudiantes que ya están preparándose para ingresar a la universidad</p>
+              <p>Únete a los más de 1000 estudiantes que ya están preparándose para ingresar a Medicina o Ingeniería Civil</p>
               <div class="footer-cta-actions">
                 <a routerLink="/cursos-public" class="btn btn-yellow btn-large">
                   <mat-icon>school</mat-icon>
@@ -500,7 +543,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
                   </div>
                   <span class="logo-text">MIRZAKHANI</span>
                 </div>
-                <p class="brand-tagline">Preparación preuniversitaria de calidad para Medicina e Ingeniería</p>
+                <p class="brand-tagline">Especialistas en Medicina Humana e Ingeniería Civil</p>
                 <div class="social-links">
                   <a href="https://facebook.com" target="_blank" class="social-link facebook">
                     <mat-icon>facebook</mat-icon>
@@ -518,22 +561,22 @@ import { AcademiaService } from 'src/app/services/academia.service';
               </div>
 
               <div class="footer-column">
-                <h4>Medicina</h4>
+                <h4>Medicina Humana</h4>
                 <ul class="footer-list">
+                  <li><a routerLink="/cursos-public">Anatomía</a></li>
                   <li><a routerLink="/cursos-public">Biología Celular</a></li>
                   <li><a routerLink="/cursos-public">Química Orgánica</a></li>
-                  <li><a routerLink="/cursos-public">Anatomía</a></li>
-                  <li><a routerLink="/cursos-public">Física Médica</a></li>
+                  <li><a routerLink="/cursos-public">Fisiología</a></li>
                 </ul>
               </div>
 
               <div class="footer-column">
-                <h4>Ingeniería</h4>
+                <h4>Ingeniería Civil</h4>
                 <ul class="footer-list">
-                  <li><a routerLink="/cursos-public">Cálculo I</a></li>
-                  <li><a routerLink="/cursos-public">Álgebra Lineal</a></li>
-                  <li><a routerLink="/cursos-public">Física Mecánica</a></li>
-                  <li><a routerLink="/cursos-public">Razonamiento Matemático</a></li>
+                  <li><a routerLink="/cursos-public">Cálculo</a></li>
+                  <li><a routerLink="/cursos-public">Álgebra</a></li>
+                  <li><a routerLink="/cursos-public">Física</a></li>
+                  <li><a routerLink="/cursos-public">Estática</a></li>
                 </ul>
               </div>
 
@@ -899,113 +942,188 @@ import { AcademiaService } from 'src/app/services/academia.service';
       margin: 0;
     }
 
-    /* AREAS SECTION */
-    .areas-section {
+    /* LEVELS SECTION */
+    .levels-section {
       padding: 100px 0;
       background: var(--white);
     }
 
-    .areas-grid {
+    .levels-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 40px;
     }
 
-    .area-card {
+    .level-card {
       background: var(--white);
       padding: 40px 32px;
       border-radius: 20px;
       border: 2px solid var(--light);
-      text-align: center;
       transition: all 0.3s;
     }
 
-    .area-card:hover {
+    .level-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     }
 
-    .area-medicina:hover {
-      border-color: var(--red);
-    }
-
-    .area-ingenieria:hover {
+    .level-universitario:hover {
       border-color: var(--blue);
     }
 
-    .area-pre:hover {
+    .level-pre:hover {
       border-color: var(--green);
     }
 
-    .area-icon {
+    .level-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .level-icon {
       width: 80px;
       height: 80px;
-      margin: 0 auto 24px;
+      margin: 0 auto 16px;
       border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .area-icon mat-icon {
+    .level-icon mat-icon {
       font-size: 40px;
       width: 40px;
       height: 40px;
       color: var(--white);
     }
 
-    .area-medicina .area-icon {
-      background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
-    }
-
-    .area-ingenieria .area-icon {
+    .level-universitario .level-icon {
       background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
     }
 
-    .area-pre .area-icon {
+    .level-pre .level-icon {
       background: linear-gradient(135deg, var(--green) 0%, #10b981 100%);
     }
 
-    .area-card h3 {
-      font-size: 24px;
+    .level-header h3 {
+      font-size: 28px;
       font-weight: 900;
       color: #1f2937;
+      margin: 0 0 8px;
+    }
+
+    .level-subtitle {
+      font-size: 15px;
+      color: var(--gray);
+      margin: 0;
+    }
+
+    .level-careers {
+      margin-bottom: 32px;
+    }
+
+    .career-item {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+      background: var(--light);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--blue);
+    }
+
+    .career-item.ingenieria {
+      border-left-color: var(--blue);
+    }
+
+    .career-item.medicina {
+      border-left-color: var(--red);
+    }
+
+    .career-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .career-icon mat-icon {
+      font-size: 28px;
+      color: var(--white);
+    }
+
+    .medicina .career-icon {
+      background: linear-gradient(135deg, var(--red) 0%, #ef4444 100%);
+    }
+
+    .ingenieria .career-icon {
+      background: linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
+    }
+
+    .career-info h4 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1f2937;
+      margin: 0 0 8px;
+    }
+
+    .career-info p {
+      font-size: 14px;
+      color: var(--gray);
       margin: 0 0 16px;
     }
 
-    .area-card > p {
-      font-size: 15px;
-      color: var(--gray);
-      line-height: 1.6;
-      margin: 0 0 24px;
-    }
-
-    .area-features {
+    .career-courses {
       list-style: none;
       padding: 0;
-      margin: 0 0 32px;
-      text-align: left;
+      margin: 0;
     }
 
-    .area-features li {
+    .career-courses li {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 8px 0;
-      font-size: 15px;
+      gap: 8px;
+      font-size: 14px;
       color: #374151;
-      border-bottom: 1px solid var(--light);
+      margin-bottom: 6px;
     }
 
-    .area-features li:last-child {
-      border-bottom: none;
-    }
-
-    .area-features mat-icon {
+    .career-courses li mat-icon {
       color: var(--green);
-      font-size: 22px;
-      width: 22px;
-      height: 22px;
+      font-size: 18px;
+    }
+
+    .pre-subjects {
+      margin-bottom: 32px;
+    }
+
+    .subject-group {
+      margin-bottom: 24px;
+    }
+
+    .subject-group h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1f2937;
+      margin: 0 0 12px;
+    }
+
+    .subject-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .subject-tag {
+      padding: 6px 14px;
+      background: var(--light);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
     }
 
     /* COURSES SECTION */
@@ -1717,8 +1835,11 @@ import { AcademiaService } from 'src/app/services/academia.service';
         gap: 32px;
       }
 
+      .levels-grid {
+        grid-template-columns: 1fr;
+      }
+
       .stats-grid,
-      .areas-grid,
       .courses-grid,
       .testimonials-grid,
       .faq-grid {
@@ -1827,25 +1948,20 @@ export class InicioComponent implements OnInit {
   }
 
   getIconoPorCategoria(categoria: string): string {
-    const iconos: { [key: string]: string } = {
-      'Medicina': 'biotech',
-      'Ingeniería': 'functions',
-      'Preuniversitario': 'quiz',
-      'Matemáticas': 'functions',
-      'Física': 'rocket_launch',
-      'Química': 'biotech'
-    };
-    return iconos[categoria] || 'school';
+    if (categoria.includes('Medicina') || categoria.includes('Anatomía') || categoria.includes('Biología')) {
+      return 'biotech';
+    } else if (categoria.includes('Ingeniería') || categoria.includes('Cálculo') || categoria.includes('Matemáticas')) {
+      return 'functions';
+    }
+    return 'school';
   }
 
   getGradientePorCategoria(categoria: string): string {
-    if (categoria.includes('Medicina') || categoria.includes('Biología')) {
+    if (categoria.includes('Medicina') || categoria.includes('Anatomía') || categoria.includes('Biología')) {
       return 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';
-    } else if (categoria.includes('Ingeniería') || categoria.includes('Matemáticas')) {
+    } else if (categoria.includes('Ingeniería') || categoria.includes('Cálculo') || categoria.includes('Matemáticas')) {
       return 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)';
-    } else if (categoria.includes('Preuniversitario')) {
-      return 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
     }
-    return 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';
+    return 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
   }
 }
