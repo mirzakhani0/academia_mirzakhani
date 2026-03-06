@@ -19,10 +19,13 @@ import { AcademiaService } from 'src/app/services/academia.service';
         </div>
         <div class="container hero-content">
           <div class="hero-level-badge">
-            <div class="level-badge-logo">
-              <mat-icon>graduation_cap</mat-icon>
+            <div class="level-badge-top">
+              <div class="level-badge-logo">
+                <mat-icon>graduation_cap</mat-icon>
+              </div>
+              <span class="level-badge-text">Nivel Universitario</span>
+              <span class="level-badge-subtitle">Carreras especializadas</span>
             </div>
-            <span>Nivel Universitario y Preuniversitario</span>
           </div>
           <span class="hero-badge">🎓 ESPECIALISTAS EN MEDICINA E INGENIERÍA CIVIL</span>
           <h1 class="hero-title">
@@ -805,36 +808,54 @@ import { AcademiaService } from 'src/app/services/academia.service';
     }
 
     .hero-level-badge {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .level-badge-top {
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.15);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(59, 130, 246, 0.9) 100%);
       backdrop-filter: blur(10px);
-      padding: 10px 24px;
-      border-radius: 50px;
-      color: var(--white);
-      font-weight: 600;
-      font-size: 15px;
-      margin-bottom: 16px;
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      justify-content: center;
+      padding: 20px 32px;
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
     }
 
     .level-badge-logo {
-      width: 40px;
-      height: 40px;
-      background: var(--yellow);
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--yellow) 0%, #f59e0b 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 16px rgba(251, 191, 36, 0.4);
     }
 
     .level-badge-logo mat-icon {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
       color: #1f2937;
+    }
+
+    .level-badge-text {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .level-badge-subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 4px;
     }
 
     .hero-badge {
