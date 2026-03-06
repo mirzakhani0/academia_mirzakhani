@@ -18,16 +18,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
           <div class="hero-pattern"></div>
         </div>
         <div class="container hero-content">
-          <div class="hero-level-badge">
-            <div class="level-badge-top">
-              <div class="level-badge-logo">
-                <mat-icon>graduation_cap</mat-icon>
-              </div>
-              <span class="level-badge-text">Nivel Universitario</span>
-              <span class="level-badge-subtitle">Carreras especializadas</span>
-            </div>
-          </div>
-          <span class="hero-badge">🎓 ESPECIALISTAS EN MEDICINA E INGENIERÍA CIVIL</span>
           <h1 class="hero-title">
             Tu Camino a la <span class="text-red">Medicina Humana</span> e <span class="text-blue">Ingeniería Civil</span> Comienza Aquí
           </h1>
@@ -805,69 +795,6 @@ import { AcademiaService } from 'src/app/services/academia.service';
       max-width: 900px;
       margin: 0 auto;
       text-align: center;
-    }
-
-    .hero-level-badge {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-
-    .level-badge-top {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(59, 130, 246, 0.9) 100%);
-      backdrop-filter: blur(10px);
-      padding: 20px 32px;
-      border-radius: 20px;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
-    }
-
-    .level-badge-logo {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, var(--yellow) 0%, #f59e0b 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 16px rgba(251, 191, 36, 0.4);
-    }
-
-    .level-badge-logo mat-icon {
-      font-size: 36px;
-      width: 36px;
-      height: 36px;
-      color: #1f2937;
-    }
-
-    .level-badge-text {
-      color: var(--white);
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .level-badge-subtitle {
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 600;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: var(--yellow);
-      color: #1f2937;
-      padding: 8px 20px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 24px;
-      border: 2px solid var(--white);
     }
 
     .hero-title {
