@@ -18,9 +18,13 @@ import { AcademiaService } from 'src/app/services/academia.service';
           <div class="hero-pattern"></div>
         </div>
         <div class="container hero-content">
+          <div class="hero-level-badge">
+            <mat-icon>graduation_cap</mat-icon>
+            <span>Nivel Universitario y Preuniversitario</span>
+          </div>
           <span class="hero-badge">🎓 ESPECIALISTAS EN MEDICINA E INGENIERÍA CIVIL</span>
           <h1 class="hero-title">
-            Tu Camino a la <span class="text-gradient">Medicina Humana</span> e <span class="text-gradient-blue">Ingeniería Civil</span> Comienza Aquí
+            Tu Camino a la <span class="text-red">Medicina Humana</span> e <span class="text-blue">Ingeniería Civil</span> Comienza Aquí
           </h1>
           <p class="hero-subtitle">
             Preparación preuniversitaria y universitaria desde nivel básico hasta avanzado. 
@@ -612,7 +616,7 @@ import { AcademiaService } from 'src/app/services/academia.service';
           <div class="container">
             <div class="footer-bottom-content">
               <p class="copyright">© 2026 Academia MIRZAKHANI. Todos los derechos reservados.</p>
-              <p class="developer-credit">Desarrollado por <strong class="dev-name">CARLOS</strong> - <a href="mailto:llanovilca79@gmail.com" class="dev-email">llanovilca79@gmail.com</a></p>
+              <p class="developer-credit">Desarrollado por <strong class="dev-name">CARLOS</strong> - <a href="mailto:llanovilca97@gmail.com" class="dev-email">llanovilca97@gmail.com</a></p>
             </div>
           </div>
         </div>
@@ -798,6 +802,28 @@ import { AcademiaService } from 'src/app/services/academia.service';
       text-align: center;
     }
 
+    .hero-level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 8px 20px;
+      border-radius: 50px;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-level-badge mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      color: var(--yellow);
+    }
+
     .hero-badge {
       display: inline-block;
       background: var(--yellow);
@@ -817,6 +843,16 @@ import { AcademiaService } from 'src/app/services/academia.service';
       margin: 0 0 24px;
       letter-spacing: -2px;
       line-height: 1.1;
+    }
+
+    .text-red {
+      color: #ff6b6b !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .text-blue {
+      color: #64b5f6 !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .hero-subtitle {
